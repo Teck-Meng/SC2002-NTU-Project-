@@ -5,7 +5,7 @@ public class Staff extends User{
         System.out.println("morb");
     }
 
-    public Staff(){
-        super();
+    public Staff(String UserID, Faculty facultyInfo){
+        super(UserID, facultyInfo);
     }
 }

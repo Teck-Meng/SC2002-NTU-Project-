@@ -1,12 +1,15 @@
+package camppackage;
+
 import user.Faculty;
 import user.Staff;
 import user.User;
-import java.util.ArrayList;
 
 public class Camp{
     private String campName;
-    private ArrayList<Integer> dates = new ArrayList<Integer>(2);
+
     //Format for dates will be 8 digit integer in the format DD/MM/YYYY
+    //dates will be in array data structure to fix the size as there should only be 2 dates in dates
+    private int[] dates = new int[2];
     private int regClosingDate;
     private Faculty userGroup;
     private String location;
@@ -16,13 +19,17 @@ public class Camp{
     private Staff StaffIC;
     private AttendeeList attendeeList;
     private CommitteeList committeeList;
+    private Blacklist blacklist;
     
+    public Camp(Staff StaffIC){
+        this.StaffIC = StaffIC; //only allow staffIC to be set during intialization
+    }
 
     public String getCampName(){
         return campName;
     }
 
-    public ArrayList<Integer> getDates(){
+    public int[] getDates(){
         return dates;
     }
 
@@ -65,5 +72,41 @@ public class Camp{
 
     public CommitteeList getCommitteeList(){
         return committeeList;
+    }
+
+    public Blacklist getBlacklist(){
+        return blacklist;
+    }
+
+    public void setCampName(String campName){
+        this.campName = campName;
+    }
+
+    public void setDates(int[] dates){
+        this.dates = dates;
+    }
+
+    public void setRegClosingDate(int regClosingDate){
+        this.regClosingDate = regClosingDate;
+    }
+
+    public void setUserGroup(Faculty userGroup){
+        this.userGroup = userGroup;
+    }
+
+    public void setLocation(String location){
+        this.location = location;
+    }
+
+    public void setTotalSlots(int totalSlots){
+        this.totalSlots = totalSlots;
+    }
+
+    public void setCampCommitteeSlots(int campCommitteeSlots){
+        this.campCommitteeSlots = campCommitteeSlots;
+    }
+
+    public void setDescription(String description){
+        this.description = description;
     }
 }
