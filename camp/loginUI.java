@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import user.UserAuthenticator;
 import password.Database;
@@ -14,14 +15,23 @@ public class loginUI {
         /*
          * Intialize integer variable to track user choice in the app
          */
-        int userInput;
+        int userInput = 0;
         boolean canLogin = false;
         Scanner sc = new Scanner(System.in);
 
         do{
-            System.out.println("Welcome to the login screen: ");
-            System.out.println("Kindly Enter your choice: 1 - Login, 2- Change Password, 3- Quit: ");
-            userInput = sc.nextInt();
+            try{
+                System.out.println("Welcome to the login screen: ");
+                System.out.println("Kindly Enter your choice: 1 - Login, 2- Change Password, 3- Quit: ");
+                userInput = sc.nextInt();
+            }
+            catch(InputMismatchException e){
+                System.out.println("Input mismatch! Kindly enter an integer value as your choice");
+                /*
+                 * Use of sc.nextLine() to prevent infinite looping
+                 */
+                sc.nextLine();
+            }
             switch(userInput){
                 case 1:
                     /*

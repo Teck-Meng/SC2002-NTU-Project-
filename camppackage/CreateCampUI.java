@@ -1,4 +1,5 @@
 package camppackage;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import user.Faculty;
 
@@ -27,8 +28,22 @@ public class CreateCampUI {
             /*
              * Prompt staff to input start date of camp and validate if staff inputted a valid date
              */
-            System.out.println("Enter starting date of camp: ");
-            startDate = sc.nextInt();
+            while(startDate == 0){
+                /*
+                 * Prompt user to enter date till they enter a valid date
+                 */
+                try{
+                    System.out.println("Enter starting date of camp: ");
+                    startDate = sc.nextInt();
+                }
+                catch(InputMismatchException e){
+                    System.out.println("Input Mismatch! Please enter an integer value for the date!");
+                    /*
+                    * Use of sc.nextLine() to prevent infinite looping
+                    */
+                    sc.nextLine();
+                }
+            }
             validDate = ValidateDate.isDateValid(startDate);
             dates[0] = startDate;
         }
@@ -37,8 +52,19 @@ public class CreateCampUI {
             /*
              * Prompt staff to input end date of camp and validate if staff inputted a valid end date
              */
-            System.out.println("Enter end date of camp: ");
-            endDate = sc.nextInt();
+            while(endDate == 0){
+                try{
+                    System.out.println("Enter end date of camp: ");
+                    endDate = sc.nextInt();
+                }
+                catch(InputMismatchException e){
+                    System.out.println("Input Mismatch! Please enter an integer value for the date!");
+                    /*
+                    * Use of sc.nextLine() to prevent infinite looping
+                    */
+                    sc.nextLine();
+                }
+            }
             if(ValidateDate.isDateValid(endDate)&&endDate>=startDate){
                 dates[1] = endDate;
                 break;
@@ -59,8 +85,22 @@ public class CreateCampUI {
              * Prompt user to input registration closing date and validate the date
              * if it is invalid, prompt user to enter date again
              */
-            System.out.println("Enter registration closing date of camp: ");
-            regClosingDate = sc.nextInt();
+            while(regClosingDate == 0){
+                /*
+                 * Use of try-catch block to continuously prompt for input till the input is valid
+                 */
+                try{
+                    System.out.println("Enter registration closing date of camp: ");
+                    regClosingDate = sc.nextInt();
+                }
+                catch(InputMismatchException e){
+                    System.out.println("Input Mismatch! Please enter an integer value for the date!");
+                    /*
+                    * Use of sc.nextLine() to prevent infinite looping
+                    */
+                    sc.nextLine();
+                }
+            }
             validDate = ValidateDate.isDateValid(regClosingDate);
         }
         sc.close();
@@ -74,13 +114,22 @@ public class CreateCampUI {
             /*
              * Prompt staff to input the user group of the camp
              */
-            System.out.println("Enter your choice of user group this camp is open to: ");
-            System.out.println("1. EEE, 2. ADM, 3. NBS");
-            System.out.println("4. CCEB, 5. CEE, 6. MSE");
-            System.out.println("7. SCSE, 8. MAE, 9. SOH");
-            System.out.println("10. SSS, 11. WKWSCI, 12. SPMS");
-            System.out.println("13. SBS, 14. ASE, 15. LKCMED, 16. ALL");
-            userChoice = sc.nextInt();
+            try{
+                System.out.println("Enter your choice of user group this camp is open to: ");
+                System.out.println("1. EEE, 2. ADM, 3. NBS");
+                System.out.println("4. CCEB, 5. CEE, 6. MSE");
+                System.out.println("7. SCSE, 8. MAE, 9. SOH");
+                System.out.println("10. SSS, 11. WKWSCI, 12. SPMS");
+                System.out.println("13. SBS, 14. ASE, 15. LKCMED, 16. ALL");
+                userChoice = sc.nextInt();
+            }
+            catch(InputMismatchException e){
+                System.out.println("Input Mismatch! Please enter an integer value for the date!");
+                /*
+                 * Use of sc.nextLine() to prevent infinite looping
+                 */
+                sc.nextLine();
+            }
 
         }
         Faculty userGroup = Faculty.ALL;
@@ -171,10 +220,19 @@ public class CreateCampUI {
      */
     public static int askCampCommitteeSlots(){
         Scanner sc = new Scanner(System.in);
-        int campCommitteeSlots;
+        int campCommitteeSlots = 0;
         do{
-            System.out.println("Enter the number of slots for the camp committee(Number to be between 1 to 10): ");
-            campCommitteeSlots = sc.nextInt();
+            try{
+                System.out.println("Enter the number of slots for the camp committee(Number to be between 1 to 10): ");
+                campCommitteeSlots = sc.nextInt();
+            }
+            catch(InputMismatchException e){
+                System.out.println("Input Mismatch! Please enter an integer value for the date!");
+                /*
+                 * Use of sc.nextLine() to prevent infinite looping
+                 */
+                sc.nextLine();
+            }
         }while(campCommitteeSlots < 1&&campCommitteeSlots > 10);
 
         sc.close();
@@ -200,8 +258,17 @@ public class CreateCampUI {
         Scanner sc = new Scanner(System.in);
         int userChoice = 0;
         while(userChoice != 1&&userChoice != 2){
-            System.out.println("Choose visibility of camp(1- Visible, 2- Not visible): ");
-            userChoice = sc.nextInt();
+            try{
+                System.out.println("Choose visibility of camp(1- Visible, 2- Not visible): ");
+                userChoice = sc.nextInt();
+            }
+            catch(InputMismatchException e){
+                System.out.println("Input Mismatch! Please enter an integer value for the date!");
+                /*
+                 * Use of sc.nextLine() to prevent infinite looping
+                 */
+                sc.nextLine();
+            }
         }
         
         sc.close();

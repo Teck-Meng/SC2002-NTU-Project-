@@ -1,6 +1,8 @@
 package user;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
+
 import password.Database;
 import password.PasswordManager;
 import java.util.Scanner;
@@ -149,6 +151,10 @@ public class UserAuthenticator {
         return true;
     }
 
+    /*
+     * Return -1 if verification fails
+     * Otherwise return index of user in database
+     */
     public static int verifyChangePassword(Database database){
         /*
          * Main method to call in main program to verify login
@@ -181,8 +187,18 @@ public class UserAuthenticator {
                 /*
                  * Change the value 1 to -1 so that user can continue their attempt to enter userID to change password
                  */
-                userIDIndex = sc.nextInt()*(-1);
-                
+                while(userIDIndex == -1){
+                    try{
+                    userIDIndex = sc.nextInt()*(-1);
+                }
+                catch(InputMismatchException e){
+                    System.out.println("Invalid input! Enter an integer value as input!");
+                    /*
+                     * To prevent infinite loop, sc.nextLine() is called
+                     */
+                    sc.nextLine();
+                }
+                }
             }
             else{
                 sc.close();
