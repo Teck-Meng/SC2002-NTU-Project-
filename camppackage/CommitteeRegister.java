@@ -11,14 +11,6 @@ import clock.Time;
 public class CommitteeRegister implements CampRegister {
     public boolean registerCamp(CampInfo campInfo, Camp camp, String userID, Database database, Time clock){
         /*
-         * Verify if registration closing date has been passed
-         * Output of checkRegClosingDate is true if current time has passed registration closing date
-         */
-        if(ValidateDate.checkRegClosingDate(clock.getDate(), camp.getRegClosingDate())){
-            System.out.println("Registration closing date has passed! Unable to process registration!");
-            return false;
-        }
-        /*
          * Verify if camp is full, if yes, terminate registration
          */
         if(isCampFull(campInfo, camp)){
@@ -26,14 +18,12 @@ public class CommitteeRegister implements CampRegister {
             return false;
         }
         /*
-         * Check if there are any collision of dates
-         * If yes, terminate registration
+         * Check if student satisfies all the requirements for registration
          */
-        if(ValidateDate.doDatesCollide(camp.getDates(), userID, database)){
-            System.out.println("Collision of dates between camps that user has registered for and the camp they want to register!");
-            System.out.println("Unable to process registration!");
+        if(!ValidateRegister.canRegister(campInfo, camp, userID, database, clock)){
             return false;
-        };
+        }
+        /*
         /*
          * Extract user object from database
          */
