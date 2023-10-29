@@ -43,4 +43,19 @@ public class CampUtility {
         return -1;
     }
 
+    /*
+     * Student ID version to search for index of a particular student
+     */
+    protected static int UserPos(String userID, ArrayList<Student> list){
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i).getUserID() == userID){
+                return i;
+            }
+        }
+        System.out.println("User is not a Committee Member! Unable to process request!");
+        return -1;
+    }
+
+    
+
 }

@@ -5,6 +5,7 @@
     2. Only the staff who created the camp can delete and edit that particular camp
     3. All staff classes can view all camps regardless of visibility
     4. Each camp can only have a maximum of 10 Camp Committee Members
+    5. Assume there are 31 days in a single month
 
 Camp Class - Added get and set methods for all attributes except for StaffIC.
              Added bool verification method for attribute StaffIC.
@@ -46,6 +47,14 @@ CampRegister Interface - To be implemented by AttendeeRegister and CommitteeRegi
 
 AttendeeRegister Class - Allows students to register and withdraw from camps.
                          Allows students to view camps for which they have the rights to view
-                      
+                         
+CommitteeRegister Class - Allows students to register as Camp Committee Member for a camp.
+                          Date Collisio
+                          Allows students to view camps for which they have the rights to view
+
+ValidateDate Class - Checks if a camp's inputted date is valid
+                     Checks if there is any clash between student's list of camp dates and the date of the camp they want to register for
+
+DuplicateCheck Class - Checks if a camp that is created is a duplicate
 
 

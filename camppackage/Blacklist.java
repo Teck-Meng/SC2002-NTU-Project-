@@ -15,9 +15,9 @@ public class Blacklist {
         return blacklist;
     }
 
-    public boolean findStudent(Student student){
+    public boolean findStudent(String userID){
         // Use userPos to verify existence of student in blacklist
-        if(CampUtility.UserPos(student, blacklist)!=-1){
+        if(CampUtility.UserPos(userID, blacklist)!=-1){
             return true;
         }
         return false;

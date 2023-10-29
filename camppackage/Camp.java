@@ -3,6 +3,7 @@ package camppackage;
 import user.Faculty;
 import user.Staff;
 import user.User;
+import password.Database;
 
 public class Camp{
     private String campName;
@@ -21,8 +22,14 @@ public class Camp{
     private CommitteeList committeeList;
     private Blacklist blacklist;
     
-    public Camp(Staff StaffIC){
-        this.StaffIC = StaffIC; //only allow staffIC to be set during intialization
+    public Camp(String UserID, Database database){
+        /*
+         * Validity check not required as system will be prompted to log all details into database at the start
+         * If staff can log in, they exist in the database
+         * Also, not users cannot be deleted from database as assumption is that no user should be deleted from database
+         */
+        this.StaffIC = (Staff)database.getUser(UserID); 
+        //only allow staffIC to be set during intialization
     }
 
     public String getCampName(){

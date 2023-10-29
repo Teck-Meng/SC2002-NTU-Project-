@@ -99,48 +99,39 @@ public class CampInfo {
     }
 
     //allows staff to set visiblity of a specific camp that they have created
-    public boolean setVisiblity(Camp camp, User user, boolean isVisible){
-        if(!camp.verifyStaff(user)){
-            System.out.println("Unauthorized Personnel! You do not have access to this feature!");
+    public boolean setVisiblity(Camp camp, boolean isVisible){
+         int index = CampUtility.CampPos(camp, listOfCamps);
+        if(index == -1){
+            return false;
         }
-        else{
-            int index = CampUtility.CampPos(camp, listOfCamps);
-            if(index == -1){
-                return false;
-            }
-            visibility.set(index, isVisible);
-            return true;
-        }
-        
-        return false;
+        visibility.set(index, isVisible);
+        return true;
     }
 
-    public void addCamp(Camp camp, boolean isVisible, User user){
-        if(user instanceof Staff){
-            listOfCamps.add(camp);
-            visibility.add(isVisible);
-            attendeeSlotsUsed.add(0);
-            campCommitteeSlotsUsed.add(0);
-        }
-        else{
-            System.out.println("Unauthorized Personnel! You do not have access to this feature!");
-        }
+    public void addCamp(Camp camp, boolean isVisible){
+        /*
+         * Add camp information into data structures
+         */
+        listOfCamps.add(camp);
+        visibility.add(isVisible);
+        attendeeSlotsUsed.add(0);
+        campCommitteeSlotsUsed.add(0);
     }
 
-    public boolean deleteCamp(Camp camp, User user){
-        if(camp.verifyStaff(user)){
-            for(int i = 0; i < listOfCamps.size(); i++){
+    public boolean deleteCamp(Camp camp){
+        for(int i = 0; i < listOfCamps.size(); i++){
                 if(camp == listOfCamps.get(i)){
                     listOfCamps.remove(i);
                     attendeeSlotsUsed.remove(i);
                     campCommitteeSlotsUsed.remove(i);
                     visibility.remove(i);
+                    System.out.println("Camp deletion successful!");
                     return true;
                 }
             }
+            System.out.println("Camp deletion unsuccessful!");
+            return false;
         }
-        return false;
-    }
 
     
 

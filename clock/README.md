@@ -1,0 +1,1 @@
+# This package contains the class that posssesses the current time, this is meant to emulate real time for the app to showcase that the app is supposed to reject registrations if the time has passed the registration closing date

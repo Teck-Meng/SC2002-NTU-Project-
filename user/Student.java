@@ -11,8 +11,23 @@ public class Student extends User{
         CommitteeCamp = null;
     }
 
+    public ArrayList<Camp> getListOfCamps(){
+        /*
+         * For date validation
+         */
+        return myCamps;
+    }
+
+    public Camp getCommitteCamp(){
+        /*
+         * For date validation
+         */
+        return CommitteeCamp;
+    }
+
 
     public void addCamp(Camp camp, boolean isJoiningCommitteeMem){
+        // update student's database to save the camp he has registered
         if(isJoiningCommitteeMem==false){
             myCamps.add(camp);
         }
