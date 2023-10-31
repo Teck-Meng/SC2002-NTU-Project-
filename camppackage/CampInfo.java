@@ -101,7 +101,18 @@ public class CampInfo {
     //allows staff to set visiblity of a specific camp that they have created
     public boolean setVisiblity(Camp camp, boolean isVisible){
          int index = CampUtility.CampPos(camp, listOfCamps);
+         /*
+          * terminate method if camp does not exist
+          */
         if(index == -1){
+            return false;
+        }
+        /*
+         * Check if camp already has students registered in the camp
+         * If yes, prevent staff from toggling visibility
+         */
+        if(campCommitteeSlotsUsed.get(index) == 0 && attendeeSlotsUsed.get(index) == 0){
+            System.out.println("Camp already has at least 1 person registered, unable to toggle visiblity!");
             return false;
         }
         visibility.set(index, isVisible);

@@ -2,23 +2,59 @@ package camppackage;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import user.Faculty;
+import clock.Time;
 
 public class CreateCampUI {
+
     /*
-     * Prompt staff to enter camp name
+     * Check if certain features of a camp can be edited
+     * Criteria for allowing edit when allowEdit is called: no person has registered for the camp yet.
+     */
+    private static boolean allowEdit(Camp camp, CampInfo campInfo){
+        if(campInfo.getAttendeeSlotUsed(camp) != 0){
+            return false;
+        }
+        if(campInfo.getCampCommitteeSlotsUsed(camp) != 0){
+            return false;
+        }
+        return true;
+    }
+    /*
+     * Prompt staff to enter camp name to create a brand new camp
      */
     public static String askCampName(){
         String CampName;
         Scanner sc = new Scanner(System.in);
         CampName = sc.nextLine();
         sc.close();
+        System.out.println("Camp Name successfully added/changed!");
+        return CampName;
+    }
+    /*
+     * Prompt staff to enter camp name and allow editing of camp name
+     * Assume that camp name cannot be edited if at least 1 person has registered for the camp
+     * return empty string if unable to edit camp name
+     */
+    public static String askCampName(Camp camp, CampInfo campInfo){
+        /*
+         * Ensure that camp name can be edi
+         */
+        if(!allowEdit(camp, campInfo)){
+            System.out.println("Unable to edit camp name as camp has at least 1 person registered!");
+            return "";
+        }
+        String CampName;
+        Scanner sc = new Scanner(System.in);
+        CampName = sc.nextLine();
+        sc.close();
+        System.out.println("Camp Name successfully added/changed!");
         return CampName;
     }
 
     /*
      * Prompt staff to enter the dates for the camp in the format DD/MM/YYYY
      */
-    public static int[] askDates(){
+    public static int[] askDates(Time time){
         Scanner sc = new Scanner(System.in);
         int startDate = 0;
         int endDate = 0;
@@ -28,7 +64,7 @@ public class CreateCampUI {
             /*
              * Prompt staff to input start date of camp and validate if staff inputted a valid date
              */
-            while(startDate == 0){
+            while(startDate <= time.getDate()){
                 /*
                  * Prompt user to enter date till they enter a valid date
                  */
@@ -43,6 +79,12 @@ public class CreateCampUI {
                     */
                     sc.nextLine();
                 }
+                /*
+                 * Staff must enter a date in the future, send a warning message to staff if they fail to do so
+                 */
+                if(startDate <= time.getDate()){
+                    System.out.println("Invalid date input! Enter a date from tomorrow onwards!");
+                }
             }
             validDate = ValidateDate.isDateValid(startDate);
             dates[0] = startDate;
@@ -52,7 +94,7 @@ public class CreateCampUI {
             /*
              * Prompt staff to input end date of camp and validate if staff inputted a valid end date
              */
-            while(endDate == 0){
+            while(endDate <= time.getDate()){
                 try{
                     System.out.println("Enter end date of camp: ");
                     endDate = sc.nextInt();
@@ -63,6 +105,12 @@ public class CreateCampUI {
                     * Use of sc.nextLine() to prevent infinite looping
                     */
                     sc.nextLine();
+                }
+                /*
+                 * Staff must enter a date in the future, send a warning message to staff if they fail to do so
+                 */
+                if(startDate <= time.getDate()){
+                    System.out.println("Invalid date input! Enter a date from tomorrow onwards!");
                 }
             }
             if(ValidateDate.isDateValid(endDate)&&endDate>=startDate){
@@ -76,7 +124,7 @@ public class CreateCampUI {
 
     }
 
-    public static int askRegClosingDate(){
+    public static int askRegClosingDate(Time time){
         Scanner sc = new Scanner(System.in);
         boolean validDate = false;
         int regClosingDate = 0;
@@ -85,7 +133,7 @@ public class CreateCampUI {
              * Prompt user to input registration closing date and validate the date
              * if it is invalid, prompt user to enter date again
              */
-            while(regClosingDate == 0){
+            while(regClosingDate <= time.getDate()){
                 /*
                  * Use of try-catch block to continuously prompt for input till the input is valid
                  */
@@ -99,6 +147,12 @@ public class CreateCampUI {
                     * Use of sc.nextLine() to prevent infinite looping
                     */
                     sc.nextLine();
+                }
+                /*
+                 * Prompt user to enter a date in the future, send warning message if staff fails to do so
+                 */
+                if(regClosingDate <= time.getDate()){
+                    System.out.println("Invalid date input! Enter a date from tomorrow onwards!");
                 }
             }
             validDate = ValidateDate.isDateValid(regClosingDate);
@@ -215,6 +269,33 @@ public class CreateCampUI {
         return totalSlots;
     }
 
+    public static int askAttendeeSlots(Camp camp, CampInfo campInfo){
+        Scanner sc = new Scanner(System.in);
+        int attendeeSlots = 0;
+        // ensure that the edited amount of slots can accomodate the current registered attendees
+        int minSlots = campInfo.getAttendeeSlotUsed(camp);
+
+        while(attendeeSlots < minSlots){
+            try{
+                System.out.println("There are currently " + minSlots +"attendees in this camp");
+                System.out.println("Kindly enter the number of attendee slots you want as of now(At least " + minSlots + "): ");
+                System.out.println("Select -1 if you wish to quit editing");
+                attendeeSlots = sc.nextInt();
+            }
+            catch(InputMismatchException e){
+                System.out.println("Enter a valid integer input!");
+                sc.nextLine();
+            }
+            if(attendeeSlots == -1){
+                /*
+                 * Exit method if staff wishes to quit editing
+                 */
+                return -1;
+            }
+        }
+        return attendeeSlots;
+    }
+
     /*
      * Prompt Staff to enter the number of slots for camp committee
      */
@@ -223,6 +304,7 @@ public class CreateCampUI {
         int campCommitteeSlots = 0;
         do{
             try{
+                
                 System.out.println("Enter the number of slots for the camp committee(Number to be between 1 to 10): ");
                 campCommitteeSlots = sc.nextInt();
             }
@@ -239,6 +321,43 @@ public class CreateCampUI {
         return campCommitteeSlots;
     }
 
+    /*
+     * Edit version of askCommitteeListCamp()
+     */
+    public static int askCampCommitteeSlots(Camp camp, CampInfo campInfo){
+        Scanner sc = new Scanner(System.in);
+        int campCommitteeSlots = 0;
+        int minSlots = campInfo.getCampCommitteeSlotsUsed(camp);
+        if(minSlots == camp.getCampCommitteeSlots()){
+            System.out.println("Unable to process editing as capacity minimum is capacity maximum");
+            return -1;
+        }
+
+        do{
+            try{
+                System.out.println("There are currently " + minSlots +"attendees in this camp");
+                System.out.println("Kindly enter the number of attendee slots you want as of now(At least " + minSlots + "): ");
+                System.out.println("Select -1 if you wish to quit editing");
+                campCommitteeSlots = sc.nextInt();
+            }
+            catch(InputMismatchException e){
+                System.out.println("Input Mismatch! Please enter an integer value for the date!");
+                /*
+                 * Use of sc.nextLine() to prevent infinite looping
+                 */
+                sc.nextLine();
+            }
+            if(campCommitteeSlots == -1){
+                /*
+                 * Exit method if user wishes to quit
+                 */
+                return -1;
+            }
+        }while(campCommitteeSlots < minSlots&&campCommitteeSlots > 10);
+
+        sc.close();
+        return campCommitteeSlots;
+    }
     /*
      * Prompt staff to enter description of camp
      */

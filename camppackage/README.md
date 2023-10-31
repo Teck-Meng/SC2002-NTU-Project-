@@ -33,8 +33,6 @@ AttendeeList Class - Contain list of attendees for a specific camp
 
 CommitteeList Class - Contain list of Camp Committee Members for a specific camp
                       Added standard get method to extract list
-                      Added method to add Committee Members and update points
-                      updatePoints is a boolean method that allows us to check if point addition is successful
 
 BlackList Class - Contains list of withdrawees who are not allowed to re-register for a particular camp
                   Added standard get method to extract list

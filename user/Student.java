@@ -4,11 +4,19 @@ import camppackage.Camp;
 
 public class Student extends User{
     private ArrayList<Camp> myCamps = new ArrayList<Camp>();
-    private Camp CommitteeCamp;
+    private Camp committeeCamp;
+    /*
+     * CommitteePoints will only be accessible and usable when student become committee member
+     */
+    private int committeePoints;
 
     public Student(String UserID, Faculty facultyInfo){
         super(UserID, facultyInfo);
-        CommitteeCamp = null;
+        committeeCamp = null;
+        /*
+         * Set all intitial points to 0
+         */
+        committeePoints = 0;
     }
 
     public ArrayList<Camp> getListOfCamps(){
@@ -22,7 +30,35 @@ public class Student extends User{
         /*
          * For date validation
          */
-        return CommitteeCamp;
+        return committeeCamp;
+    }
+
+    /*
+     * Return number of points for camp committee
+     * Return -1 if user is not in camp committee
+     * System will print warning statement if user is not in camp committee
+     */
+    public int getCommitteePoints(){
+        if(committeeCamp == null){
+            System.out.println("Student is not a camp committee member!");
+            return -1;
+        }
+        return committeePoints;
+    }
+
+    /*
+     * Every call will check if student is camp committee
+     * Return false if student is not in camp committee
+     * Return true and add 1 point if student is in camp committee
+     * To be used by staff class
+     */
+    protected boolean addCommitteePoints(){
+        if(committeeCamp == null){
+            System.out.println("Student is not a camp committee member!");
+            return false;
+        }
+        committeePoints++;
+        return true;
     }
 
 
@@ -32,7 +68,7 @@ public class Student extends User{
             myCamps.add(camp);
         }
         else if(!hasCommitteePos()){
-            CommitteeCamp = camp;
+            committeeCamp = camp;
         }
     }
 
@@ -47,7 +83,7 @@ public class Student extends User{
     }
 
     public boolean hasCommitteePos(){
-        if(CommitteeCamp == null){
+        if(committeeCamp == null){
             return false;
         }
         return true;
