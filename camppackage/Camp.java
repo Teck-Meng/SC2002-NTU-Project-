@@ -29,6 +29,9 @@ public class Camp{
          * Also, not users cannot be deleted from database as assumption is that no user should be deleted from database
          */
         this.staffIC = (Staff)database.getUser(UserID); 
+        attendeeList = new AttendeeList();
+        committeeList = new CommitteeList();
+        blacklist = new Blacklist();
         //only allow staffIC to be set during intialization
     }
 
@@ -119,5 +122,18 @@ public class Camp{
 
     public String getStaffID(){
         return staffIC.getUserID();
+    }
+
+    public void print(){
+        System.out.print(dates[0] + " ");
+        System.out.print(dates[1] + " ");
+        System.out.print(regClosingDate + " ");
+        System.out.print(userGroup.toString()+ " ");
+        System.out.print(location+ " ");
+        System.out.print(totalSlots+ " ");
+        System.out.print(campCommitteeSlots+ " ");
+        System.out.print(description+ " ");
+        System.out.print(staffIC.getUserID());
+        System.out.println();
     }
 }

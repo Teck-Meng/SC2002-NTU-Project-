@@ -1,17 +1,25 @@
 package user;
 
 public enum Faculty {
-    EEE(1), ADM(2), NBS(3), CCEB(4), CEE(5), MSE(6), SCSE(7),
-    MAE(8), SOH(9), SSS(10), WKWSCI(11), SPMS(12), SBS(13), ASE(14),
-    LKCMED(15), 
-    ALL(16); // Special Faculty ALL is for use by camppackage to allow camp to be open to all students
+    EEE(1, "EEE"), ADM(2, "ADM"), NBS(3, "NBS"), CCEB(4, "CCEB"), CEE(5, "CEE"),
+    MSE(6, "MSE"), SCSE(7, "SCSE"), MAE(8, "MAE"), SOH(9, "SOH"), SSS(10, "SSS"),
+    WKWSCI(11, "WKWSCI"), SPMS(12, "SPMS"), SBS(13, "SBS"), ASE(14, "ASE"),
+    LKCMED(15, "LKCMED"), ALL(16, "ALL"); 
+    // Special Faculty ALL is for use by camppackage to allow camp to be open to all students
 
     private final int index;
-    private Faculty(int index){
+    private final String name;
+    private Faculty(int index, String name){
         this.index = index;
+        this.name = name;
     }
 
     public int toInt(){
         return index;
+    }
+
+    
+    public String toString(){
+        return name;
     }
 }

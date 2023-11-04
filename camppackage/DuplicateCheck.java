@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class DuplicateCheck {
     public static boolean isNameTaken(String campName, ArrayList<Camp> camps){
         for(int i = 0; i < camps.size(); i++){
-            if(camps.get(i).getCampName() == campName){
+            if(campName.equals(camps.get(i).getCampName())){
                 return true;
             }
         }

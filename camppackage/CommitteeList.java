@@ -19,5 +19,11 @@ public class CommitteeList {
     }
 
     //deletion method not provided as CCMembers cannot quit camp
+
+    public void print(){
+        for(int i = 0;i<listOfCCMembers.size();i++){
+            System.out.println(listOfCCMembers.get(i).getUserID());
+        }
+    }
     
 }

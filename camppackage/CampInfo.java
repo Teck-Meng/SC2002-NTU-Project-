@@ -32,27 +32,27 @@ public class CampInfo {
         }
     }
 
-    public void updateAttendeeSlotUsed(boolean isIncrement, Camp camp){
+    public void updateAttendeeSlotUsed(boolean isIncrement, Camp camp, int value){
         // store return value of campPos due to possible repeated usage
         int index = CampUtility.CampPos(camp, listOfCamps);
         // checks for existence of camp
         if(index == -1){
             return;
         } // check if there is space for students
-        else if(CampUtility.isFull(camp, attendeeSlotsUsed.get(index)) == true){
+        else if(CampUtility.isFull(camp, attendeeSlotsUsed.get(index),campCommitteeSlotsUsed.get(index)) == true){
             System.out.println("Camp is at full capacity! Unable to register more attendees!");
             return;
         }
         int intialValue = attendeeSlotsUsed.get(index);
         if(isIncrement == true){
-            attendeeSlotsUsed.set(index, ++intialValue);
+            attendeeSlotsUsed.set(index, (intialValue + value));
         }
         else{
-            attendeeSlotsUsed.set(index, --intialValue);
+            attendeeSlotsUsed.set(index, (intialValue - value));
         }
     }
 
-    public void updateCommitteeSlotUsed(Camp camp){
+    public void updateCommitteeSlotUsed(Camp camp, int value){
         // store return value of campPos due to possible repeated usage
         int index = CampUtility.CampPos(camp, listOfCamps);
         // checks for existence of camp
@@ -64,7 +64,7 @@ public class CampInfo {
         }
         //Process the addition of camp committee member
         int intialValue = campCommitteeSlotsUsed.get(index);
-        campCommitteeSlotsUsed.set(index, ++intialValue);
+        campCommitteeSlotsUsed.set(index, (intialValue + value));
     }
 
     public int getAttendeeSlotUsed(Camp camp){
@@ -156,9 +156,31 @@ public class CampInfo {
         }
         return false;
     }
+
+    public Camp getCamp(int index){
+        return listOfCamps.get(index);
+    }
+
+    public Camp getCamp(String campName){
+        for(int i = 0; i < listOfCamps.size(); i++){
+            Camp compareWith = listOfCamps.get(i);
+            if(campName.equals(compareWith.getCampName())){
+                return compareWith;
+            }
+        }
+        return null;
+    }
+
+    //To test method usability, should delete this method for the final product
+    public void print(){
+        for(int i = 0;i < listOfCamps.size();i++){
+            System.out.println();
+            System.out.print("name: "+listOfCamps.get(i).getCampName());
+            System.out.print("Att slot: " + attendeeSlotsUsed.get(i));
+            System.out.print(" CC slot: " + campCommitteeSlotsUsed.get(i));
+            System.out.print(" V:" + visibility.get(i));
+        }
+    }
 }
 
-    /* Checks for position of camp, if camp does not exist, return -1 and print out error message
-     * Else, return the index of the camp in the data structure listOfCamps
-     */
     

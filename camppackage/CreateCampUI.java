@@ -113,7 +113,7 @@ public class CreateCampUI {
                     System.out.println("Invalid date input! Enter a date from tomorrow onwards!");
                 }
             }
-            if(ValidateDate.isDateValid(endDate)&&endDate>=startDate){
+            if(ValidateDate.isDateValid(endDate) && endDate >= startDate){
                 dates[1] = endDate;
                 break;
             }
@@ -290,9 +290,11 @@ public class CreateCampUI {
                 /*
                  * Exit method if staff wishes to quit editing
                  */
+                sc.close();
                 return -1;
             }
         }
+        sc.close();
         return attendeeSlots;
     }
 
@@ -330,6 +332,7 @@ public class CreateCampUI {
         int minSlots = campInfo.getCampCommitteeSlotsUsed(camp);
         if(minSlots == camp.getCampCommitteeSlots()){
             System.out.println("Unable to process editing as capacity minimum is capacity maximum");
+            sc.close();
             return -1;
         }
 
@@ -351,6 +354,7 @@ public class CreateCampUI {
                 /*
                  * Exit method if user wishes to quit
                  */
+                sc.close();
                 return -1;
             }
         }while(campCommitteeSlots < minSlots&&campCommitteeSlots > 10);

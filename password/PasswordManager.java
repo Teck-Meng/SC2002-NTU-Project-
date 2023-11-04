@@ -19,7 +19,7 @@ public class PasswordManager {
             newPassword = sc.nextLine();
             System.out.println("Enter your new password again: ");
             confirmPassword = sc.nextLine();
-            if(newPassword == confirmPassword){
+            if(newPassword.equals(confirmPassword)){
                 database.setPassword(index, newPassword);
                 passwordChanged = true;
             }
@@ -54,7 +54,7 @@ public class PasswordManager {
          */
         int index = 0;
         for(int i = 0; i < users.size(); i++){
-            if(userID == users.get(i).getUserID()){
+            if(userID.equals(users.get(i).getUserID())){
                 index = i;
                 break;
             }
@@ -62,7 +62,7 @@ public class PasswordManager {
         /*
          * Verify password and return true if passwords match
          */
-        return (enteredPassword == passwords.get(index));
+        return (enteredPassword.equals(passwords.get(index)));
     }
 
 
@@ -78,6 +78,6 @@ public class PasswordManager {
         /*
          * Verify password and return true if passwords match
          */
-        return (enteredPassword == passwords.get(index));
+        return (enteredPassword.equals(passwords.get(index)));
     }
 }

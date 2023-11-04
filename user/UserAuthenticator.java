@@ -24,7 +24,7 @@ public class UserAuthenticator {
          */
         ArrayList<User> users = database.getUsers();
         for(int i = 0; i < users.size(); i++){
-            if(enteredID == users.get(i).getUserID()){
+            if(enteredID.equals(users.get(i).getUserID())){
                 return i;
             }
         }

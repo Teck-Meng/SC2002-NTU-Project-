@@ -21,8 +21,8 @@ public class CampUtility {
     /*
      * Check if attendee Slot is full
      */
-    protected static boolean isFull(Camp camp, int attendeeSlotsUsed){
-        if(camp.getTotalSlots() - 10 - attendeeSlotsUsed <= 0){
+    protected static boolean isFull(Camp camp, int attendeeSlotsUsed, int committeeSlots){
+        if(camp.getTotalSlots() - committeeSlots - attendeeSlotsUsed <= 0){
             return true;
         }
         return false;
@@ -48,7 +48,7 @@ public class CampUtility {
      */
     protected static int UserPos(String userID, ArrayList<Student> list){
         for(int i = 0; i < list.size(); i++){
-            if(list.get(i).getUserID() == userID){
+            if(userID.equals(list.get(i).getUserID())){
                 return i;
             }
         }

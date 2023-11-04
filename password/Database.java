@@ -27,11 +27,24 @@ public class Database {
 
     public User getUser(String userID){
         for(int i = 0; i < users.size(); i++){
-            if(userID == users.get(i).getUserID()){
+            if(userID.equals(users.get(i).getUserID())){
                 return users.get(i);
             }
         }
         return null;
+    }
+
+    public int getUserIndex(String userID){
+        for(int i = 0; i < users.size(); i++){
+            System.out.print(userID);
+            System.out.print(users.get(i).getUserID());
+            System.out.println();
+            if(userID.equals(users.get(i).getUserID())){
+                System.out.println("no");
+                return i;
+            }
+        }
+        return -1;
     }
 
     protected void setPassword(String userID, String newPassword){
@@ -39,7 +52,7 @@ public class Database {
          * Find specific user id to change the password for that particular user
          */
         for(int i = 0; i < passwords.size(); i++){
-            if(userID == users.get(i).getUserID()){
+            if(userID.equals(users.get(i).getUserID())){
                 passwords.set(i, newPassword);
                 System.out.println("Password change is successful!");
                 return;
@@ -59,5 +72,24 @@ public class Database {
          */
         passwords.set(index, newPassword);
         System.out.println("Password change is successful!");
+    }
+
+    /*
+     * For file handler to set password without system prompt
+     */
+    public void initializePassword(int index, String password){
+        passwords.set(index, password);
+    }
+
+    /*
+     * Testing only, later delete
+     */
+    public void printAllUsers(){
+        for(int i = 0; i <users.size();i++){
+            System.out.print("user id: "+users.get(i).getUserID());
+            System.out.print("faculty: "+users.get(i).getFaculty().toString());
+            System.out.println("pw: "+passwords.get(i));
+            System.out.println();
+        }
     }
 }

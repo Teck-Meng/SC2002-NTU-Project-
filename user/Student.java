@@ -52,12 +52,12 @@ public class Student extends User{
      * Return true and add 1 point if student is in camp committee
      * To be used by staff class
      */
-    protected boolean addCommitteePoints(){
+    public boolean addCommitteePoints(int points){
         if(committeeCamp == null){
             System.out.println("Student is not a camp committee member!");
             return false;
         }
-        committeePoints++;
+        committeePoints += points;
         return true;
     }
 

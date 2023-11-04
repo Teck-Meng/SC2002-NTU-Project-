@@ -204,6 +204,10 @@ public class Staff extends User{
         }
     } 
 
+    public void addCamp(Camp camp){
+        myCamps.add(camp);
+    }
+
     public void deleteCamp(Camp camp, CampInfo campInfo){
         /*
          * Delete camp in Staff's list of camps
@@ -229,7 +233,7 @@ public class Staff extends User{
              * Add points iteratively to committee member
              * If student is not a committee member, terminate addPoints() immediately
              */
-            if(!committeeMember.addCommitteePoints()){
+            if(!committeeMember.addCommitteePoints(1)){
                 return;
             }
         }

@@ -24,6 +24,10 @@ public class Blacklist {
        
     }
 
-
+    public void print(){
+        for(int i = 0; i < blacklist.size(); i++){
+            System.out.println(blacklist.get(i).getUserID());
+        }
+    }
     // deleteStudent method not implemented as students who withdraw are assumed to be permanently blacklisted
 }
