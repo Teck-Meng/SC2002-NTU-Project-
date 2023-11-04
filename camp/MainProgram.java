@@ -1,15 +1,23 @@
 import java.util.Scanner;
+
+import camppackage.CampInfo;
 import password.Database;
+import filehandler.readFromFile;
 /*
  * Main program will call methods to operate the features of the app
  */
 public class MainProgram {
     public static void main(String[] args) {
         /*
-         * Currently missing addition of users from csv file, to be done later
+         * Initialize campInfo and database data structures from csv files
          */
-        Database database = new Database();
-
+        Database database = readFromFile.readUserList();
+        database = readFromFile.readPasswords(database);
+        CampInfo campInfo = readFromFile.readListOfCamps(database);
+        readFromFile.readAttendeeList(campInfo, database);
+        readFromFile.readCommitteeList(campInfo, database);
+        readFromFile.readBlacklist(campInfo, database);
+        
         /*
          * Intialize integer variable to track user choice in the app
          */
