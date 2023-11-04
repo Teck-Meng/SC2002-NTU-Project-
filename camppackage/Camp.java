@@ -17,7 +17,7 @@ public class Camp{
     private int totalSlots;
     private int campCommitteeSlots;
     private String description;
-    private Staff StaffIC;
+    private Staff staffIC;
     private AttendeeList attendeeList;
     private CommitteeList committeeList;
     private Blacklist blacklist;
@@ -28,7 +28,7 @@ public class Camp{
          * If staff can log in, they exist in the database
          * Also, not users cannot be deleted from database as assumption is that no user should be deleted from database
          */
-        this.StaffIC = (Staff)database.getUser(UserID); 
+        this.staffIC = (Staff)database.getUser(UserID); 
         //only allow staffIC to be set during intialization
     }
 
@@ -67,7 +67,7 @@ public class Camp{
     //only allow verification of whether current user is the creator of any specific camp
     //User should not be able to extract Staff class through a get method
     public boolean verifyStaff(User user){
-        if(user == this.StaffIC){
+        if(user == this.staffIC){
             return true;
         }
         return false;
@@ -115,5 +115,9 @@ public class Camp{
 
     public void setDescription(String description){
         this.description = description;
+    }
+
+    public String getStaffID(){
+        return staffIC.getUserID();
     }
 }
