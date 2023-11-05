@@ -1,5 +1,2 @@
-userID, campName,
-YCHERN,Orientation,
-AKY013,Orientation,
-DON84,Workout,
-YCHERN,Workout,
+campName,attendeeSlotsUsed,campCommitteeSlotsUsed,visibility,
+

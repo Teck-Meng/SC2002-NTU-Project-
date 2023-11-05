@@ -3,6 +3,8 @@ import java.util.Scanner;
 import camppackage.CampInfo;
 import filehandler.Database;
 import filehandler.readFromFile;
+import filehandler.clearFiles;
+import filehandler.writeToFile;
 /*
  * Main program will call methods to operate the features of the app
  */
@@ -39,6 +41,20 @@ public class MainProgram {
          * To have another method call to 2 other classes called staffUI and studentUI
          */
 
+         
+         /*
+          * To be called upon program termination, write updated information into csv files
+          */
+        clearFiles.clearAttendanceLists();
+        clearFiles.clearPasswords();
+        clearFiles.clearCampInfoAttributes();
+        clearFiles.clearCampInfo();
+
+        writeToFile.writeToBlacklist(campInfo);
+        writeToFile.writeToAttendeeList(campInfo);
+        writeToFile.writeToCommitteeList(campInfo);
+        writeToFile.writeToPasswords(database);
+        writeToFile.writeCampInfo(campInfo);
 
          sc.close();
     }

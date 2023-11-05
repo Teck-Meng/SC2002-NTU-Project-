@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 public class clearFiles {
     /*
      * Clear the blacklist, attendee list and committee list
+     * To be used before calling corresponding write methods
      */
     public static void clearAttendanceLists(){
         try{
@@ -32,7 +33,11 @@ public class clearFiles {
                e.printStackTrace(); 
         }
     }
-
+    
+    /*
+     * Clear passwords csv file
+     * To be used before calling corresponding write methods
+     */
     public static void clearPasswords(){
         try{
                 PrintWriter passwordCsvWriter = new PrintWriter(new FileWriter("./data/passwords.csv", false));
@@ -43,6 +48,44 @@ public class clearFiles {
                  */
                 passwordCsvWriter.println("userID,password,");
                 passwordCsvWriter.close();
+        } catch (IOException e) { 
+               e.printStackTrace(); 
+        }
+    }
+    
+    /*
+     * Clear list of camps info csv file
+     * To be used before calling corresponding write methods
+     */
+    public static void clearCampInfo(){
+        try{
+                PrintWriter campInfoCsvWriter = new PrintWriter(new FileWriter("./data/List_Of_Camp_Info.csv", false));
+                
+                
+                /*
+                 * Add relevant headers for passwords.csv
+                 */
+                campInfoCsvWriter.println("userID, campName, dateStart, dateEnd, regClosingDate, userGroup, location, totalSlots, campCommitteeSlots, description,");
+                campInfoCsvWriter.close();
+        } catch (IOException e) { 
+               e.printStackTrace(); 
+        }
+    }
+    
+    /*
+     * Clear CampInfo Attributes csv file
+     * To be used before calling corresponding write methods
+     */
+    public static void clearCampInfoAttributes(){
+        try{
+                PrintWriter campInfoCsvWriter = new PrintWriter(new FileWriter("./data/CampInfo_Attrib.csv", false));
+                
+                
+                /*
+                 * Add relevant headers for passwords.csv
+                 */
+                campInfoCsvWriter.println("campName,attendeeSlotsUsed,campCommitteeSlotsUsed,visibility,");
+                campInfoCsvWriter.close();
         } catch (IOException e) { 
                e.printStackTrace(); 
         }

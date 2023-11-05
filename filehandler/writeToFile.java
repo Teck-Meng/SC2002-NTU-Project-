@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 
 import camppackage.Camp;
-import user.Faculty;
 import user.Student;
 import user.User;
 import camppackage.CampInfo;
@@ -31,11 +30,14 @@ public class writeToFile {
 
         clearFiles.clearAttendanceLists();
         clearFiles.clearPasswords();
+        clearFiles.clearCampInfoAttributes();
+        clearFiles.clearCampInfo();
 
         writeToBlacklist(campInfo);
         writeToAttendeeList(campInfo);
         writeToCommitteeList(campInfo);
         writeToPasswords(database);
+        writeCampInfo(campInfo);
     }
     /*
      * Method to write blacklist information on corresponding csv file
@@ -132,7 +134,7 @@ public class writeToFile {
      * Method to store passwords for users who do not have default password
     */
     public static void writeToPasswords(Database database){
-        //iterate through all the camps to update the csv file corresponding to password
+        //iterate through all the users to update the csv file corresponding to password
         ArrayList<User> users = database.getUsers();
         for(int i = 0; i < users.size(); i++){
             String currentUserID = users.get(i).getUserID();
@@ -151,29 +153,64 @@ public class writeToFile {
         
     }
 
+    /*
+     * Method to store campInfo into csv
+     */
     public static void writeCampInfo(CampInfo campInfo){
 
+        ArrayList<Camp> listOfCamps = campInfo.getFullList();
+        /*
+         * Iterate every camp and input the information into corresponding excel files
+         */
+        for(int i = 0; i < listOfCamps.size(); i++){
+            /*
+             * Extract current camp object to reduce unnecessary reference calls to campInfo 
+             */
+            Camp currentCamp = listOfCamps.get(i);
+            try { 
+                /*
+                 * Initialize Printwriter for both list of camps and camp info attributes csv files
+                 */
+                PrintWriter campInfoCsvWriter = new PrintWriter(new FileWriter("./data/List_Of_Camp_Info.csv", true)); 
+                PrintWriter campInfoAttributesWriter = new PrintWriter(new FileWriter("./data/CampInfo_Attrib.csv", true)); 
+                
+                /*
+                 * Update list of camps csv
+                 * First, extract all attributes of camp object
+                 */
+                String staffID = currentCamp.getStaffID();
+                String campName = currentCamp.getCampName();
+                int[] dates = currentCamp.getDates();
+                int regClosingDate = currentCamp.getRegClosingDate();
+                String userGroup = (currentCamp.getUserGroup()).toString();
+                String location = currentCamp.getLocation();
+                int totalSlots = currentCamp.getTotalSlots();
+                int campCommitteeSlots = currentCamp.getCampCommitteeSlots();
+                String description = currentCamp.getDescription();
+                /*
+                 * Write the attributes into a csv file
+                 */
+                campInfoCsvWriter.println(staffID + "," + campName + "," + dates[0] + "," + dates[1] + "," + regClosingDate + ","
+                                        + userGroup + "," + location + "," + totalSlots + "," + campCommitteeSlots + "," + 
+                                        description + ",");    
+                /*
+                 * Update camp info attributes csv
+                 * Extract attributes first
+                 */
+                int attendeeSlotsUsed = campInfo.getAttendeeSlotUsed(currentCamp);
+                int campCommitteeSlotsUsed = campInfo.getCampCommitteeSlotsUsed(currentCamp);
+                boolean visibility = campInfo.getVisibility(currentCamp);
+
+
+                campInfoAttributesWriter.println(campName + "," + attendeeSlotsUsed + "," + campCommitteeSlotsUsed + "," + 
+                                                visibility + ",");
+                // Close Printwriter
+                campInfoCsvWriter.close(); 
+                campInfoAttributesWriter.close();
+            } catch (IOException e) { 
+                    e.printStackTrace(); 
+            }
+    }
     }
 
-
-
-
-    public static void writeToUserList(){
-        try { 
-            PrintWriter csvWriter = new PrintWriter(new FileWriter("./data/test.csv", true)); // "results.csv" is the name of the CSV file 
-               //csvWriter.println("No. of vertices,TimeTaken"); // Write the header 
-            //edit here to change graph size 
-             
-            for (int i=0;i<10;i++) 
-            {    
-             
-              
-             System.out.println("Execution Time: "+ 5); 
-             csvWriter.println(i + "," + 2); // Write the data in CSV format 
-            }   
-            csvWriter.close(); 
-           } catch (IOException e) { 
-               e.printStackTrace(); 
-           }
-    }
 }

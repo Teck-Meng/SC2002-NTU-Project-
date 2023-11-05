@@ -1,2 +1,3 @@
-userID,password,
-OURIN,Morbius123,
+userID, campName, dateStart, dateEnd, regClosingDate, userGroup, location, totalSlots, campCommitteeSlots, description,
+OURIN,Orientation,5082024,6082024,1082024,ALL,Fields,11,10,Fun for All,
+OURIN,Workout,11082024,12082024,3082024,SCSE,SCSE,9,20,SCSE needs to touch grass,
