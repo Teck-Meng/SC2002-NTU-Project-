@@ -3,7 +3,7 @@ package enquiry;
 import java.util.ArrayList;
 import user.User;
 import camppackage.Camp;
-import password.Database;
+import filehandler.Database;
 
 public class ListOfEnquiries{
     private int id = 0;

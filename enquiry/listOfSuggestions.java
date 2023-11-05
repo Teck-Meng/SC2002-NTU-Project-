@@ -3,7 +3,7 @@ package enquiry;
 import java.util.ArrayList;
 
 import camppackage.Camp;
-import password.Database;
+import filehandler.Database;
 import user.User;
 
 public class listOfSuggestions {

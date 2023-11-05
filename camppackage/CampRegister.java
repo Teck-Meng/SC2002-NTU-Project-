@@ -1,8 +1,9 @@
 package camppackage;
 
 import java.util.ArrayList;
-import password.Database;
+
 import clock.Time;
+import filehandler.Database;
 
 public interface CampRegister {
     //return false if camp is full

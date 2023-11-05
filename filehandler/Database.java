@@ -1,4 +1,4 @@
-package password;
+package filehandler;
 
 import java.util.ArrayList;
 import user.User;
@@ -16,7 +16,7 @@ public class Database {
         return passwords;
     }
 
-    public void addUser(User user){
+    protected void addUser(User user){
         /*
          * To call this method during database intialization 
          * Password assumed to be the default "password" initially
@@ -36,11 +36,7 @@ public class Database {
 
     public int getUserIndex(String userID){
         for(int i = 0; i < users.size(); i++){
-            System.out.print(userID);
-            System.out.print(users.get(i).getUserID());
-            System.out.println();
             if(userID.equals(users.get(i).getUserID())){
-                System.out.println("no");
                 return i;
             }
         }
@@ -61,6 +57,12 @@ public class Database {
         System.out.println("Password change is unsuccessful!");
     }
 
+    /*
+     * To be used by writeToFile class to write into passwords.csv
+     */
+    protected String getPassword(int index){
+        return passwords.get(index);
+    }
     
     /*
      * Method overloading of SetPassword method
@@ -81,10 +83,11 @@ public class Database {
         passwords.set(index, password);
     }
 
+    
     /*
      * Testing only, later delete
      */
-    public void printAllUsers(){
+    protected void printAllUsers(){
         for(int i = 0; i <users.size();i++){
             System.out.print("user id: "+users.get(i).getUserID());
             System.out.print("faculty: "+users.get(i).getFaculty().toString());

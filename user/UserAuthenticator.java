@@ -2,10 +2,10 @@ package user;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
-
-import password.Database;
-import password.PasswordManager;
 import java.util.Scanner;
+
+import filehandler.Database;
+import filehandler.PasswordManager;
 
 
 public class UserAuthenticator {

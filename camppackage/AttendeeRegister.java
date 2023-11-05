@@ -3,8 +3,8 @@ package camppackage;
 import java.util.ArrayList;
 import user.Student;
 import user.User;
-import password.Database;
 import clock.Time;
+import filehandler.Database;
 
 public class AttendeeRegister implements CampRegister {
 

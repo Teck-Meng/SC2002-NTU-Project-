@@ -85,6 +85,9 @@ public class CampInfo {
         return campCommitteeSlotsUsed.get(index);
     }
 
+    /*
+     * To be called by filehandler package
+     */
     public ArrayList<Camp> getFullList(){
         return listOfCamps;
     }

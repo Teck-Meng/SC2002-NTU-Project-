@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 import camppackage.CampInfo;
-import password.Database;
+import filehandler.Database;
 import filehandler.readFromFile;
 /*
  * Main program will call methods to operate the features of the app

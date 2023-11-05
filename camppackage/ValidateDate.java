@@ -3,7 +3,7 @@ package camppackage;
 import user.Student;
 import java.util.ArrayList;
 
-import password.Database;
+import filehandler.Database;
 
 /*
  * To validate dates and also to check dates with student's collection

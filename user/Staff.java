@@ -7,8 +7,9 @@ import camppackage.Camp;
 import camppackage.CampInfo;
 import camppackage.CreateCampUI;
 import camppackage.DuplicateCheck;
-import password.Database;
 import clock.Time;
+import filehandler.Database;
+
 import java.util.Scanner;
 
 public class Staff extends User{

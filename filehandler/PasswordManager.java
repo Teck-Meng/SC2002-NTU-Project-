@@ -1,4 +1,4 @@
-package password;
+package filehandler;
 
 import java.util.Scanner;
 import java.util.ArrayList;

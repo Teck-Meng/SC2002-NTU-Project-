@@ -1,9 +1,9 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import user.UserAuthenticator;
-import password.Database;
-import password.PasswordManager;
 import clock.Time;
+import filehandler.Database;
+import filehandler.PasswordManager;
 
 
 public class loginUI {

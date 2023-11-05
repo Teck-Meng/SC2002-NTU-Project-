@@ -25,5 +25,9 @@ public class CommitteeList {
             System.out.println(listOfCCMembers.get(i).getUserID());
         }
     }
+
+    public ArrayList<Student> getListOfMembers(){
+        return listOfCCMembers;
+    }
     
 }

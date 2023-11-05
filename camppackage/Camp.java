@@ -1,9 +1,9 @@
 package camppackage;
 
+import filehandler.Database;
 import user.Faculty;
 import user.Staff;
 import user.User;
-import password.Database;
 
 public class Camp{
     private String campName;

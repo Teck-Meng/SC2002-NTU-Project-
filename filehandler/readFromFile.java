@@ -1,7 +1,5 @@
 package filehandler;
 
-import password.Database;
-
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.io.File;
@@ -15,7 +13,6 @@ import camppackage.Camp;
 
 /*
  * Class will be contain all methods to read from csv
- * csv file name will be passed as @param_type String
  */
 public class readFromFile extends convertToString {
     public static void main(String args[]){
@@ -106,7 +103,6 @@ public class readFromFile extends convertToString {
                  * Extract the index that the password is at to edit passwords database using index
                  */
                 String userID = sc.next();
-                System.out.println(userID);
                 int pos = database.getUserIndex(userID);
                 database.initializePassword(pos, sc.next());
             }

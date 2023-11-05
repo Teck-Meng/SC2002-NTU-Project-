@@ -1,7 +1,7 @@
 package camppackage;
 
 import clock.Time;
-import password.Database;
+import filehandler.Database;
 
 public class ValidateRegister {
     public static boolean canRegister(CampInfo campInfo, Camp camp, String userID, Database database, Time clock){
