@@ -10,14 +10,14 @@ public class ReplyToStudent implements Replies{
     ArrayList<Integer> ptrToEnquiry = new ArrayList<Integer>();
 
 
-    public void addReply(String reply, int index, ListOfEnquiries list){
+    public void addReply(String reply, int index, listOfEnquiries list){
         replies.add(reply);
         ptrToEnquiry.add(list.getEnquiryID(index));
         /*
          * Update list that the enquiry has been answered
          */
         list.answeredEnquiry(index);
-        System.out.println("Reply added successfully");
+        System.out.println("Reply added successfully!");
     }
 
     public String getReply(int index){

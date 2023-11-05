@@ -12,7 +12,6 @@ import user.Staff;
 import user.User;
 import camppackage.CampInfo;
 
-import report.AttendanceReport;
 import report.PerformanceReport;
 
 
@@ -32,7 +31,6 @@ public class writeToFile {
         readFromFile.readCommitteeList(campInfo, database);
         readFromFile.readBlacklist(campInfo, database);
 
-        Staff s = (Staff)(database.getUser("OURIN"));
         Camp c = campInfo.getCamp("Orientation");
         PerformanceReport.printReport(c, campInfo);
 

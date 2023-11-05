@@ -5,7 +5,7 @@ import user.User;
 import camppackage.Camp;
 import filehandler.Database;
 
-public class ListOfEnquiries{
+public class listOfEnquiries{
     private int id = 0;
 
     ArrayList<String> enquiries = new ArrayList<String>();
@@ -14,7 +14,7 @@ public class ListOfEnquiries{
     ArrayList<Camp> enquiredCamp = new ArrayList<Camp>();
     ArrayList<Integer> enquiryID = new ArrayList<Integer>();
 
-    public void addEnquiry(String enquiry, String userID, Database database, Camp camp){
+    protected void addEnquiry(String enquiry, String userID, Database database, Camp camp){
         /*
          * Acquire user object from database using userID
          * In main program, userID for this method is to be acquired using the getUserID method from the user class
@@ -36,7 +36,7 @@ public class ListOfEnquiries{
     /*
      * Update isAnswered at the specific index that the staff or CCMember has answered the enquiry
      */
-    public void answeredEnquiry(int index){
+    protected void answeredEnquiry(int index){
         isAnswered.set(index, true);
         System.out.println("Enquiry successfully answered!");
     }
@@ -64,7 +64,7 @@ public class ListOfEnquiries{
      * Edits cannot be made after it has been answered
      * UI class will be responsible for system prompt, this method does not provide system prompt
      */
-    public void editEnquiry(int index, String userID, String newEnquiry){
+    protected void editEnquiry(int index, String userID, String newEnquiry){
         if(userID != enquirer.get(index).getUserID()){
             System.out.println("Unauthorized personnel, you do not have permission to edit this enquiry");
             return;
@@ -81,7 +81,7 @@ public class ListOfEnquiries{
      * Method to delete enquiry
      * Enquiry can only be deleted by enquirer and if the enquiry is not yet answered
      */
-    public void deleteEnquiry(int index, String userID){
+    protected void deleteEnquiry(int index, String userID){
         if(userID != enquirer.get(index).getUserID()){
             System.out.println("Unauthorized personnel, you do not have permission to delete this enquiry");
             return;
@@ -96,14 +96,15 @@ public class ListOfEnquiries{
         enquiryID.remove(index);
         enquiredCamp.remove(index);
     }
-
-   
-
+    
+    protected int getSize(){
+        return enquiries.size();
+    }
 
     /*
      * Returns the status of the enquiry
      */
-    public boolean isEnquiryAnswered(int index){
+    protected boolean isEnquiryAnswered(int index){
         return isAnswered.get(index);
     }
 
