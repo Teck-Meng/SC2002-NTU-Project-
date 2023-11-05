@@ -185,6 +185,7 @@ public class Staff extends User{
             }
             
         }
+        sc.close();
     }
 
     public ArrayList<Camp> getListOfCamps(){

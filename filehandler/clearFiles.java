@@ -63,7 +63,7 @@ public class clearFiles {
                 
                 
                 /*
-                 * Add relevant headers for passwords.csv
+                 * Add relevant headers for List_Of_Camp_Info.csv
                  */
                 campInfoCsvWriter.println("userID, campName, dateStart, dateEnd, regClosingDate, userGroup, location, totalSlots, campCommitteeSlots, description,");
                 campInfoCsvWriter.close();
@@ -82,10 +82,48 @@ public class clearFiles {
                 
                 
                 /*
-                 * Add relevant headers for passwords.csv
+                 * Add relevant headers for CampInfo_Attrib.csv
                  */
                 campInfoCsvWriter.println("campName,attendeeSlotsUsed,campCommitteeSlotsUsed,visibility,");
                 campInfoCsvWriter.close();
+        } catch (IOException e) { 
+               e.printStackTrace(); 
+        }
+    }
+
+    /*
+     * Clears attendance report to set up a new attendance report to be written
+     * To only be called by AttendanceReport.java
+     */
+    public static void clearAttendanceReport(){
+        try{
+                PrintWriter reportCsvWriter = new PrintWriter(new FileWriter("./data/AttendanceReport.csv", false));
+                
+                
+                /*
+                 * Add relevant headers for AttendanceReport.csv
+                 */
+                reportCsvWriter.println("userID, faculty, campName, role, location, campDescription,");
+                reportCsvWriter.close();
+        } catch (IOException e) { 
+               e.printStackTrace(); 
+        }
+    }
+
+    /*
+     * Clears performance report to set up a new performance report to be written
+     * To only be called by Performance_Report.java
+     */
+    public static void clearPerformanceReport(){
+        try{
+                PrintWriter reportCsvWriter = new PrintWriter(new FileWriter("./data/Performance_Report.csv", false));
+                
+                
+                /*
+                 * Add relevant headers for AttendanceReport.csv
+                 */
+                reportCsvWriter.println("userID, faculty, campName, role, location, campDescription, points,");
+                reportCsvWriter.close();
         } catch (IOException e) { 
                e.printStackTrace(); 
         }
