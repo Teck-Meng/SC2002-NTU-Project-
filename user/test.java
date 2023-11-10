@@ -2,7 +2,6 @@ package user;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.lang.Exception;
 
 //to be deleted later, this is a test file
 public class test {

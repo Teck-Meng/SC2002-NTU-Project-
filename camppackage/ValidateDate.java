@@ -48,7 +48,7 @@ public class ValidateDate {
          */
         Student student = (Student)database.getUser(userID);
         ArrayList<Camp> studentCamps = student.getListOfCamps();
-        Camp committeeCamp = student.getCommitteCamp();
+        Camp committeeCamp = student.getCommitteeCamp();
         /*
          * Contains current dates array used for checking
          */

@@ -20,7 +20,7 @@ public class CommitteeSuggestion {
 
     public void viewSuggestion(String userID, listOfSuggestions list, Database database){
         Student committeeMember = ((Student)database.getUser(userID));
-        list.printAllSuggestions(committeeMember.getCommitteCamp(), committeeMember.getUserID(), false);
+        list.printAllSuggestions(committeeMember.getCommitteeCamp(), committeeMember.getUserID(), false);
     }
 
     public void deleteSuggestion(){

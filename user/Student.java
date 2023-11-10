@@ -26,7 +26,7 @@ public class Student extends User{
         return myCamps;
     }
 
-    public Camp getCommitteCamp(){
+    public Camp getCommitteeCamp(){
         /*
          * For date validation
          */
