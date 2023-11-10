@@ -9,13 +9,6 @@ import filehandler.PasswordManager;
 
 
 public class UserAuthenticator {
-    String enteredID;
-    String enteredPassword;
-
-    UserAuthenticator(String enteredID, String enteredPassword){
-        this.enteredID = enteredID;
-        this.enteredPassword = enteredPassword;
-    }
 
     private static int checkID(Database database, String enteredID){
         /*

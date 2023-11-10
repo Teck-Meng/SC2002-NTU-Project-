@@ -34,6 +34,9 @@ public class Database {
         return null;
     }
 
+    /*
+     * Returns index of user in the database
+     */
     public int getUserIndex(String userID){
         for(int i = 0; i < users.size(); i++){
             if(userID.equals(users.get(i).getUserID())){
