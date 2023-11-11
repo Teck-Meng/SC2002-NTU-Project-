@@ -6,18 +6,18 @@ import camppackage.Camp;
 import filehandler.Database;
 import user.User;
 
-public class listOfSuggestions {
-    private int id = 0;
+public class ListOfSuggestions {
+    private static int id = 0;
 
-    ArrayList<String> suggestions = new ArrayList<String>();
-    ArrayList<User> suggestor = new ArrayList<User>();
-    ArrayList<Boolean> isApproved = new ArrayList<Boolean>();
+    private ArrayList<String> suggestions = new ArrayList<String>();
+    private ArrayList<User> suggestor = new ArrayList<User>();
+    private ArrayList<Boolean> isApproved = new ArrayList<Boolean>();
     /*
      * isApproved is to check for approval while isAnswered is used to check if a staff has done administrative action on a suggestion
      */
-    ArrayList<Boolean> isAnswered = new ArrayList<Boolean>();
-    ArrayList<Camp> suggestedCamp = new ArrayList<Camp>();
-    ArrayList<Integer> suggestionID = new ArrayList<Integer>();
+    private ArrayList<Boolean> isAnswered = new ArrayList<Boolean>();
+    private ArrayList<Camp> suggestedCamp = new ArrayList<Camp>();
+    private ArrayList<Integer> suggestionID = new ArrayList<Integer>();
 
     public void addSuggestion(String suggestion, String userID, Database database, Camp camp){
         /*

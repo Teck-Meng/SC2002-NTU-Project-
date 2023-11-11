@@ -7,7 +7,7 @@ import user.Student;
 import filehandler.Database;
 
 public class CommitteeSuggestion {
-    public void giveSuggestion(String userID, Camp camp, listOfSuggestions list, Database database){
+    public static void giveSuggestion(String userID, Camp camp, ListOfSuggestions list, Database database){
         Scanner sc = new Scanner(System.in);
         String suggestion;
 
@@ -18,12 +18,12 @@ public class CommitteeSuggestion {
         sc.close();
     }
 
-    public void viewSuggestion(String userID, listOfSuggestions list, Database database){
+    public static void viewSuggestion(String userID, ListOfSuggestions list, Database database){
         Student committeeMember = ((Student)database.getUser(userID));
         list.printAllSuggestions(committeeMember.getCommitteeCamp(), committeeMember.getUserID(), false);
     }
 
-    public void deleteSuggestion(){
+    public static void deleteSuggestion(){
         
     }
 }

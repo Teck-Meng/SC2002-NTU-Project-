@@ -14,7 +14,7 @@ import camppackage.Camp;
 /*
  * Class will be contain all methods to read from csv
  */
-public class readFromFile extends convertToString {
+public class readFromFile extends convertString {
     public static void main(String args[]){
         /*
          * Testing environment for read methods
@@ -191,7 +191,7 @@ public class readFromFile extends convertToString {
             while(attributeScanner.hasNext()){
                 attributeScanner.next();
                 Camp currentCamp = campInfo.getCamp(index);
-                campInfo.updateAttendeeSlotUsed(true, currentCamp, stringToInt(attributeScanner.next()));
+                campInfo.updateAttendeeSlotsUsed(true, currentCamp, stringToInt(attributeScanner.next()));
                 campInfo.updateCommitteeSlotUsed(currentCamp, stringToInt(attributeScanner.next()));
                 campInfo.setVisiblity(currentCamp, Boolean.parseBoolean(attributeScanner.next()));
                 attributeScanner.nextLine();

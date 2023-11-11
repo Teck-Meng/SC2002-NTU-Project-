@@ -20,7 +20,7 @@ public class AttendeeList{
     //return true if attendee exist and deletion is successful
     //else return false
     public boolean deleteAttendee(Student attendee){
-        int index = CampUtility.UserPos(attendee, listOfAttendees);
+        int index = CampUtility.userPos(attendee, listOfAttendees);
         //terminate method if student does not exist in committee list
         if(index == -1){
             return false;

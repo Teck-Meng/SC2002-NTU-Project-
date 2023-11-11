@@ -6,10 +6,10 @@ import user.Staff;
 import user.Faculty;
 
 public class CampInfo {
-    ArrayList<Camp> listOfCamps = new ArrayList<Camp>();
-    ArrayList<Integer> attendeeSlotsUsed = new ArrayList<Integer>();
-    ArrayList<Integer> campCommitteeSlotsUsed = new ArrayList<Integer>();
-    ArrayList<Boolean> visibility = new ArrayList<Boolean>();
+    private ArrayList<Camp> listOfCamps = new ArrayList<Camp>();
+    private ArrayList<Integer> attendeeSlotsUsed = new ArrayList<Integer>();
+    private ArrayList<Integer> campCommitteeSlotsUsed = new ArrayList<Integer>();
+    private ArrayList<Boolean> visibility = new ArrayList<Boolean>();
 
     //default empty constructor as arraylist is empty for all attributes
 
@@ -32,7 +32,7 @@ public class CampInfo {
         }
     }
 
-    public void updateAttendeeSlotUsed(boolean isIncrement, Camp camp, int value){
+    public void updateAttendeeSlotsUsed(boolean isIncrement, Camp camp, int value){
         // store return value of campPos due to possible repeated usage
         int index = CampUtility.CampPos(camp, listOfCamps);
         // checks for existence of camp
@@ -67,7 +67,7 @@ public class CampInfo {
         campCommitteeSlotsUsed.set(index, (intialValue + value));
     }
 
-    public int getAttendeeSlotUsed(Camp camp){
+    public int getAttendeeSlotsUsed(Camp camp){
         int index = CampUtility.CampPos(camp, listOfCamps);
         if(index == -1){
             //if unsuccessful, return -1

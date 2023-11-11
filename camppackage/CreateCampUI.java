@@ -11,7 +11,7 @@ public class CreateCampUI {
      * Criteria for allowing edit when allowEdit is called: no person has registered for the camp yet.
      */
     private static boolean allowEdit(Camp camp, CampInfo campInfo){
-        if(campInfo.getAttendeeSlotUsed(camp) != 0){
+        if(campInfo.getAttendeeSlotsUsed(camp) != 0){
             return false;
         }
         if(campInfo.getCampCommitteeSlotsUsed(camp) != 0){
@@ -273,7 +273,7 @@ public class CreateCampUI {
         Scanner sc = new Scanner(System.in);
         int attendeeSlots = 0;
         // ensure that the edited amount of slots can accomodate the current registered attendees
-        int minSlots = campInfo.getAttendeeSlotUsed(camp);
+        int minSlots = campInfo.getAttendeeSlotsUsed(camp);
 
         while(attendeeSlots < minSlots){
             try{

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 // to keep track of students who already withdraw and not allow them to register for a particular camp again
 public class Blacklist {
-    ArrayList<Student> blacklist = new ArrayList<Student>();
+    private ArrayList<Student> blacklist = new ArrayList<Student>();
 
     public void addStudent(Student withdrawee){
         blacklist.add(withdrawee);
@@ -17,7 +17,7 @@ public class Blacklist {
 
     public boolean findStudent(String userID){
         // Use userPos to verify existence of student in blacklist
-        if(CampUtility.UserPos(userID, blacklist)!=-1){
+        if(CampUtility.userPos(userID, blacklist)!=-1){
             return true;
         }
         return false;

@@ -29,7 +29,7 @@ public class AttendeeRegister implements CampRegister {
         User toAddUser = database.getUser(userID);
 
         camp.getAttendeeList().addAttendee((Student)toAddUser);
-        campInfo.updateAttendeeSlotUsed(true, camp, 1);
+        campInfo.updateAttendeeSlotsUsed(true, camp, 1);
         // Adds student into camp while denoting that the student is joining as attendee with boolean param
         ((Student)toAddUser).addCamp(camp, false);
         return true;
@@ -52,7 +52,7 @@ public class AttendeeRegister implements CampRegister {
             camp.getBlacklist().addStudent(withdrawee);
             camp.getAttendeeList().deleteAttendee(withdrawee);
             //reduce value of slots used by 1 as student is removed from camp
-            campInfo.updateAttendeeSlotUsed(false, camp, 1);
+            campInfo.updateAttendeeSlotsUsed(false, camp, 1);
             System.out.println(withdrawee.getUserID()+" has successfully withdrawn from "+camp.getCampName());
             return;
         }
@@ -66,7 +66,7 @@ public class AttendeeRegister implements CampRegister {
     public boolean isCampFull(CampInfo campInfo, Camp camp){
         int total = camp.getTotalSlots();
         int committeeSlots = camp.getCampCommitteeSlots();
-        int attendeeSlotsUsed = campInfo.getAttendeeSlotUsed(camp);
+        int attendeeSlotsUsed = campInfo.getAttendeeSlotsUsed(camp);
         if(total - committeeSlots - attendeeSlotsUsed <= 0){
             return true;
         }

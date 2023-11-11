@@ -11,7 +11,7 @@ public class AttendeeEnquiry {
      * This is a system prompt to ask question
      * AttendeeUI and CommitteeUI class to add option to select @param camp 
      */
-    public void askQuestion(String userID, Camp camp, listOfEnquiries list, Database database){
+    public static void askQuestion(String userID, Camp camp, ListOfEnquiries list, Database database){
         Scanner sc = new Scanner(System.in);
         String enquiry;
 
@@ -25,7 +25,7 @@ public class AttendeeEnquiry {
     /*
      * Prints all enquiries sent by student
      */
-    public void viewQuestion(String userID, listOfEnquiries list, Database database){
+    public static void viewQuestion(String userID, ListOfEnquiries list, Database database){
         int size = list.getSize();
         for(int i = 0; i < size; i++){
             String toPrint = list.getEnquiry(i, userID);
@@ -35,7 +35,7 @@ public class AttendeeEnquiry {
         }
     }
 
-    public void deleteQuestion(int index, String userID, listOfEnquiries list, Database database){
+    public static void deleteQuestion(int index, String userID, ListOfEnquiries list, Database database){
         list.deleteEnquiry(index, userID);
     }
 

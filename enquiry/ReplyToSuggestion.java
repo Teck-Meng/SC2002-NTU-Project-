@@ -9,7 +9,7 @@ public class ReplyToSuggestion{
      * @param index is the index of the enquiry
      * StaffUI class should prompt Staff will another function call to make the necessary edits to be made from approving suggestion
      */
-    public void replyToSuggestion(int index, listOfSuggestions list){
+    public void replyToSuggestion(int index, ListOfSuggestions list){
         Scanner sc = new Scanner(System.in);
         int userChoice = 0;
 

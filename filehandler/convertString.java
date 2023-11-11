@@ -2,7 +2,7 @@ package filehandler;
 
 import user.Faculty;
 
-public class convertToString {
+public class convertString {
         protected static Faculty setFaculty(String faculty){
         Faculty returnFaculty = Faculty.ADM;
         switch(faculty){

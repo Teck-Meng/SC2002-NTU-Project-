@@ -2,7 +2,7 @@ package clock;
 
 
 public class Time {
-    int currentDate;
+    private int currentDate;
 
     /*
      * Only admin of program can set this time, admin is expected to set a proper time

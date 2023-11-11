@@ -33,7 +33,7 @@ public class CampUtility {
      * and For AttendeeList use: To find index of attendee in the list
      * and For blackList use: To verify existence of student in blacklist
      */
-    protected static int UserPos(Student student, ArrayList<Student> list){
+    protected static int userPos(Student student, ArrayList<Student> list){
         for(int i = 0; i < list.size(); i++){
             if(list.get(i) == student){
                 return i;
@@ -46,7 +46,7 @@ public class CampUtility {
     /*
      * Student ID version to search for index of a particular student
      */
-    protected static int UserPos(String userID, ArrayList<Student> list){
+    protected static int userPos(String userID, ArrayList<Student> list){
         for(int i = 0; i < list.size(); i++){
             if(userID.equals(list.get(i).getUserID())){
                 return i;

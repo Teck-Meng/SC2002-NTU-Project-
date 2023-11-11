@@ -5,14 +5,14 @@ import user.User;
 import camppackage.Camp;
 import filehandler.Database;
 
-public class listOfEnquiries{
+public class ListOfEnquiries{
     private int id = 0;
 
-    ArrayList<String> enquiries = new ArrayList<String>();
-    ArrayList<User> enquirer = new ArrayList<User>();
-    ArrayList<Boolean> isAnswered = new ArrayList<Boolean>();
-    ArrayList<Camp> enquiredCamp = new ArrayList<Camp>();
-    ArrayList<Integer> enquiryID = new ArrayList<Integer>();
+    private ArrayList<String> enquiries = new ArrayList<String>();
+    private ArrayList<User> enquirer = new ArrayList<User>();
+    private ArrayList<Boolean> isAnswered = new ArrayList<Boolean>();
+    private ArrayList<Camp> enquiredCamp = new ArrayList<Camp>();
+    private ArrayList<Integer> enquiryID = new ArrayList<Integer>();
 
     protected void addEnquiry(String enquiry, String userID, Database database, Camp camp){
         /*

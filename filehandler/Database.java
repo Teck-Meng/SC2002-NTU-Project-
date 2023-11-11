@@ -80,9 +80,9 @@ public class Database {
     }
 
     /*
-     * For file handler to set password without system prompt
+     * For readFromFile to set password without system prompt
      */
-    public void initializePassword(int index, String password){
+    protected void initializePassword(int index, String password){
         passwords.set(index, password);
     }
 

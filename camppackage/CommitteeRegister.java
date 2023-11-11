@@ -39,7 +39,7 @@ public class CommitteeRegister implements CampRegister {
          * student's own database
          */
         camp.getCommitteeList().addCommitteeMember((Student)user);
-        campInfo.updateAttendeeSlotUsed(true, camp, 1);
+        campInfo.updateAttendeeSlotsUsed(true, camp, 1);
         // Adds student into camp while denoting that the student is joining as committee member with boolean param
         ((Student)user).addCamp(camp, true);
         return true;

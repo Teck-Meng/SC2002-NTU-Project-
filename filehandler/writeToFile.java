@@ -203,7 +203,7 @@ public class writeToFile {
                  * Update camp info attributes csv
                  * Extract attributes first
                  */
-                int attendeeSlotsUsed = campInfo.getAttendeeSlotUsed(currentCamp);
+                int attendeeSlotsUsed = campInfo.getAttendeeSlotsUsed(currentCamp);
                 int campCommitteeSlotsUsed = campInfo.getCampCommitteeSlotsUsed(currentCamp);
                 boolean visibility = campInfo.getVisibility(currentCamp);
 
