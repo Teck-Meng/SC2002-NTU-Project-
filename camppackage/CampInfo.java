@@ -123,8 +123,21 @@ public class CampInfo {
     }
 
     public void addCamp(Camp camp, boolean isVisible){
+
         /*
-         * Add camp information into data structures
+         * Add camp into camp list in alphabetical order
+         */
+        for(int i = 0;i < listOfCamps.size();i++){
+            if(camp.getCampName().compareTo(listOfCamps.get(i).getCampName()) < 0){
+                listOfCamps.add(i, camp);
+                visibility.add(i, isVisible);
+                attendeeSlotsUsed.add(0);
+                campCommitteeSlotsUsed.add(0);
+                return;
+            }
+        }
+        /*
+         * Execute if list of camp has no elements or camp to be added to end of list of camp
          */
         listOfCamps.add(camp);
         visibility.add(isVisible);
