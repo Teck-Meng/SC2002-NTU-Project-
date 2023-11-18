@@ -9,7 +9,7 @@ public class ReplyToSuggestion{
      * @param index is the index of the enquiry
      * StaffUI class should prompt Staff will another function call to make the necessary edits to be made from approving suggestion
      */
-    public void replyToSuggestion(int index, ListOfSuggestions list){
+    public static void replyToSuggestion(int index, ListOfSuggestions list){
         Scanner sc = new Scanner(System.in);
         int userChoice = 0;
 
@@ -27,7 +27,7 @@ public class ReplyToSuggestion{
                 System.out.println("Invalid choice! Kindly enter an integer value as choice!");
             }
         }
-        sc.close();
+        
         switch(userChoice){
             case 1:
                 list.staffAction(index, true);
@@ -38,5 +38,6 @@ public class ReplyToSuggestion{
                 System.out.println("Suggestion has been rejected!");
                 break;
         } 
+        sc.close();
     }
 }

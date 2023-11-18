@@ -1,22 +1,18 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import user.UserAuthenticator;
-import clock.Time;
 import filehandler.Database;
 import filehandler.PasswordManager;
 
 
 public class loginUI {
-    public static boolean promptLogin(Database database){
-        /*
-         * Set the current time of the program
-         */
-        Time time = new Time(10_29_2023);
+    public static int promptLogin(Database database){
+        
         /*
          * Intialize integer variable to track user choice in the app
          */
         int userInput = 0;
-        boolean canLogin = false;
+        int userIDIndex = -1;
         Scanner sc = new Scanner(System.in);
 
         do{
@@ -37,12 +33,12 @@ public class loginUI {
                     /*
                      * Check for userID and password using UserAuthenticator class
                      */
-                    canLogin = UserAuthenticator.verifyLogin(database);
+                    userIDIndex = UserAuthenticator.verifyLogin(database);
                     /*
                      * Prompt app to allow users to utilize app features
                      */
-                    if(canLogin == true){
-                        return true;
+                    if(userIDIndex >= 0){
+                        return userIDIndex;
                     }
                     break;
                 case 2:
@@ -60,14 +56,14 @@ public class loginUI {
                      * Prompt application to close completely
                      */
                     sc.close();
-                    return false;
+                    return -1;
                 default:
                     System.out.println("Kindly enter a valid choice!");
             }
-        }while(canLogin == false);
+        }while(userIDIndex < 0);
 
         sc.close();
-        return true;
+        return userIDIndex;
         /*
          * Break out of loop if login successful
          */

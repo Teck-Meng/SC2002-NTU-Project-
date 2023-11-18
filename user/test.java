@@ -6,21 +6,14 @@ import java.util.Scanner;
 //to be deleted later, this is a test file
 public class test {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int x = 0;
-        while(x == 0){
-            try{
-            System.out.println("Enter");
-            x = sc.nextInt();
-        }
-        catch(InputMismatchException e){
-            System.out.println("bad");
-            sc.nextLine();
-        }
-        
-        }
+        User u = new User("Bob", Faculty.ADM);
+        User a = new Student("Dick", Faculty.ADM);
+        User b = new Staff("Harry", Faculty.ADM);
 
 
+        System.out.println(u instanceof Student);
+        System.out.println(a instanceof Student);
+        System.out.println(b instanceof Student);
 
     }
 }

@@ -34,6 +34,10 @@ public class Database {
         return null;
     }
 
+    public User getUser(int userIDIndex){
+        return users.get(userIDIndex);
+    }
+
     /*
      * Returns index of user in the database
      */

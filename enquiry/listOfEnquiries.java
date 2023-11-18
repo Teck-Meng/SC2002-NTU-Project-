@@ -204,7 +204,7 @@ public class ListOfEnquiries{
          for(int i = 0; i < enquiries.size(); i++){
             if(enquiredCamp.get(i) == camp){
                 count++;
-                System.out.println(enquiries.get(i));
+                System.out.println(enquiryID + " " + enquiries.get(i));
                 returnIndexes.add(i);
             }
          }

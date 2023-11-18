@@ -58,7 +58,7 @@ public class ListOfSuggestions {
      * Method to delete suggestion
      * Suggestion can only be deleted by enquirer and if the enquiry is not yet answered
      */
-    public void deleteEnquiry(int index, String userID){
+    public void deleteSuggestion(int index, String userID){
         if(userID != suggestor.get(index).getUserID()){
             System.out.println("Unauthorized personnel, you do not have permission to delete this enquiry");
             return;

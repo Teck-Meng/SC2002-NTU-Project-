@@ -4,6 +4,9 @@ import camppackage.Camp;
 
 public class Student extends User{
     private ArrayList<Camp> myCamps = new ArrayList<Camp>();
+    /*
+     * If committeeCamp is null, Student did not register for camp committee
+     */
     private Camp committeeCamp;
     /*
      * CommitteePoints will only be accessible and usable when student become committee member

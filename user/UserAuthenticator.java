@@ -103,7 +103,11 @@ public class UserAuthenticator {
         return 2;
     }
 
-    public static boolean verifyLogin(Database database){
+    /*
+     * Returns user id index if login is possible
+     * Else return -1
+     */
+    public static int verifyLogin(Database database){
         /*
          * Main method to call in main program to verify login
          */
@@ -118,7 +122,7 @@ public class UserAuthenticator {
                 /*
                  * Prompt loginUI class to exit login call
                  */
-                return false;
+                return -1;
             }
         }while(userIDIndex == -1);
         /*
@@ -137,11 +141,11 @@ public class UserAuthenticator {
                 /*
                  * Prompt loginUI class to exit login call
                  */
-                return false;
+                return -1;
             }
             }
         }while(outcome != 2);
-        return true;
+        return userIDIndex;
     }
 
     /*
