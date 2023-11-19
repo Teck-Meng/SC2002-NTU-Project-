@@ -9,6 +9,9 @@ import user.Student;
 import user.User;
 import user.Staff;
 import camppackage.CampInfo;
+import enquiry.ListOfEnquiries;
+import enquiry.ListOfSuggestions;
+import enquiry.ReplyToStudent;
 import camppackage.Camp;
 
 /*
@@ -19,22 +22,30 @@ public class readFromFile extends convertString {
         /*
          * Testing environment for read methods
          */
-
         Database db = readUserList();
         db = readPasswords(db);
         
-        System.out.println(db.getUserIndex("KOH"));
         CampInfo test = readListOfCamps(db);
 
         readAttendeeList(test, db);
         readCommitteeList(test, db);
         readBlacklist(test, db);
        
+        ListOfEnquiries enquiries = new ListOfEnquiries();
+        ListOfSuggestions suggest = new ListOfSuggestions();
+        ReplyToStudent replies = new ReplyToStudent();
+        readEnquiries(test, db, enquiries, replies);
+        readSuggestions(test, db, suggest);
 
-        System.out.println("Sep");
-        test.getCamp(0).getBlacklist().print();
-        System.out.println();
-        test.getCamp(1).getBlacklist().print();
+        System.out.println(suggest.getSuggestion(0));
+        System.out.println(suggest.getCampEnquiredID(0));
+        System.out.println(suggest.isItApproved(0));
+
+        suggest.addSuggestion("Get Cake!", "FURINA", test.getCamp("Workout"), 1, false, db);
+
+        clearFiles.clearSuggestions();
+        writeToFile.writeToSuggestion(suggest);
+
     }
 
 
@@ -303,8 +314,86 @@ public class readFromFile extends convertString {
             // Make program continue even if got this error
         }
     }
-}
+
+    public static void readEnquiries(CampInfo campInfo, Database database, ListOfEnquiries enquiryList, ReplyToStudent replies){
+        File enquiries = new File("./data/Enquiries.csv");
+        try{
+            
+            Scanner sc = new Scanner(enquiries);
+            sc.useDelimiter(",");
+            sc.nextLine();
+            while(sc.hasNext()){
+                /*
+                 * Update enquiries
+                 */
+                String enquiry = sc.next();
+
+                String userID = sc.next();
+
+                String campName = sc.next();
+                Camp camp = campInfo.getCamp(campName);
+
+                int enquiryID = Integer.parseInt(sc.next());
+
+                String reply = sc.next();
+                boolean isAnswered = !(reply.matches("NaN"));
+
+                int ptrToEnquiry = Integer.parseInt(sc.next());
+                
+
+                enquiryList.addEnquiry(enquiry, userID, database, camp, enquiryID, isAnswered);
+                if(isAnswered){
+                    replies.addReply(reply, ptrToEnquiry, enquiryList);
+                }
+                sc.nextLine();
+            }
+            
+        }
+        catch(FileNotFoundException e){
+            System.out.println("Error! File not found! ");
+        }
+        catch(NoSuchElementException n){
+            // Make program continue even if got this error
+        }
+    }
+
     /*
-     * To be used by readUserList to set faculty information for database
+     * suggestion,suggestor,suggestedCamp,suggestionID,isApproved
      */
+    public static void readSuggestions(CampInfo campInfo, Database database, ListOfSuggestions suggestions){
+        File suggestionList = new File("./data/Suggestions.csv");
+        try{
+            
+            Scanner sc = new Scanner(suggestionList);
+            sc.useDelimiter(",");
+            sc.nextLine();
+            while(sc.hasNext()){
+                /*
+                 * Update enquiries
+                 */
+                String suggestion = sc.next();
+
+                String userID = sc.next();
+
+                String campName = sc.next();
+                Camp camp = campInfo.getCamp(campName);
+
+                int suggestionID = Integer.parseInt(sc.next());
+
+                String isAns = sc.next();
+                boolean isAnswered = (isAns.matches("yes"));
+                
+                suggestions.addSuggestion(suggestion, userID, camp, suggestionID, isAnswered, database);
+                sc.nextLine();
+            }
+            
+        }
+        catch(FileNotFoundException e){
+            System.out.println("Error! File not found! ");
+        }
+        catch(NoSuchElementException n){
+            // Make program continue even if got this error
+        }
+    }
+}
 

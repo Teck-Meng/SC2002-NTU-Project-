@@ -10,17 +10,26 @@ public class ReplyToStudent implements Replies{
     private ArrayList<Integer> ptrToEnquiry = new ArrayList<Integer>();
 
 
-    public void addReply(String reply, int index, ListOfEnquiries list){
+    public void addReply(String reply, int ID, ListOfEnquiries list){
         replies.add(reply);
-        ptrToEnquiry.add(list.getEnquiryID(index));
+        ptrToEnquiry.add(ID);
         /*
          * Update list that the enquiry has been answered
          */
+        int index = list.getIndexFromID(ID);
         list.answeredEnquiry(index);
-        System.out.println("Reply added successfully!");
     }
 
     public String getReply(int index){
         return replies.get(index);
+    }
+
+    public String getReplyFromPtr(int id){
+        for(int i = 0; i < replies.size(); i++){
+            if(ptrToEnquiry.get(i) == id){
+                return replies.get(i);
+            }
+        }
+        return null;
     }
 }

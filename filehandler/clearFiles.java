@@ -120,9 +120,39 @@ public class clearFiles {
                 
                 
                 /*
-                 * Add relevant headers for AttendanceReport.csv
+                 * Add relevant headers for clearPerformanceReport.csv
                  */
                 reportCsvWriter.println("userID, faculty, campName, role, location, campDescription, points,");
+                reportCsvWriter.close();
+        } catch (IOException e) { 
+               e.printStackTrace(); 
+        }
+    }
+    
+    public static void clearEnquiries(){
+        try{
+                PrintWriter reportCsvWriter = new PrintWriter(new FileWriter("./data/Enquiries.csv", false));
+                
+                
+                /*
+                 * Add relevant headers for Enquries.csv
+                 */
+                reportCsvWriter.println("enquiry,enquirer,enquiredCamp,enquiryID,reply,ptrToEnquiry,");
+                reportCsvWriter.close();
+        } catch (IOException e) { 
+               e.printStackTrace(); 
+        }
+    }
+
+    public static void clearSuggestions(){
+        try{
+                PrintWriter reportCsvWriter = new PrintWriter(new FileWriter("./data/Suggestions.csv", false));
+                
+                
+                /*
+                 * Add relevant headers for Enquries.csv
+                 */
+                reportCsvWriter.println("suggestion,suggestor,suggestedCamp,suggestionID,isApproved,");
                 reportCsvWriter.close();
         } catch (IOException e) { 
                e.printStackTrace(); 

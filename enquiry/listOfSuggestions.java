@@ -37,6 +37,26 @@ public class ListOfSuggestions {
         suggestionID.add(id++);
         System.out.println("Successfully added suggestion!");
     }
+    
+    /*
+     * For readFromFile to add data from csv
+     */
+    public void addSuggestion(String suggestion, String userID, Camp camp, int suggestionIndex, boolean isApproved, Database database){
+        suggestions.add(suggestion);
+        suggestor.add(database.getUser(userID));
+        suggestedCamp.add(camp);
+        suggestionID.add(suggestionIndex);
+        isAnswered.add(isApproved);
+    }
+
+    public String getSuggestion(int index){
+        return suggestions.get(index);
+    }
+
+    public ArrayList<String> getListOfSuggestions(){
+        return suggestions;
+    }
+    
     /*
      * Method to edit suggestion
      * Suggestion can only be editted if the enquiry is not yet answered
@@ -94,6 +114,9 @@ public class ListOfSuggestions {
         return suggestor.get(index).getUserID();
     }
 
+    public boolean isItApproved(int index){
+        return isAnswered.get(index);
+    }
     /*
      * To be used to ensure only staff of that specific camp can view suggestions
      * Camp Name is a unique ID and will be returned to do the check
@@ -105,7 +128,7 @@ public class ListOfSuggestions {
     /*
      * To be used by Replies to Committee Class as a reference id to link the replies to the enquiry
      */
-    public int getEnquiryID(int index){
+    public int getSuggestionID(int index){
         return suggestionID.get(index);
     }
 
@@ -116,7 +139,7 @@ public class ListOfSuggestions {
      */
     public int getIndexFromID(int id){
         for(int i = 0; i < suggestionID.size(); i++){
-            if(getEnquiryID(i) == id){
+            if(getSuggestionID(i) == id){
                 return i;
             }
         }

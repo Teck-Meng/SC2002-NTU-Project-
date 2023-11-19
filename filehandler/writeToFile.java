@@ -11,7 +11,9 @@ import user.Student;
 import user.Staff;
 import user.User;
 import camppackage.CampInfo;
-
+import enquiry.ListOfEnquiries;
+import enquiry.ListOfSuggestions;
+import enquiry.ReplyToStudent;
 import report.PerformanceReport;
 
 
@@ -218,5 +220,77 @@ public class writeToFile {
             }
     }
     }
+    /*
+     * Method to store enquiries and corresponding replies into csv
+     * 
+     */
+    public static void writeToEnquiries(ListOfEnquiries enquries, ReplyToStudent replies){
+        ArrayList<String> listOfEnquiries = enquries.getEnquiries();
+        
 
+
+            try { 
+                PrintWriter csvWriter = new PrintWriter(new FileWriter("./data/Enquiries.csv", true)); 
+                
+                for(int i = 0; i < listOfEnquiries.size(); i++){
+                    /*
+                    * Extract all attributes to write into csv
+                    */
+                    String enquiry = enquries.getEnquiry(i);
+                    String userID = enquries.getUserID(i);
+                    String campName = enquries.getCampEnquiredID(i);
+                    int enquiryID = enquries.getEnquiryID(i);
+
+                    if(enquries.isEnquiryAnswered(i)){
+                        String reply = replies.getReplyFromPtr(enquiryID);
+                        csvWriter.println(enquiry + "," + userID + "," + campName + "," + enquiryID + "," + reply + "," +
+                                            enquiryID + ",");
+                    }
+                    else{
+                        csvWriter.println(enquiry + "," + userID + "," + campName + "," + enquiryID + "," + "NaN" + "," +
+                                            enquiryID + ",");
+                    }
+                }
+                csvWriter.close(); 
+            } catch (IOException e) { 
+                e.printStackTrace(); 
+            }
+        
+    }
+
+    /*
+     * Method to store suggestions into csv
+     */
+    public static void writeToSuggestion(ListOfSuggestions suggestions){
+        ArrayList<String> listOfSuggestions = suggestions.getListOfSuggestions();
+        
+
+
+            try { 
+                PrintWriter csvWriter = new PrintWriter(new FileWriter("./data/Suggestions.csv", true)); 
+                
+                for(int i = 0; i < listOfSuggestions.size(); i++){
+                    /*
+                    * Extract all attributes to write into csv
+                    suggestion,suggestor,suggestedCamp,suggestionID,isApproved,
+                    */
+                    String suggestion = suggestions.getSuggestion(i);
+                    String userID = suggestions.getUserID(i);
+                    String campName = suggestions.getCampEnquiredID(i);
+                    int suggestionID = suggestions.getSuggestionID(i);
+                    
+
+                    if(suggestions.isItApproved(i)){
+                        csvWriter.println(suggestion + "," + userID + "," + campName + "," + suggestionID + "," + "yes" + ",");
+                    }
+                    else{
+                        csvWriter.println(suggestion + "," + userID + "," + campName + "," + suggestionID + "," + "no" + ",");
+                    }
+                }
+                csvWriter.close(); 
+            } catch (IOException e) { 
+                e.printStackTrace(); 
+            }
+        
+    }
 }

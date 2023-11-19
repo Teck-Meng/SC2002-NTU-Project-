@@ -68,6 +68,7 @@ public class MainProgram {
         clearFiles.clearPasswords();
         clearFiles.clearCampInfoAttributes();
         clearFiles.clearCampInfo();
+        clearFiles.clearEnquiries();
 
         writeToFile.writeToBlacklist(campInfo);
         writeToFile.writeToAttendeeList(campInfo);

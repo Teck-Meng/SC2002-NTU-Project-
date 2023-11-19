@@ -14,7 +14,11 @@ public class ListOfEnquiries{
     private ArrayList<Camp> enquiredCamp = new ArrayList<Camp>();
     private ArrayList<Integer> enquiryID = new ArrayList<Integer>();
 
-    protected void addEnquiry(String enquiry, String userID, Database database, Camp camp){
+    public ArrayList<String> getEnquiries(){
+        return enquiries;
+    }
+
+    public void addEnquiry(String enquiry, String userID, Database database, Camp camp){
         /*
          * Acquire user object from database using userID
          * In main program, userID for this method is to be acquired using the getUserID method from the user class
@@ -34,11 +38,34 @@ public class ListOfEnquiries{
     }
 
     /*
+     * For readFromFile to add enquiry from excel sheet
+     */
+    public void addEnquiry(String enquiry, String userID, Database database, Camp camp, int enquiryIndex, boolean isItAnswered){
+        /*
+         * Acquire user object from database using userID
+         * In main program, userID for this method is to be acquired using the getUserID method from the user class
+         */
+        User student = database.getUser(userID);
+
+        enquiries.add(enquiry);
+        enquirer.add(student);
+        isAnswered.add(isItAnswered);
+        enquiredCamp.add(camp);
+        /*
+         * Ensure that id value is unique by always incrementing it when a new enquiry is added
+         */
+        enquiryID.add(enquiryIndex);
+        /*
+         * Update id so that id is unique for every new entry within the app
+         */
+        id = ++enquiryIndex;
+    }
+
+    /*
      * Update isAnswered at the specific index that the staff or CCMember has answered the enquiry
      */
-    protected void answeredEnquiry(int index){
+    public void answeredEnquiry(int index){
         isAnswered.set(index, true);
-        System.out.println("Enquiry successfully answered!");
     }
 
     /*
@@ -104,7 +131,7 @@ public class ListOfEnquiries{
     /*
      * Returns the status of the enquiry
      */
-    protected boolean isEnquiryAnswered(int index){
+    public boolean isEnquiryAnswered(int index){
         return isAnswered.get(index);
     }
 
