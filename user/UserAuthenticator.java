@@ -90,10 +90,17 @@ public class UserAuthenticator {
             System.out.println("Enter any other number to re-attempt entering password");
             userChoice = Integer.parseInt(sc.nextLine());
             if(userChoice != 1){
-                return 0;
+                return promptUserPasswordInput(userIDIndex, database);
             }
             System.out.println("Kindly re-attempt entering of password.");
             return 1;
+        }
+        if(password.matches("password")){
+            int verifyIndex = verifyChangePassword(database);
+            // if userID is correct, prompt password change using the index
+            if(verifyIndex != -1){
+                PasswordManager.changePassword(verifyIndex, database);
+            }
         }
         return 2;
     }

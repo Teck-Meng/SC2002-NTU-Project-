@@ -2,6 +2,9 @@ import java.util.Scanner;
 
 import camppackage.CampInfo;
 import clock.Time;
+import enquiry.ListOfEnquiries;
+import enquiry.ListOfSuggestions;
+import enquiry.ReplyToStudent;
 import filehandler.*;
 import user.User;
 /*
@@ -16,12 +19,13 @@ public class MainProgram {
         /*
          * Initialize campInfo and database data structures from csv files
          */
-        Database database = readFromFile.readUserList();
-        database = readFromFile.readPasswords(database);
-        CampInfo campInfo = readFromFile.readListOfCamps(database);
-        readFromFile.readAttendeeList(campInfo, database);
-        readFromFile.readCommitteeList(campInfo, database);
-        readFromFile.readBlacklist(campInfo, database);
+        Database database = new Database();
+        CampInfo campInfo = new CampInfo();
+        ListOfSuggestions suggestions = new ListOfSuggestions();
+        ListOfEnquiries enquiries = new ListOfEnquiries();
+        ReplyToStudent replies = new ReplyToStudent();
+
+        readFileInfo(campInfo, database, enquiries, suggestions, replies);
         
         /*
          * Intialize integer variable to track user choice in the app
@@ -57,23 +61,38 @@ public class MainProgram {
          /*
           * To be called upon program termination, write updated information into csv files
           */
-        saveFileInfo(campInfo, database);
+        saveFileInfo(campInfo, database, enquiries, suggestions, replies);
 
         sc.close();
     }
 
+    public static void readFileInfo(CampInfo campInfo, Database database, ListOfEnquiries enquiries, ListOfSuggestions suggestions,
+                                    ReplyToStudent replies){
+        readFromFile.readUserList(database); 
+        readFromFile.readPasswords(database);
+        readFromFile.readListOfCamps(campInfo, database); 
+        readFromFile.readAttendeeList(campInfo, database);
+        readFromFile.readCommitteeList(campInfo, database);
+        readFromFile.readBlacklist(campInfo, database);
+        readFromFile.readEnquiries(campInfo, database, enquiries, replies);
+        readFromFile.readSuggestions(campInfo, database, suggestions);   
+    }
 
-    public static void saveFileInfo(CampInfo campInfo, Database database){
+    public static void saveFileInfo(CampInfo campInfo, Database database, ListOfEnquiries enquiries, ListOfSuggestions suggestions,
+                                    ReplyToStudent replies){
         clearFiles.clearAttendanceLists();
         clearFiles.clearPasswords();
         clearFiles.clearCampInfoAttributes();
         clearFiles.clearCampInfo();
         clearFiles.clearEnquiries();
+        clearFiles.clearSuggestions();
 
         writeToFile.writeToBlacklist(campInfo);
         writeToFile.writeToAttendeeList(campInfo);
         writeToFile.writeToCommitteeList(campInfo);
         writeToFile.writeToPasswords(database);
         writeToFile.writeCampInfo(campInfo);
+        writeToFile.writeToEnquiries(enquiries, replies);
+        writeToFile.writeToSuggestion(suggestions);
     }
 }

@@ -22,31 +22,6 @@ import report.PerformanceReport;
  * csv file name will be passed as @param_type String
  */
 public class writeToFile {
-    public static void main(String[] args){
-        /*
-         * Testing environment
-         */
-        Database database = readFromFile.readUserList();
-        database = readFromFile.readPasswords(database);
-        CampInfo campInfo = readFromFile.readListOfCamps(database);
-        readFromFile.readAttendeeList(campInfo, database);
-        readFromFile.readCommitteeList(campInfo, database);
-        readFromFile.readBlacklist(campInfo, database);
-
-        Camp c = campInfo.getCamp("Orientation");
-        PerformanceReport.printReport(c, campInfo);
-
-        clearFiles.clearAttendanceLists();
-        clearFiles.clearPasswords();
-        clearFiles.clearCampInfoAttributes();
-        clearFiles.clearCampInfo();
-
-        writeToBlacklist(campInfo);
-        writeToAttendeeList(campInfo);
-        writeToCommitteeList(campInfo);
-        writeToPasswords(database);
-        writeCampInfo(campInfo);
-    }
     /*
      * Method to write blacklist information on corresponding csv file
      */

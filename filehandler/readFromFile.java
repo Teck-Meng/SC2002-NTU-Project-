@@ -22,10 +22,12 @@ public class readFromFile extends convertString {
         /*
          * Testing environment for read methods
          */
-        Database db = readUserList();
-        db = readPasswords(db);
+        Database db = new Database();
+        readUserList(db);
+        readPasswords(db);
         
-        CampInfo test = readListOfCamps(db);
+        CampInfo test = new CampInfo();
+        readListOfCamps(test, db);
 
         readAttendeeList(test, db);
         readCommitteeList(test, db);
@@ -53,8 +55,7 @@ public class readFromFile extends convertString {
     /*
      * To read staff list and student list and translate into database
      */
-    public static Database readUserList(){
-        Database database = new Database();
+    public static void readUserList(Database database){
         final int NUMBEROFLISTS = 2;
         File file = new File("./data/student_list.csv");;
         /*
@@ -85,23 +86,23 @@ public class readFromFile extends convertString {
                     user = new Staff(userID, faculty);
                 }
                 database.addUser(user);
+                sc.nextLine();
             }
             
+            }
+            catch(FileNotFoundException e){
+                System.out.println("Error! File not found! ");
+            }
+            catch(NoSuchElementException n){
+                // Make program continue even if got this error
+            }
         }
-        catch(FileNotFoundException e){
-            System.out.println("Error! File not found! ");
-        }
-        catch(NoSuchElementException n){
-            // Make program continue even if got this error
-        }
-        }
-        return database;
     }
 
     /*
      * To be called right after calling readUserList()
      */
-    public static Database readPasswords(Database database){
+    public static void readPasswords(Database database){
         File file = new File("./data/passwords.csv");
         try{
             
@@ -115,6 +116,7 @@ public class readFromFile extends convertString {
                 String userID = sc.next();
                 int pos = database.getUserIndex(userID);
                 database.initializePassword(pos, sc.next());
+                sc.nextLine();
             }
             
         }
@@ -124,15 +126,13 @@ public class readFromFile extends convertString {
         catch(NoSuchElementException n){
             // Make program continue even if got this error
         }
-        return database;
     }
     
     /*
      * To intialize campInfo object, to be called after using readPassWords()
      * Will also update staff's list of camp list
      */
-    public static CampInfo readListOfCamps(Database database){
-        CampInfo campInfo = new CampInfo();
+    public static void readListOfCamps(CampInfo campInfo, Database database){
         File listOfCamps = new File("./data/List_Of_Camp_Info.csv");
         File campInfoAttributes = new File("./data/CampInfo_Attrib.csv");
 
@@ -215,8 +215,6 @@ public class readFromFile extends convertString {
         catch(NoSuchElementException n){
             // Make program continue even if got this error
         }
-        
-        return campInfo;
     }
     
     /*

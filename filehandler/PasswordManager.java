@@ -20,6 +20,9 @@ public class PasswordManager {
             System.out.println("Enter your new password again: ");
             confirmPassword = sc.nextLine();
             if(newPassword.equals(confirmPassword)){
+                /*
+         * Invoke database method to save password into database
+         */
                 database.setPassword(index, newPassword);
                 passwordChanged = true;
             }
@@ -35,10 +38,7 @@ public class PasswordManager {
                 }
             }
         }while(passwordChanged == false);
-        /*
-         * Invoke database method to save password into database
-         */
-        System.out.println("Password change is successful!");
+        
     }
 
     public static boolean checkPassword(String userID, String enteredPassword, Database database){
