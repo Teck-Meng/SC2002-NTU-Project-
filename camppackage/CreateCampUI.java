@@ -37,7 +37,7 @@ public class CreateCampUI {
      */
     public static String askCampName(Camp camp, CampInfo campInfo){
         /*
-         * Ensure that camp name can be edi
+         * Ensure that camp name can be edit
          */
         if(!allowEdit(camp, campInfo)){
             System.out.println("Unable to edit camp name as camp has at least 1 person registered!");
