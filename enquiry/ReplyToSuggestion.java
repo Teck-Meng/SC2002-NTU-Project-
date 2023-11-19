@@ -25,6 +25,7 @@ public class ReplyToSuggestion{
             }
             catch(InputMismatchException e){
                 System.out.println("Invalid choice! Kindly enter an integer value as choice!");
+                sc.nextLine();
             }
         }
         
@@ -38,6 +39,5 @@ public class ReplyToSuggestion{
                 System.out.println("Suggestion has been rejected!");
                 break;
         } 
-        sc.close();
     }
 }

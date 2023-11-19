@@ -41,7 +41,7 @@ public class AttendeeRegister implements CampRegister {
         return campInfo.getCampList(user);
     }
 
-    public void withdrawCamp(CampInfo campInfo, Camp camp, String userID, Database database){
+    public static void withdrawCamp(CampInfo campInfo, Camp camp, String userID, Database database){
         Student withdrawee = (Student)database.getUser(userID);
         /*
          * Checks if user's own database of registered camps contains the current camp

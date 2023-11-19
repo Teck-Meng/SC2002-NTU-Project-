@@ -1,17 +1,19 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
 import user.*;
-import report.ReportGeneration;
+import report.AttendanceReport;
 import filehandler.Database;
 import camppackage.Camp;
+import camppackage.CampInfo;
 import enquiry.ListOfEnquiries;
 import enquiry.ListOfSuggestions;
 import enquiry.ReplyToStudent;
-import enquiry.ReplyToSuggestion;
 
-public class committeeMemUI {
+public class CommitteeMemUI {
 
-    public void main(Camp camp, String userID, Database database, ListOfEnquiries enquiries, ListOfSuggestions suggestions, ReplyToStudent replyToStudent) {
+    public static void main(Camp camp, String userID, Database database, ListOfEnquiries enquiries, 
+                            ListOfSuggestions suggestions, ReplyToStudent replyToStudent, CampInfo campInfo) {
         boolean exit = false;
         while (!exit) {
             Scanner sc = new Scanner(System.in);
@@ -39,8 +41,8 @@ public class committeeMemUI {
                         replyToEnquiries(enquiries, camp, userID, replyToStudent, database);
                         break;
                     case 4:
-                        ReportGeneration reportGeneration = new ReportGeneration();
-                        reportGeneration.printReport(userID, database);
+                        AttendanceReport.attendeeReportHandling(camp.getAttendeeList().getListOfAttendees(), camp);
+                        System.out.println("Report generated successfully!");
                         break;
                     case 5:
                         exit = true;
@@ -56,7 +58,7 @@ public class committeeMemUI {
         /*
          * Call this method when committee member wishes to modify suggestion 
          */
-        private void modifySuggestion(Camp camp, String userID, Database database, ListOfSuggestions suggestions){
+        private static void modifySuggestion(Camp camp, String userID, Database database, ListOfSuggestions suggestions){
             Scanner sc = new Scanner(System.in);
             boolean manage = true;
             while(manage){
@@ -70,21 +72,48 @@ public class committeeMemUI {
                 sc.nextLine(); // Consume the newline character left by previous nextInt()
                 switch(suggestionChoice){
                     case 1:
-                    sc.nextLine(); // Consume the newline character left by previous nextInt()
+                        sc.nextLine(); // Consume the newline character left by previous nextInt()
                     case 2:
                         suggestions.printAllSuggestions(camp, userID, false);
                         break;
                     case 3:
-                        System.out.println("Enter the suggestion ID of the suggestion you want to edit: ");
-                        int suggestionID = sc.nextInt();
+                        int suggestionID = -1;
+                        while(suggestionID == -1){
+                            try{
+                                /*
+                                 * Show the user the suggestions they can edit
+                                 */
+                                suggestions.printAllSuggestions(camp, userID, false);
+
+                                System.out.println("Enter the suggestion ID of the suggestion you want to edit: ");
+                                suggestionID = sc.nextInt();
+                            }
+                            catch(InputMismatchException e){
+                                sc.nextLine();
+                                System.out.println("Please enter a valid integer choice!");
+                            }
+                        }
                         sc.nextLine(); // Consume the newline character left by previous nextInt()
                         System.out.println("Enter your new suggestion: ");
                         String newSuggestion = sc.nextLine();
                         suggestions.editSuggestion(suggestionID, userID, newSuggestion);
                         break;
                     case 4:
-                        System.out.println("Enter the suggestion ID of the suggestion you want to delete: ");
-                        int suggestionID2 = sc.nextInt();
+                        int suggestionID2 = -1;
+                        while(suggestionID2 == -1){
+                            try{
+                                /*
+                                 * Show the user the suggestions they can delete
+                                 */
+                                suggestions.printAllSuggestions(camp, userID, false);
+                                System.out.println("Enter the suggestion ID of the suggestion you want to delete: ");
+                                suggestionID2 = sc.nextInt();
+                            }
+                            catch(InputMismatchException e){
+                                sc.nextLine();
+                                System.out.println("Please enter a valid integer choice!");
+                            }
+                        }
                         sc.nextLine(); // Consume the newline character left by previous nextInt()
                         suggestions.deleteSuggestion(suggestionID2, userID);
                         break;
@@ -95,15 +124,24 @@ public class committeeMemUI {
                         System.out.println("Invalid choice");
                     }                   
                 }
-                sc.close();
         }
 
-        private void replyToEnquiries(ListOfEnquiries enquiries, Camp camp, String userID, ReplyToStudent replyToStudent, Database database){
+        private static void replyToEnquiries(ListOfEnquiries enquiries, Camp camp, String userID, ReplyToStudent replyToStudent, Database database){
             Scanner sc = new Scanner(System.in);
+            int enquiryID = -1;
 
-            enquiries.printAllEnquiries(camp);
-            System.out.println("Enter the enquiry ID of the enquiry you want to reply to: ");
-            int enquiryID = sc.nextInt();
+            while(enquiryID == -1){
+                try{
+                    enquiries.printAllEnquiries(camp);
+                    System.out.println("Enter the enquiry ID of the enquiry you want to reply to: ");
+                    enquiryID = sc.nextInt();
+                }
+                catch(InputMismatchException e){
+                    sc.nextLine();
+                    System.out.println("Please enter a valid integer choice!");
+                }
+            }
+            
             sc.nextLine(); // Consume the newline character left by previous nextInt()
             System.out.println("Enter your reply: ");
             String reply = sc.nextLine();
@@ -114,6 +152,5 @@ public class committeeMemUI {
             Student currentUser = (Student)database.getUser(userID);
             currentUser.addCommitteePoints(1);
 
-            sc.close();
         }
 }

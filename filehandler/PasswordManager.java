@@ -31,7 +31,6 @@ public class PasswordManager {
                 userChoice = sc.nextInt();
                 if(userChoice != 1){
                     System.out.println("Quitting password changing...");
-                    sc.close();
                     return;
                 }
             }
@@ -39,7 +38,6 @@ public class PasswordManager {
         /*
          * Invoke database method to save password into database
          */
-        sc.close();
         System.out.println("Password change is successful!");
     }
 

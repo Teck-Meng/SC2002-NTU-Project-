@@ -159,6 +159,7 @@ public class ListOfEnquiries{
         if(!isStaff){
             for(int i = 0; i < enquiries.size(); i++){
             if(userID == enquirer.get(i).getUserID()){
+                System.out.print("Enquiry ID: "+ enquiryID.get(i)+ " : ");
                 System.out.println(enquiries.get(i));
                 returnIndexes.add(i);
                 count++;
@@ -176,8 +177,9 @@ public class ListOfEnquiries{
              */
             for(int i = 0; i < enquiries.size(); i++){
             if(userID == enquiredCamp.get(i).getStaffID()){
+                System.out.print("Enquiry for "+ enquiredCamp.get(i).getCampName() + " ");
+                System.out.print("Enquiry ID: "+ enquiryID.get(i)+ " : ");
                 System.out.println(enquiries.get(i));
-                System.out.println("Enquiry for " + enquiredCamp.get(i).getCampName());
                 returnIndexes.add(i);
                 count++;
             }
@@ -204,6 +206,7 @@ public class ListOfEnquiries{
          for(int i = 0; i < enquiries.size(); i++){
             if(enquiredCamp.get(i) == camp){
                 count++;
+                System.out.print("Enquiry ID: "+ enquiryID.get(i)+ " : ");
                 System.out.println(enquiryID + " " + enquiries.get(i));
                 returnIndexes.add(i);
             }

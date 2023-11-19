@@ -23,7 +23,7 @@ public class readFromFile extends convertString {
         Database db = readUserList();
         db = readPasswords(db);
         
-
+        System.out.println(db.getUserIndex("KOH"));
         CampInfo test = readListOfCamps(db);
 
         readAttendeeList(test, db);
@@ -75,7 +75,6 @@ public class readFromFile extends convertString {
                 }
                 database.addUser(user);
             }
-            sc.close();
             
         }
         catch(FileNotFoundException e){
@@ -106,7 +105,6 @@ public class readFromFile extends convertString {
                 int pos = database.getUserIndex(userID);
                 database.initializePassword(pos, sc.next());
             }
-            sc.close();
             
         }
         catch(FileNotFoundException e){
@@ -232,7 +230,6 @@ public class readFromFile extends convertString {
                 attendee.addCamp(correspondingCamp, false);
                 sc.nextLine();
             }
-            sc.close();
             
         }
         catch(FileNotFoundException e){
@@ -266,7 +263,6 @@ public class readFromFile extends convertString {
                 CCMember.addCommitteePoints(Integer.parseInt(sc.next()));
                 sc.nextLine();
             }
-            sc.close();
             
         }
         catch(FileNotFoundException e){
@@ -298,7 +294,6 @@ public class readFromFile extends convertString {
                 correspondingCamp.getBlacklist().addStudent(student);
                 sc.nextLine();
             }
-            sc.close();
             
         }
         catch(FileNotFoundException e){

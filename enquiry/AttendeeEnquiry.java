@@ -19,7 +19,7 @@ public class AttendeeEnquiry {
         enquiry = sc.nextLine();
         
         list.addEnquiry(enquiry, userID, database, camp);
-        sc.close();
+        System.out.println("Enquiry successfully added!");
     }
 
     /*
@@ -37,6 +37,11 @@ public class AttendeeEnquiry {
 
     public static void deleteQuestion(int index, String userID, ListOfEnquiries list, Database database){
         list.deleteEnquiry(index, userID);
+        System.out.println("Enquiry deletion successful!");
     }
 
+    public static void editEnquiry(ListOfEnquiries list, String userID, String newEnquiry, int index){
+        list.editEnquiry(index, userID, newEnquiry);
+        System.out.println("Enquiry edit successful!");
+    }
 }

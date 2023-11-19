@@ -15,7 +15,6 @@ public class CommitteeSuggestion {
         suggestion = sc.nextLine();
         
         list.addSuggestion(suggestion, userID, database, camp);
-        sc.close();
     }
 
     public static void viewSuggestion(String userID, ListOfSuggestions list, Database database){

@@ -57,6 +57,13 @@ public class MainProgram {
          /*
           * To be called upon program termination, write updated information into csv files
           */
+        saveFileInfo(campInfo, database);
+
+        sc.close();
+    }
+
+
+    public static void saveFileInfo(CampInfo campInfo, Database database){
         clearFiles.clearAttendanceLists();
         clearFiles.clearPasswords();
         clearFiles.clearCampInfoAttributes();
@@ -67,7 +74,5 @@ public class MainProgram {
         writeToFile.writeToCommitteeList(campInfo);
         writeToFile.writeToPasswords(database);
         writeToFile.writeCampInfo(campInfo);
-
-         sc.close();
     }
 }

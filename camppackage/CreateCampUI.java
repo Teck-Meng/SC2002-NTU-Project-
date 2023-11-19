@@ -26,7 +26,6 @@ public class CreateCampUI {
         String CampName;
         Scanner sc = new Scanner(System.in);
         CampName = sc.nextLine();
-        sc.close();
         System.out.println("Camp Name successfully added/changed!");
         return CampName;
     }
@@ -46,7 +45,6 @@ public class CreateCampUI {
         String CampName;
         Scanner sc = new Scanner(System.in);
         CampName = sc.nextLine();
-        sc.close();
         System.out.println("Camp Name successfully added/changed!");
         return CampName;
     }
@@ -119,7 +117,6 @@ public class CreateCampUI {
             }
         }
 
-        sc.close();
         return dates;
 
     }
@@ -157,7 +154,6 @@ public class CreateCampUI {
             }
             validDate = ValidateDate.isDateValid(regClosingDate);
         }
-        sc.close();
         return regClosingDate;
     }
 
@@ -237,7 +233,6 @@ public class CreateCampUI {
                 userGroup  = Faculty.ALL;
                 break;
         }
-        sc.close();
         return userGroup;
     }
 
@@ -248,7 +243,6 @@ public class CreateCampUI {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter location name of camp: ");
         String location = sc.nextLine();
-        sc.close();
         return location;
     }
 
@@ -265,7 +259,6 @@ public class CreateCampUI {
             System.out.println("Enter the number of total slots for this camp(Number to be above 1): ");
             totalSlots = sc.nextInt();
         }
-        sc.close();
         return totalSlots;
     }
 
@@ -290,11 +283,9 @@ public class CreateCampUI {
                 /*
                  * Exit method if staff wishes to quit editing
                  */
-                sc.close();
                 return -1;
             }
         }
-        sc.close();
         return attendeeSlots;
     }
 
@@ -319,7 +310,6 @@ public class CreateCampUI {
             }
         }while(campCommitteeSlots < 1&&campCommitteeSlots > 10);
 
-        sc.close();
         return campCommitteeSlots;
     }
 
@@ -332,7 +322,6 @@ public class CreateCampUI {
         int minSlots = campInfo.getCampCommitteeSlotsUsed(camp);
         if(minSlots == camp.getCampCommitteeSlots()){
             System.out.println("Unable to process editing as capacity minimum is capacity maximum");
-            sc.close();
             return -1;
         }
 
@@ -354,12 +343,10 @@ public class CreateCampUI {
                 /*
                  * Exit method if user wishes to quit
                  */
-                sc.close();
                 return -1;
             }
         }while(campCommitteeSlots < minSlots&&campCommitteeSlots > 10);
 
-        sc.close();
         return campCommitteeSlots;
     }
     /*
@@ -369,7 +356,6 @@ public class CreateCampUI {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter description of camp: ");
         String description = sc.nextLine();
-        sc.close();
         return description;
     }
 
@@ -394,7 +380,6 @@ public class CreateCampUI {
             }
         }
         
-        sc.close();
         if(userChoice == 1){
             return true;
         }

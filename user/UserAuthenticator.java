@@ -52,16 +52,14 @@ public class UserAuthenticator {
             System.out.println("Would you like to terminate program?");
             System.out.println("Enter 0 if you would like to do so");
             System.out.println("Enter any other number if you would like to reattempt entering user ID");
-            userChoice = sc.nextInt();
+            userChoice = Integer.parseInt(sc.nextLine());
             /*
              * Prompts verifyLogin to terminate login attempt
              */
             if(userChoice == 0){
-                sc.close();
                 return -2;
             }
         }
-        sc.close();
         return returnIndex;
     }
 
@@ -90,16 +88,13 @@ public class UserAuthenticator {
             System.out.println("Would you like to re-enter user ID?");
             System.out.println("Enter 1 if you would like to re-enter user ID");
             System.out.println("Enter any other number to re-attempt entering password");
-            userChoice = sc.nextInt();
+            userChoice = Integer.parseInt(sc.nextLine());
             if(userChoice != 1){
-                sc.close();
                 return 0;
             }
             System.out.println("Kindly re-attempt entering of password.");
-            sc.close();
             return 1;
         }
-        sc.close();
         return 2;
     }
 
@@ -118,13 +113,15 @@ public class UserAuthenticator {
              * userID verification and retrieve index of userID if valid
              */
             userIDIndex = promptUserIDInput(database);
-            if(userIDIndex == -2){
+            
+        }while(userIDIndex == -1);
+
+        if(userIDIndex == -2){
                 /*
                  * Prompt loginUI class to exit login call
                  */
                 return -1;
             }
-        }while(userIDIndex == -1);
         /*
          * Password verification for user ID
          * int variable outcome will prompt the system to execute the decision of promptUserPasswordInput as stated earlier
@@ -198,12 +195,10 @@ public class UserAuthenticator {
                 }
             }
             else{
-                sc.close();
                 return userIDIndex;
             }
         }while(userIDIndex == -1);
 
-        sc.close();
         return -1;
     }
 }

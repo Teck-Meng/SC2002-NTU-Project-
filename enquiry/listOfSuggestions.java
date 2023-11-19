@@ -140,6 +140,7 @@ public class ListOfSuggestions {
         if(isStaff){
             for(int i = 0; i < suggestions.size(); i++){
                 if(userID == suggestedCamp.get(i).getStaffID()){
+                    System.out.print("Suggestion ID: " + suggestionID.get(i)+ " : ");
                     count++;
                     System.out.println(suggestions.get(i));
                     returnIndexes.add(i);
@@ -149,6 +150,7 @@ public class ListOfSuggestions {
         else{
             for(int i = 0; i < suggestions.size(); i++){
                 if(userID == suggestor.get(i).getUserID()){
+                    System.out.print("Suggestion ID: " + suggestionID.get(i)+ " : ");
                     count++;
                     System.out.println(suggestions.get(i));
                     returnIndexes.add(i);

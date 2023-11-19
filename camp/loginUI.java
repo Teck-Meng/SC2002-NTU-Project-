@@ -19,7 +19,7 @@ public class loginUI {
             try{
                 System.out.println("Welcome to the login screen: ");
                 System.out.println("Kindly Enter your choice: 1 - Login, 2- Change Password, 3- Quit: ");
-                userInput = sc.nextInt();
+                userInput = Integer.parseInt(sc.nextLine());
             }
             catch(InputMismatchException e){
                 System.out.println("Input mismatch! Kindly enter an integer value as your choice");
@@ -55,14 +55,12 @@ public class loginUI {
                     /*
                      * Prompt application to close completely
                      */
-                    sc.close();
                     return -1;
                 default:
                     System.out.println("Kindly enter a valid choice!");
             }
         }while(userIDIndex < 0);
 
-        sc.close();
         return userIDIndex;
         /*
          * Break out of loop if login successful

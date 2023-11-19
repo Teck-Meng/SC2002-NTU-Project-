@@ -125,15 +125,15 @@ public class Camp{
     }
 
     public void print(){
-        System.out.print(dates[0] + " ");
-        System.out.print(dates[1] + " ");
-        System.out.print(regClosingDate + " ");
-        System.out.print(userGroup.toString()+ " ");
-        System.out.print(location+ " ");
-        System.out.print(totalSlots+ " ");
-        System.out.print(campCommitteeSlots+ " ");
-        System.out.print(description+ " ");
-        System.out.print(staffIC.getUserID());
-        System.out.println();
+        System.out.println("Camp Name: " + campName);
+        System.out.print("Start Date: " + dates[0] + " ");
+        System.out.print("End Date: " + dates[1] + " ");
+        System.out.println("Registration Closing Date" + regClosingDate);
+        System.out.print("User Group: "+ userGroup.toString()+ " ");
+        System.out.println("Location: " + location);
+        System.out.print("Total Slots: " + totalSlots + " ");
+        System.out.println("Camp Committee Slots: " + campCommitteeSlots);
+        System.out.println("Camp Description: " + description + " ");
+        System.out.println("--------------------------------------------");
     }
 }

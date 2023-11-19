@@ -39,6 +39,7 @@ public class AttendanceReport implements ReportGeneration{
             }
             catch(InputMismatchException e){
                 System.out.println("Kindly enter a valid integer choice!");
+                sc.nextLine();
             }
             if(userChoice < 0|| userChoice > 3){
                 System.out.println("Please enter a choice from 0 to 3!");
@@ -49,7 +50,6 @@ public class AttendanceReport implements ReportGeneration{
          */
         if(userChoice == 3){
             System.out.println("Exiting report generation page . . .");
-            sc.close();
             return;
         }
         System.out.println("Generating report . . .");
@@ -82,7 +82,6 @@ public class AttendanceReport implements ReportGeneration{
             }
         }
         System.out.println("Attendance Report successfully generated");
-        sc.close();
     }
 
     /*
@@ -108,6 +107,7 @@ public class AttendanceReport implements ReportGeneration{
             }
             catch(InputMismatchException e){
                 System.out.println("Kindly enter a valid integer choice!");
+                sc.nextLine();
             }
             if(userChoice < 0|| userChoice > 3){
                 System.out.println("Please enter a choice from 0 to 3!");
@@ -118,7 +118,6 @@ public class AttendanceReport implements ReportGeneration{
          */
         if(userChoice == 3){
             System.out.println("Exiting report generation page . . .");
-            sc.close();
             return;
         }
         System.out.println("Generating report . . .");
@@ -139,7 +138,6 @@ public class AttendanceReport implements ReportGeneration{
                     break;
             }
         System.out.println("Attendance Report successfully generated");
-        sc.close();
     }
 
     public static void attendeeReportHandling(ArrayList<Student> attendeeList, Camp camp){
