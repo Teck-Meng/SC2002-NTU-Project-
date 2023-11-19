@@ -49,6 +49,10 @@ public class AttendeeUI {
                             System.out.println("Enter a valid integer choice!");
                             sc.nextLine();
                         }
+                        catch(NumberFormatException n){
+                            System.out.println("Enter a valid integer choice!");
+                            sc.nextLine();
+                        }
                     }
 
                     if(withdrawChoice == 1){
@@ -84,6 +88,10 @@ public class AttendeeUI {
                             sc.nextLine();
                             System.out.println("Enter a valid integer choice!");
                         }
+                        catch(NumberFormatException n){
+                            System.out.println("Enter a valid integer choice!");
+                            sc.nextLine();
+                        }
                     }
             
                     System.out.println("Kindly enter your enquiry for "+camp.getCampName());
@@ -108,6 +116,10 @@ public class AttendeeUI {
                         catch(InputMismatchException e){
                             sc.nextLine();
                             System.out.println("Enter a valid integer choice!");
+                        }
+                        catch(NumberFormatException n){
+                            System.out.println("Enter a valid integer choice!");
+                            sc.nextLine();
                         }
                     }
 

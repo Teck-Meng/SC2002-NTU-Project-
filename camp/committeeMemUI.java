@@ -17,7 +17,7 @@ public class CommitteeMemUI {
         boolean exit = false;
         while (!exit) {
             Scanner sc = new Scanner(System.in);
-                System.out.println("Camp Committee Member Menu");
+                System.out.println("--- Camp Committee Member Menu ---");
                 System.out.println("1. View Camp Details");
                 System.out.println("2. Modify Suggestions for Camp");
                 System.out.println("3. Reply to Enquiries");

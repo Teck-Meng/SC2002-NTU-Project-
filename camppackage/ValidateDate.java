@@ -125,6 +125,36 @@ public class ValidateDate {
      * returns true if registration closing date has passed
      */
     public static boolean checkRegClosingDate(int currentTime, int regClosingDate){
-        return !(regClosingDate > currentTime);
+        int currentTimeYear = currentTime % 10000;
+        int regClosingDateYear = regClosingDate % 10000;
+        if(currentTimeYear > regClosingDateYear){
+            return true;
+        }
+        else if(currentTimeYear < regClosingDateYear){
+            return false;
+        }
+        currentTime /= 10000;
+        regClosingDate /= 10000;
+        int currentTimeMonth = currentTime % 100;
+        int regClosingDateMonth = regClosingDate % 100;
+        if(currentTimeMonth > regClosingDateMonth){
+            return true;
+        }
+        else if(currentTimeMonth < regClosingDateMonth){
+            return false;
+        }
+
+        currentTime /= 100;
+        regClosingDate /= 100;
+        /*
+         * compare days
+         */
+        if(currentTime > regClosingDate){
+            return true;
+        }
+        else if(currentTime < regClosingDate){
+            return false;
+        }
+        return true;
     }
 }

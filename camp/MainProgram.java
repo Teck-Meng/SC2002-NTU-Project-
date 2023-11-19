@@ -7,6 +7,8 @@ import enquiry.ListOfSuggestions;
 import enquiry.ReplyToStudent;
 import filehandler.*;
 import user.User;
+import user.Staff;
+import user.Student;
 /*
  * Main program will call methods to operate the features of the app
  */
@@ -24,9 +26,8 @@ public class MainProgram {
         ListOfSuggestions suggestions = new ListOfSuggestions();
         ListOfEnquiries enquiries = new ListOfEnquiries();
         ReplyToStudent replies = new ReplyToStudent();
-
-        readFileInfo(campInfo, database, enquiries, suggestions, replies);
         
+        readFileInfo(campInfo, database, enquiries, suggestions, replies);
         /*
          * Intialize integer variable to track user choice in the app
          */
@@ -56,7 +57,15 @@ public class MainProgram {
         /*
          * To have another method call to 2 other classes called staffUI and studentUI
          */
-
+        if(currentUser instanceof Staff){
+            System.out.println("Template");
+        }
+        else{
+            /*
+             * Call student UI
+             */
+            StudentUI.Main((Student)currentUser, campInfo, database, time, enquiries, suggestions, replies);
+        }
          
          /*
           * To be called upon program termination, write updated information into csv files

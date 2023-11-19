@@ -30,6 +30,15 @@ public class AttendeeList{
         return true;
     }
 
+    public boolean findStudent(String userID){
+        // Use userPos to verify existence of student in blacklist
+        if(CampUtility.userPos(userID, listOfAttendees) != -1){
+            return true;
+        }
+        return false;
+       
+    }
+
     public void print(){
         for(int i = 0;i<listOfAttendees.size();i++){
             System.out.println(listOfAttendees.get(i).getUserID());

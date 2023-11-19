@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import user.User;
 import user.Staff;
 import user.Faculty;
+import filehandler.Database;
+import clock.Time;
 
 public class CampInfo {
     private ArrayList<Camp> listOfCamps = new ArrayList<Camp>();
@@ -24,12 +26,27 @@ public class CampInfo {
                 /* For every iteration, check if camp is open to all students, if not, check if
                  * user group matches student's faculty, if yes, insert into arrayList
                  */
-                if(visibility.get(i)&&matchFaculty(user, listOfCamps.get(i).getUserGroup())){
+                if(visibility.get(i) && matchFaculty(user, listOfCamps.get(i).getUserGroup())){
                     returnList.add(listOfCamps.get(i));
                 }
             }
             return returnList;
         }
+    }
+
+    public ArrayList<Camp> getCampList(User user, CampInfo campInfo, Database database, Time clock){
+        ArrayList<Camp> returnList = new ArrayList<Camp>();
+        for(int i = 0; i < listOfCamps.size(); i++){
+                /* For every iteration, check if camp is open to all students, if not, check if
+                 * user group matches student's faculty, if yes, insert into arrayList
+                 */
+                Camp currentCamp = listOfCamps.get(i);
+                if(visibility.get(i) && matchFaculty(user, listOfCamps.get(i).getUserGroup()) 
+                    && ValidateRegister.canRegisterForCamp(campInfo, currentCamp, user.getUserID(), database, clock)){
+                        returnList.add(listOfCamps.get(i));
+                }
+            }
+        return returnList;
     }
 
     public void updateAttendeeSlotsUsed(boolean isIncrement, Camp camp, int value){
@@ -102,8 +119,15 @@ public class CampInfo {
     }
 
     //allows staff to set visiblity of a specific camp that they have created
-    public boolean setVisiblity(Camp camp, boolean isVisible){
-         int index = CampUtility.CampPos(camp, listOfCamps);
+    public boolean setVisiblity(Camp camp, boolean isVisible, boolean isStaff){
+        int index = CampUtility.CampPos(camp, listOfCamps);
+        if(!isStaff){
+            /*
+             * Give special rights to fileHandler
+             */
+            visibility.set(index, isVisible);
+            return true;
+        }
          /*
           * terminate method if camp does not exist
           */
@@ -114,7 +138,7 @@ public class CampInfo {
          * Check if camp already has students registered in the camp
          * If yes, prevent staff from toggling visibility
          */
-        if(campCommitteeSlotsUsed.get(index) == 0 && attendeeSlotsUsed.get(index) == 0){
+        if(campCommitteeSlotsUsed.get(index) > 0 || attendeeSlotsUsed.get(index) > 0){
             System.out.println("Camp already has at least 1 person registered, unable to toggle visiblity!");
             return false;
         }

@@ -173,7 +173,7 @@ public class Staff extends User{
                         break;
                     case 8:
                         boolean visiblity = CreateCampUI.askVisibility();
-                        campInfo.setVisiblity(camp, visiblity);
+                        campInfo.setVisiblity(camp, visiblity, true);
                         break;
                     case 9:
                         wantToEdit = false;

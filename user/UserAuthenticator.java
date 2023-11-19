@@ -49,14 +49,22 @@ public class UserAuthenticator {
          * If user id not found, prompt user to see if they would like to terminate program
          */
         if(returnIndex == -1){
-            System.out.println("Would you like to terminate program?");
-            System.out.println("Enter 0 if you would like to do so");
-            System.out.println("Enter any other number if you would like to reattempt entering user ID");
-            userChoice = Integer.parseInt(sc.nextLine());
-            /*
-             * Prompts verifyLogin to terminate login attempt
-             */
-            if(userChoice == 0){
+            try{
+                System.out.println("Would you like to terminate program?");
+                System.out.println("Enter 0 if you would like to do so");
+                System.out.println("Enter any other number if you would like to reattempt entering user ID");
+                userChoice = Integer.parseInt(sc.nextLine());
+                /*
+                * Prompts verifyLogin to terminate login attempt
+                */
+                if(userChoice == 0){
+                    return -2;
+                }
+            }
+            catch(InputMismatchException e){
+                return -2;
+            }
+            catch(NumberFormatException n){
                 return -2;
             }
         }
@@ -100,6 +108,9 @@ public class UserAuthenticator {
             // if userID is correct, prompt password change using the index
             if(verifyIndex != -1){
                 PasswordManager.changePassword(verifyIndex, database);
+            }
+            else{
+                return -2;
             }
         }
         return 2;
@@ -148,6 +159,9 @@ public class UserAuthenticator {
                 return -1;
             }
             }
+            else if(outcome == -2){
+                return -1;
+            }
         }while(outcome != 2);
         return userIDIndex;
     }
@@ -190,15 +204,25 @@ public class UserAuthenticator {
                  */
                 while(userIDIndex == -1){
                     try{
-                    userIDIndex = sc.nextInt()*(-1);
+                        userIDIndex = sc.nextInt();
+                        sc.nextLine();
+                    }
+                    catch(InputMismatchException e){
+                        System.out.println("Invalid input! Enter an integer value as input!");
+                        /*
+                        * To prevent infinite loop, sc.nextLine() is called
+                        */
+                        sc.nextLine();
+                    }
                 }
-                catch(InputMismatchException e){
-                    System.out.println("Invalid input! Enter an integer value as input!");
+                if(userIDIndex == 1){
                     /*
-                     * To prevent infinite loop, sc.nextLine() is called
+                     * Continue looping if user wishes to reattempt
                      */
-                    sc.nextLine();
+                    return verifyChangePassword(database);
                 }
+                else{
+                    return -1;
                 }
             }
             else{
@@ -206,6 +230,5 @@ public class UserAuthenticator {
             }
         }while(userIDIndex == -1);
 
-        return -1;
     }
 }

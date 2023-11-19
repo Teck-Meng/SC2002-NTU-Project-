@@ -126,9 +126,13 @@ public class Camp{
 
     public void print(){
         System.out.println("Camp Name: " + campName);
-        System.out.print("Start Date: " + dates[0] + " ");
-        System.out.print("End Date: " + dates[1] + " ");
-        System.out.println("Registration Closing Date" + regClosingDate);
+        System.out.print("Start Date: ");
+        PrintDate.print(dates[0]);
+        System.out.print(" End Date: ");
+        PrintDate.print(dates[1]);
+        System.out.print(" Registration Closing Date: ");
+        PrintDate.print(regClosingDate);
+        System.out.println();
         System.out.print("User Group: "+ userGroup.toString()+ " ");
         System.out.println("Location: " + location);
         System.out.print("Total Slots: " + totalSlots + " ");

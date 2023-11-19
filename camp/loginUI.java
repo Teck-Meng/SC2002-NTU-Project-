@@ -28,6 +28,10 @@ public class loginUI {
                  */
                 sc.nextLine();
             }
+            catch(NumberFormatException n){
+                System.out.println("Enter a valid integer choice!");
+                sc.nextLine();
+            }
             switch(userInput){
                 case 1:
                     /*

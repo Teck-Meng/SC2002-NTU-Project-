@@ -38,7 +38,7 @@ public class CommitteeRegister implements CampRegister {
          * Update the committee list, Committee slot value and also keeping data of the camp into
          * student's own database
          */
-        camp.getCommitteeList().addCommitteeMember((Student)user);
+        camp.getCommitteeList().addCommitteeMember((Student)user, campInfo, camp);
         campInfo.updateAttendeeSlotsUsed(true, camp, 1);
         // Adds student into camp while denoting that the student is joining as committee member with boolean param
         ((Student)user).addCamp(camp, true);

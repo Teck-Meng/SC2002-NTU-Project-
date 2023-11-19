@@ -32,6 +32,7 @@ public class PasswordManager {
                 System.out.println("Enter 1 if you would like to try again");
                 System.out.println("Enter any other number if you would like to quit");
                 userChoice = sc.nextInt();
+                sc.nextLine();
                 if(userChoice != 1){
                     System.out.println("Quitting password changing...");
                     return;

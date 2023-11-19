@@ -202,7 +202,7 @@ public class readFromFile extends convertString {
                 Camp currentCamp = campInfo.getCamp(index);
                 campInfo.updateAttendeeSlotsUsed(true, currentCamp, stringToInt(attributeScanner.next()));
                 campInfo.updateCommitteeSlotUsed(currentCamp, stringToInt(attributeScanner.next()));
-                campInfo.setVisiblity(currentCamp, Boolean.parseBoolean(attributeScanner.next()));
+                campInfo.setVisiblity(currentCamp, Boolean.parseBoolean(attributeScanner.next()), false);
                 attributeScanner.nextLine();
                 index++;
             }
@@ -267,7 +267,7 @@ public class readFromFile extends convertString {
                 String userID = sc.next();
                 Student CCMember = (Student)database.getUser(userID);
                 Camp correspondingCamp = campInfo.getCamp(sc.next());
-                correspondingCamp.getCommitteeList().addCommitteeMember(CCMember);
+                correspondingCamp.getCommitteeList().addCommitteeMember(CCMember, campInfo, correspondingCamp);
                 CCMember.addCamp(correspondingCamp, true);
                 CCMember.addCommitteePoints(Integer.parseInt(sc.next()));
                 sc.nextLine();

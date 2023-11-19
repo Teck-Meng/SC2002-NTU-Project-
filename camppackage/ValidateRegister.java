@@ -28,6 +28,45 @@ public class ValidateRegister {
             System.out.println(userID+" has previously withdraw from camp, unable to process re-registration request!");
             return false;
         }
+
+        if(camp.getCommitteeList().findStudent(userID) || camp.getAttendeeList().findStudent(userID)){
+            System.out.println("Student has already registered for this camp!");
+            return false;
+        }
+
+        
         return true;
     }
+
+    /*
+     * Does not have system reaction
+     */
+    public static boolean canRegisterForCamp(CampInfo campInfo, Camp camp, String userID, Database database, Time clock){
+        /*
+         * Verify if registration closing date has been passed
+         * Output of checkRegClosingDate is true if current time has passed registration closing date
+         */
+        if(ValidateDate.checkRegClosingDate(clock.getDate(), camp.getRegClosingDate())){
+            return false;
+        }
+        
+        /*
+         * Check if there are any collision of dates
+         * If yes, terminate registration
+         */
+        if(ValidateDate.doDatesCollide(camp.getDates(), userID, database)){
+            return false;
+        };
+        // checks if the user has withdrew from this particular camp
+        if(camp.getBlacklist().findStudent(userID)){
+            return false;
+        }
+        if(camp.getCommitteeList().findStudent(userID) || camp.getAttendeeList().findStudent(userID)){
+            return false;
+        }
+
+        
+        return true;
+    }
+    
 }

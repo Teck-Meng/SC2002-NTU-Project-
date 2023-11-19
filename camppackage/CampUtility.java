@@ -39,7 +39,6 @@ public class CampUtility {
                 return i;
             }
         }
-        System.out.println("User is not a Committee Member! Unable to process request!");
         return -1;
     }
 
@@ -52,7 +51,6 @@ public class CampUtility {
                 return i;
             }
         }
-        System.out.println("User is not a Committee Member! Unable to process request!");
         return -1;
     }
 
