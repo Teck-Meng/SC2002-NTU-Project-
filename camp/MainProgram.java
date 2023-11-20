@@ -31,9 +31,7 @@ public class MainProgram {
         /*
          * Intialize integer variable to track user choice in the app
          */
-        int userInput;
         int userIDIndex;
-        boolean canLogin;
         /*
          * currentUser will store the object of the current user after they have successfully logged in
          */
@@ -58,6 +56,9 @@ public class MainProgram {
          * To have another method call to 2 other classes called staffUI and studentUI
          */
         if(currentUser instanceof Staff){
+            /*
+             * To call Staff UI
+             */
             System.out.println("Template");
         }
         else{

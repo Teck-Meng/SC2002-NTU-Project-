@@ -6,6 +6,7 @@ import camppackage.AttendeeList;
 import camppackage.Camp;
 import camppackage.CampInfo;
 import camppackage.CommitteeList;
+import camppackage.PrintCampDetails;
 import user.Student;
 import filehandler.Database;
 import clock.Time;
@@ -27,7 +28,8 @@ public class StudentUI {
                 System.out.println("3: Modify Registered Camps");
                 System.out.println("4: Committee Camp Affairs");
                 System.out.println("5: View all registered Camps");
-                System.out.println("6. Exit");
+                System.out.println("6. View user status");
+                System.out.println("7. Exit");
                 System.out.println("Please enter your choice: ");
                 choice = sc.nextInt();
                 sc.nextLine();
@@ -47,7 +49,7 @@ public class StudentUI {
                     registerCamp(campInfo, student, database, clock);
                     break;
                 case 3:
-                    callAttendeeUI(student, campInfo, database, enquiries);
+                    callAttendeeUI(student, campInfo, database, enquiries, replies);
                     // Modify registered Camp, give user choice of camp and call AttendeeUI afterwards
                     break;
                 case 4:
@@ -65,9 +67,18 @@ public class StudentUI {
                     break;
                 case 5:
                     // View all registered camps
-                    printListOfRegisteredCamps(student);
+                    printListOfRegisteredCamps(student, campInfo);
                     break;
                 case 6:
+                    // Shows whether student is a camp committee member in system prompt
+                    if(student.getCommitteeCamp() == null){
+                        System.out.println("You are not a committee member in any camp.");
+                    }
+                    else{
+                        System.out.println("You are a camp committee member for " + student.getCommitteeCamp().getCampName());
+                    }
+                    break;
+                case 7:
                     int choiceToExit = -1;
                     while(choiceToExit == -1){
                         try{
@@ -98,7 +109,8 @@ public class StudentUI {
         System.out.println("This are the list of camps available to you:");
         for(int i = 0; i < listOfCamps.size(); i++){
             System.out.print((i + 1) + ": ");
-            listOfCamps.get(i).print();
+            PrintCampDetails.print(listOfCamps.get(i));
+            PrintCampDetails.printRemainingSlots(listOfCamps.get(i), campInfo);
         }
     }
 
@@ -119,15 +131,12 @@ public class StudentUI {
         while(registerChoice < 0 || registerChoice > listOfCamps.size()){
             try{
                 for(int i = 0; i < listOfCamps.size(); i++){
-                    listOfCamps.get(i).print();
+                    PrintCampDetails.print(listOfCamps.get(i));
+                    PrintCampDetails.printRemainingSlots(listOfCamps.get(i), campInfo);
                     }
                     System.out.println("Enter 0 if you wish to quit the registration interface.");
                     System.out.println("Enter your choice of camp based on its numerical index: ");
                     registerChoice = sc.nextInt();
-
-                    if(registerChoice == 0){
-                        break;
-                }
                 /*
                     * Error message if choice is out of bound
                     */
@@ -140,7 +149,9 @@ public class StudentUI {
                 sc.nextLine();
             }
         }
-
+        if(registerChoice == 0){
+            return;
+        }
         Camp selectedCamp = listOfCamps.get(registerChoice - 1);
 
         /*
@@ -182,20 +193,23 @@ public class StudentUI {
         //Register for a camp
     }
     
-    private static void printListOfRegisteredCamps(Student student){
+    private static void printListOfRegisteredCamps(Student student, CampInfo campInfo){
         ArrayList<Camp> registeredCamps = student.getListOfCamps();
         System.out.println("The following are the camps you have registered for as an attendee: ");
         for(int i = 0; i < registeredCamps.size(); i++){
             System.out.print((i+1) + " : ");
-            registeredCamps.get(i).print();
+            PrintCampDetails.print(registeredCamps.get(i));
+            PrintCampDetails.printRemainingSlots(registeredCamps.get(i), campInfo);
         }
         if(student.getCommitteeCamp() != null){
             System.out.println("This is the camp that you have registered for as a committee member: ");
-            student.getCommitteeCamp().print();
+            PrintCampDetails.print(student.getCommitteeCamp());
+            PrintCampDetails.printRemainingSlots(student.getCommitteeCamp(), campInfo);
         }
     }
 
-    private static void callAttendeeUI(Student student, CampInfo campInfo, Database database, ListOfEnquiries enquiries){
+    private static void callAttendeeUI(Student student, CampInfo campInfo, Database database, ListOfEnquiries enquiries, 
+                                        ReplyToStudent replies){
         Scanner sc = new Scanner(System.in);
         int attendeeChoice = -1;
         ArrayList<Camp> registeredCamps = student.getListOfCamps();
@@ -204,14 +218,12 @@ public class StudentUI {
                 System.out.println("The following are the camps you have registered for as an attendee: ");
                 for(int i = 0; i < registeredCamps.size(); i++){
                     System.out.print((i+1) + " : ");
-                    registeredCamps.get(i).print();
+                    PrintCampDetails.print(registeredCamps.get(i));
+                    PrintCampDetails.printRemainingSlots(registeredCamps.get(i), campInfo);
                 }
-                System.out.println("Enter 0 if you wish to quit the registration interface.");
+                System.out.println("Enter 0 if you wish to quit the modification interface.");
                 System.out.println("Enter your choice of camp based on its numerical index: ");
                 attendeeChoice = sc.nextInt();
-                if(attendeeChoice == 0){
-                    return;
-                }
             }
             catch(InputMismatchException e){
                 System.out.println("Please enter a valid integer choice!");
@@ -219,8 +231,11 @@ public class StudentUI {
             }
         }
 
+        if(attendeeChoice == 0){
+            return;
+        }
         Camp camp = registeredCamps.get(attendeeChoice - 1);
-        AttendeeUI.DisplayUI(camp, campInfo, student, database, enquiries);
+        AttendeeUI.DisplayUI(camp, campInfo, student, database, enquiries, replies);
     }
    
 }

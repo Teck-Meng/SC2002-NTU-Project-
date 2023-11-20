@@ -27,9 +27,15 @@ public class AttendeeEnquiry {
      */
     public static void viewQuestion(String userID, ListOfEnquiries list, Database database){
         int size = list.getSize();
+        if(size == 0){
+            System.out.println("You do not have any enquiries!");
+            return;
+        }
+        System.out.println("The following are the enquiries you have submitted: ");
         for(int i = 0; i < size; i++){
             String toPrint = list.getEnquiry(i, userID);
             if(toPrint != null){
+                System.out.print((i+1)+": ");
                 System.out.println(toPrint);
             }
         }

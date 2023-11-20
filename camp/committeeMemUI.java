@@ -6,6 +6,7 @@ import report.AttendanceReport;
 import filehandler.Database;
 import camppackage.Camp;
 import camppackage.CampInfo;
+import camppackage.PrintCampDetails;
 import enquiry.ListOfEnquiries;
 import enquiry.ListOfSuggestions;
 import enquiry.ReplyToStudent;
@@ -32,7 +33,7 @@ public class CommitteeMemUI {
                         /*
                         * Print all the camp details
                         */
-                        camp.print();
+                        PrintCampDetails.print(camp);
                         break;
                     case 2:
                         modifySuggestion(camp, userID, database, suggestions);

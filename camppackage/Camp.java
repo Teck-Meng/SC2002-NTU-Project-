@@ -124,20 +124,7 @@ public class Camp{
         return staffIC.getUserID();
     }
 
-    public void print(){
-        System.out.println("Camp Name: " + campName);
-        System.out.print("Start Date: ");
-        PrintDate.print(dates[0]);
-        System.out.print(" End Date: ");
-        PrintDate.print(dates[1]);
-        System.out.print(" Registration Closing Date: ");
-        PrintDate.print(regClosingDate);
-        System.out.println();
-        System.out.print("User Group: "+ userGroup.toString()+ " ");
-        System.out.println("Location: " + location);
-        System.out.print("Total Slots: " + totalSlots + " ");
-        System.out.println("Camp Committee Slots: " + campCommitteeSlots);
-        System.out.println("Camp Description: " + description + " ");
-        System.out.println("--------------------------------------------");
-    }
+    
+
+
 }
