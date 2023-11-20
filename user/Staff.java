@@ -54,11 +54,11 @@ public class Staff extends User{
         int[] dates = CreateCampUI.askDates(time);
         newCamp.setDates(dates);
 
-        int regClosingDate = CreateCampUI.askRegClosingDate(time);
+        int regClosingDate = CreateCampUI.askRegClosingDate(time, dates[0]);
         newCamp.setRegClosingDate(regClosingDate);
 
-        Faculty useGroup = CreateCampUI.askUserGroup();
-        newCamp.setUserGroup(useGroup);
+        Faculty userGroup = CreateCampUI.askUserGroup();
+        newCamp.setUserGroup(userGroup);
 
         String location = CreateCampUI.askLocation();
         newCamp.setLocation(location);
@@ -97,6 +97,7 @@ public class Staff extends User{
         int userChoice = 0;
 
         while(wantToEdit == true){
+            userChoice = 0;
             while(userChoice == 0){
                 try{
                     System.out.println("Which camp detail would you like to edit? Enter the corresponding integer choice: ");
@@ -124,12 +125,16 @@ public class Staff extends User{
                     case 1:
                         boolean nameTaken = true;
                         String campName = "";
-                        while(nameTaken == true){
+                        while(nameTaken){
                             campName = CreateCampUI.askCampName(camp, campInfo);
+                            if(campName == ""){
+                                break;
+                            }
                             nameTaken = DuplicateCheck.isNameTaken(campName, myCamps);
                             if(nameTaken == true){
                                 System.out.println("Camp Name has already been taken!");
                             }
+                            
                         }
                         /*
                          * Only allow edit if nobody has registered for camp
@@ -143,7 +148,7 @@ public class Staff extends User{
                         camp.setDates(dates);
                         break;
                     case 3:
-                        int regClosingDate = CreateCampUI.askRegClosingDate(time);
+                        int regClosingDate = CreateCampUI.askRegClosingDate(time, (camp.getDates())[0]);
                         camp.setRegClosingDate(regClosingDate);
                         break;
                     case 4:
@@ -151,14 +156,14 @@ public class Staff extends User{
                         camp.setLocation(location);
                         break;
                     case 5:
-                    /*
+                        /*
                          * To edit attendee slot
                          */
                         int attendeeSlots = CreateCampUI.askAttendeeSlots(camp, campInfo);
                         if(attendeeSlots == -1){
                             break;
                         }
-                        camp.setTotalSlots(campInfo.getCampCommitteeSlotsUsed(camp) + attendeeSlots);
+                        camp.setTotalSlots(camp.getCampCommitteeSlots() + attendeeSlots);
                         break;
                     case 6:
                         int campCommitteeSlots = CreateCampUI.askCampCommitteeSlots(camp, campInfo);
@@ -201,6 +206,7 @@ public class Staff extends User{
      */
     public void printListOfCamps(){
         for(int i = 0; i < myCamps.size(); i++){
+            System.out.print((i+1) + ": ");
             System.out.println(myCamps.get(i).getCampName());
         }
     } 

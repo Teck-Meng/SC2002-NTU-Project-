@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import camppackage.CampInfo;
@@ -38,34 +39,53 @@ public class MainProgram {
         User currentUser;
         
         Scanner sc = new Scanner(System.in);
-        System.out.println("Welcome to the Camp Application and Management System!");
-        /*
-         * Login verification by calling loginUI class
-         */
-        userIDIndex = loginUI.promptLogin(database);
-        if(userIDIndex < 0){
-            System.out.println("Terminating program. . .");
-            sc.close();
-            return;
-        }
-        /*
-         * Else grab user object from database and prepare interfaces
-         */
-        currentUser = database.getUser(userIDIndex);
-        /*
-         * To have another method call to 2 other classes called staffUI and studentUI
-         */
-        if(currentUser instanceof Staff){
+        while(true){
+            System.out.println("Welcome to the Camp Application and Management System!");
             /*
-             * To call Staff UI
-             */
-            System.out.println("Template");
-        }
-        else{
+            * Login verification by calling loginUI class
+            */
+            userIDIndex = loginUI.promptLogin(database);
+            if(userIDIndex < 0){
+                /*
+                 * Terminate program if login inside loginUI has failed
+                 */
+                System.out.println("Terminating program. . .");
+                sc.close();
+                break;
+            }
             /*
-             * Call student UI
-             */
-            StudentUI.Main((Student)currentUser, campInfo, database, time, enquiries, suggestions, replies);
+            * Else grab user object from database and prepare interfaces
+            */
+            currentUser = database.getUser(userIDIndex);
+            /*
+            * To have another method call to 2 other classes called staffUI and studentUI
+            */
+            if(currentUser instanceof Staff){
+                /*
+                * To call Staff UI
+                */
+                StaffUI.main(campInfo, database, enquiries, suggestions, replies, time, (Staff)currentUser);
+            }
+            else{
+                /*
+                * Call student UI
+                */
+                StudentUI.Main((Student)currentUser, campInfo, database, time, enquiries, suggestions, replies);
+            }
+
+            System.out.println("Would you like to terminate program?");
+            System.out.println("Enter 1 if you would like to do so");
+            int userChoice = -1;
+            try{
+                userChoice = sc.nextInt();
+            }
+            catch(InputMismatchException e){
+                sc.nextLine();
+            }
+            if(userChoice == 1){
+                System.out.println("Terminating program. . .");
+                break;
+            }
         }
          
          /*

@@ -24,6 +24,7 @@ public class CreateCampUI {
      */
     public static String askCampName(){
         String CampName;
+        System.out.println("Enter camp name: ");
         Scanner sc = new Scanner(System.in);
         CampName = sc.nextLine();
         System.out.println("Camp Name successfully added/changed!");
@@ -35,15 +36,18 @@ public class CreateCampUI {
      * return empty string if unable to edit camp name
      */
     public static String askCampName(Camp camp, CampInfo campInfo){
+        Scanner sc = new Scanner(System.in);
+        String CampName;
+        
+        
         /*
-         * Ensure that camp name can be edi
+         * Ensure that camp name can be edited
          */
         if(!allowEdit(camp, campInfo)){
             System.out.println("Unable to edit camp name as camp has at least 1 person registered!");
             return "";
         }
-        String CampName;
-        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter camp name: ");
         CampName = sc.nextLine();
         System.out.println("Camp Name successfully added/changed!");
         return CampName;
@@ -59,10 +63,11 @@ public class CreateCampUI {
         int[] dates = new int[2];
         boolean validDate = false;
         while(validDate == false){
+            startDate = 0;
             /*
              * Prompt staff to input start date of camp and validate if staff inputted a valid date
              */
-            while(startDate <= time.getDate()){
+            while(startDate == time.getDate() || ValidateDate.isDateSmaller(startDate, time.getDate())){
                 /*
                  * Prompt user to enter date till they enter a valid date
                  */
@@ -80,19 +85,20 @@ public class CreateCampUI {
                 /*
                  * Staff must enter a date in the future, send a warning message to staff if they fail to do so
                  */
-                if(startDate <= time.getDate()){
+                if(startDate == time.getDate() || ValidateDate.isDateSmaller(startDate, time.getDate())){
                     System.out.println("Invalid date input! Enter a date from tomorrow onwards!");
                 }
             }
             validDate = ValidateDate.isDateValid(startDate);
             dates[0] = startDate;
+            
         }
         validDate = false;
         while(validDate == false){
             /*
              * Prompt staff to input end date of camp and validate if staff inputted a valid end date
              */
-            while(endDate <= time.getDate()){
+            while(endDate == time.getDate() || ValidateDate.isDateSmaller(endDate, time.getDate())){
                 try{
                     System.out.println("Enter end date of camp: ");
                     endDate = sc.nextInt();
@@ -107,30 +113,37 @@ public class CreateCampUI {
                 /*
                  * Staff must enter a date in the future, send a warning message to staff if they fail to do so
                  */
-                if(startDate <= time.getDate()){
+                if(endDate == time.getDate() || ValidateDate.isDateSmaller(endDate, time.getDate())){
                     System.out.println("Invalid date input! Enter a date from tomorrow onwards!");
                 }
+                if(ValidateDate.isDateSmaller(startDate, endDate) || startDate == endDate){
+                    validDate = ValidateDate.isDateValid(endDate);
+                }
+                else{
+                    continue;
+                }
             }
-            if(ValidateDate.isDateValid(endDate) && endDate >= startDate){
-                dates[1] = endDate;
-                break;
-            }
+            
+            dates[1] = endDate;
+            startDate = 0;
+            endDate = 0;
         }
 
         return dates;
 
     }
 
-    public static int askRegClosingDate(Time time){
+    public static int askRegClosingDate(Time time, int startDate){
         Scanner sc = new Scanner(System.in);
         boolean validDate = false;
         int regClosingDate = 0;
         while(validDate == false){
+            regClosingDate = 0;
             /*
              * Prompt user to input registration closing date and validate the date
              * if it is invalid, prompt user to enter date again
              */
-            while(regClosingDate <= time.getDate()){
+            while(regClosingDate == time.getDate() || ValidateDate.isDateSmaller(regClosingDate, time.getDate())){
                 /*
                  * Use of try-catch block to continuously prompt for input till the input is valid
                  */
@@ -148,11 +161,19 @@ public class CreateCampUI {
                 /*
                  * Prompt user to enter a date in the future, send warning message if staff fails to do so
                  */
-                if(regClosingDate <= time.getDate()){
+                if(regClosingDate == time.getDate() || ValidateDate.isDateSmaller(regClosingDate, time.getDate())){
                     System.out.println("Invalid date input! Enter a date from tomorrow onwards!");
                 }
+                if(ValidateDate.isDateSmaller(startDate, regClosingDate) || startDate == regClosingDate){
+                    System.out.println("Enter a date before the starting date of camp!");
+                    
+                }
+                else{
+                    validDate = ValidateDate.isDateValid(regClosingDate);
+                }
             }
-            validDate = ValidateDate.isDateValid(regClosingDate);
+            
+            
         }
         return regClosingDate;
     }
@@ -160,7 +181,7 @@ public class CreateCampUI {
     public static Faculty askUserGroup(){
         Scanner sc = new Scanner(System.in);
         int userChoice = 0;
-        while(userChoice<1&&userChoice>16){
+        while(userChoice < 1 || userChoice > 16){
             /*
              * Prompt staff to input the user group of the camp
              */
@@ -264,13 +285,13 @@ public class CreateCampUI {
 
     public static int askAttendeeSlots(Camp camp, CampInfo campInfo){
         Scanner sc = new Scanner(System.in);
-        int attendeeSlots = 0;
+        int attendeeSlots = -1;
         // ensure that the edited amount of slots can accomodate the current registered attendees
         int minSlots = campInfo.getAttendeeSlotsUsed(camp);
 
         while(attendeeSlots < minSlots){
             try{
-                System.out.println("There are currently " + minSlots +"attendees in this camp");
+                System.out.println("There are currently " + minSlots +" attendees in this camp");
                 System.out.println("Kindly enter the number of attendee slots you want as of now(At least " + minSlots + "): ");
                 System.out.println("Select -1 if you wish to quit editing");
                 attendeeSlots = sc.nextInt();
@@ -327,8 +348,8 @@ public class CreateCampUI {
 
         do{
             try{
-                System.out.println("There are currently " + minSlots +"attendees in this camp");
-                System.out.println("Kindly enter the number of attendee slots you want as of now(At least " + minSlots + "): ");
+                System.out.println("There are currently " + minSlots +" committee members in this camp");
+                System.out.println("Kindly enter the number of committee slots you want as of now(At least " + minSlots + "): ");
                 System.out.println("Select -1 if you wish to quit editing");
                 campCommitteeSlots = sc.nextInt();
             }

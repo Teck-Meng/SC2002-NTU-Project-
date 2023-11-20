@@ -10,6 +10,7 @@ import camppackage.PrintCampDetails;
 import user.Student;
 import filehandler.Database;
 import clock.Time;
+import enquiry.AttendeeEnquiry;
 import enquiry.ListOfEnquiries;
 import enquiry.ListOfSuggestions;
 import enquiry.ReplyToStudent;
@@ -29,7 +30,8 @@ public class StudentUI {
                 System.out.println("4: Committee Camp Affairs");
                 System.out.println("5: View all registered Camps");
                 System.out.println("6. View user status");
-                System.out.println("7. Exit");
+                System.out.println("7. Manage your Enquiries");
+                System.out.println("8. Exit");
                 System.out.println("Please enter your choice: ");
                 choice = sc.nextInt();
                 sc.nextLine();
@@ -42,11 +44,11 @@ public class StudentUI {
             switch(choice){
                 case 1:
                     // View list of camps
-                    printListOfCamps(campInfo, student);
+                    CampManagementUI.printListOfCamps(campInfo, student);
                     break;
                 case 2:
                     // Camp Registration
-                    registerCamp(campInfo, student, database, clock);
+                    CampManagementUI.registerCamp(campInfo, student, database, clock);
                     break;
                 case 3:
                     callAttendeeUI(student, campInfo, database, enquiries, replies);
@@ -62,12 +64,12 @@ public class StudentUI {
                     }
                     else{
                         CommitteeMemUI.main(student.getCommitteeCamp(), student.getUserID(), database,
-                                             enquiries, suggestions, replies, campInfo);
+                                             enquiries, suggestions, replies, campInfo, student);
                     }
                     break;
                 case 5:
                     // View all registered camps
-                    printListOfRegisteredCamps(student, campInfo);
+                    CampManagementUI.printListOfRegisteredCamps(student, campInfo);
                     break;
                 case 6:
                     // Shows whether student is a camp committee member in system prompt
@@ -76,9 +78,16 @@ public class StudentUI {
                     }
                     else{
                         System.out.println("You are a camp committee member for " + student.getCommitteeCamp().getCampName());
+                        System.out.println("You currently have " + student.getCommitteePoints() + " points!");
                     }
                     break;
                 case 7:
+                    /*
+                    * Call method to allow students to manage enquiries
+                    */
+                    enquiryManagement(campInfo, student, database, enquiries, student);
+                    break;
+                case 8:
                     int choiceToExit = -1;
                     while(choiceToExit == -1){
                         try{
@@ -101,110 +110,6 @@ public class StudentUI {
                 default:
                     System.out.println("Kindly enter a valid choice from 1 to 6!");
             }
-        }
-    }
-
-    private static void printListOfCamps(CampInfo campInfo, Student student){
-        ArrayList<Camp> listOfCamps = campInfo.getCampList(student);
-        System.out.println("This are the list of camps available to you:");
-        for(int i = 0; i < listOfCamps.size(); i++){
-            System.out.print((i + 1) + ": ");
-            PrintCampDetails.print(listOfCamps.get(i));
-            PrintCampDetails.printRemainingSlots(listOfCamps.get(i), campInfo);
-        }
-    }
-
-    private static void registerCamp(CampInfo campInfo, Student student, Database database, Time clock){
-        Scanner sc = new Scanner(System.in);
-        int registerChoice = -1;
-        int campCommitteeChoice = -1;
-        /*
-            * Get a new arraylist containing only camps that are open to student
-            * Exclude camps that they have already registered for or are blacklisted from
-            */
-        ArrayList<Camp> listOfCamps = campInfo.getCampList(student, campInfo, database, clock);
-        if(listOfCamps.size() == 0){
-            System.out.println("No camps are available for registration!");
-            return;
-        }
-
-        while(registerChoice < 0 || registerChoice > listOfCamps.size()){
-            try{
-                for(int i = 0; i < listOfCamps.size(); i++){
-                    PrintCampDetails.print(listOfCamps.get(i));
-                    PrintCampDetails.printRemainingSlots(listOfCamps.get(i), campInfo);
-                    }
-                    System.out.println("Enter 0 if you wish to quit the registration interface.");
-                    System.out.println("Enter your choice of camp based on its numerical index: ");
-                    registerChoice = sc.nextInt();
-                /*
-                    * Error message if choice is out of bound
-                    */
-                if(registerChoice < 0 || registerChoice > listOfCamps.size()){
-                    System.out.println("Please enter a choice between 0 to " + listOfCamps.size());
-                }
-            }
-            catch(InputMismatchException e){
-                System.out.println("Enter a valid integer value!");
-                sc.nextLine();
-            }
-        }
-        if(registerChoice == 0){
-            return;
-        }
-        Camp selectedCamp = listOfCamps.get(registerChoice - 1);
-
-        /*
-            * Check if student is already a committee member for another camp
-            * This is as a student can only be committee member for one camp
-            */
-        if(student.getCommitteeCamp() == null){
-            while(campCommitteeChoice == -1){
-                try{
-                    System.out.println("Are you joining this camp as camp committee?: ");
-                    System.out.println("Enter 1 if you wish to register for camp committee for " + selectedCamp.getCampName());
-                    System.out.println("Enter your choice: ");
-                    campCommitteeChoice = sc.nextInt();
-                }
-                catch(InputMismatchException e){
-                    System.out.println("Enter a valid integer value!");
-                    sc.nextLine();
-                }
-            }
-        }
-
-        if(campCommitteeChoice == 1){
-            /*
-                * student want to be camp committee member
-                */
-            student.addCamp(selectedCamp, true);
-            CommitteeList committeeList = selectedCamp.getCommitteeList();
-            committeeList.addCommitteeMember(student, campInfo, selectedCamp);
-        }
-        else{
-            /*
-                * Register as attendee
-                */
-            student.addCamp(selectedCamp, false);
-            AttendeeList attendeeList = selectedCamp.getAttendeeList();
-            attendeeList.addAttendee(student);
-        }
-        System.out.println("Camp registered Successfully!");
-        //Register for a camp
-    }
-    
-    private static void printListOfRegisteredCamps(Student student, CampInfo campInfo){
-        ArrayList<Camp> registeredCamps = student.getListOfCamps();
-        System.out.println("The following are the camps you have registered for as an attendee: ");
-        for(int i = 0; i < registeredCamps.size(); i++){
-            System.out.print((i+1) + " : ");
-            PrintCampDetails.print(registeredCamps.get(i));
-            PrintCampDetails.printRemainingSlots(registeredCamps.get(i), campInfo);
-        }
-        if(student.getCommitteeCamp() != null){
-            System.out.println("This is the camp that you have registered for as a committee member: ");
-            PrintCampDetails.print(student.getCommitteeCamp());
-            PrintCampDetails.printRemainingSlots(student.getCommitteeCamp(), campInfo);
         }
     }
 
@@ -238,4 +143,78 @@ public class StudentUI {
         AttendeeUI.DisplayUI(camp, campInfo, student, database, enquiries, replies);
     }
    
+    public static void enquiryManagement(CampInfo campInfo, Student student, Database database, ListOfEnquiries enquiries,
+                                        Student attendee){
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Camp> listOfCamps = CampManagementUI.printListOfCamps(campInfo, student);
+        Camp currentCamp;
+        int choice = -1;
+        while(true){
+            System.out.println("Kindly enter your choice of camp to manage enquiries for: ");
+            try{
+                choice = sc.nextInt();
+            }
+            catch(InputMismatchException e){
+                sc.nextLine();
+                System.out.println("Please enter a valid integer choice!");
+            }
+            if(choice > 0 || choice <= listOfCamps.size()){
+                currentCamp = campInfo.getCamp(choice - 1);
+                break;
+            }
+            System.out.println("Invalid option!");
+            CampManagementUI.printListOfCamps(campInfo, student);
+        }
+
+        int userChoice = -1;
+        while(userChoice != 5){
+            try{
+                System.out.println("Welcome to the enquiry managment interface!");
+                System.out.println("The following are the options available for this interface:");
+                System.out.println("1. View Enquiries");
+                System.out.println("2. Make an Enquiry");
+                System.out.println("3. Edit an enquiry");
+                System.out.println("4. Delete an Enquiry");
+                System.out.println("5. Exit");
+                userChoice = sc.nextInt();
+            }
+            catch(InputMismatchException e){
+                sc.nextLine();
+                System.out.println("Please enter a valid integer option!");
+            }
+
+            switch(userChoice){
+                case 1:
+                    /*
+                     * View enquiries for camp
+                     */
+                    AttendeeEnquiry.viewQuestion(attendee.getUserID(), enquiries, database, currentCamp);  
+                    break;
+                case 2:
+                    /*
+                    * Make enquiry
+                    */
+                    AttendeeEnquiry.askQuestion(attendee.getUserID(), currentCamp, enquiries, database);
+                    break;
+                case 3:
+                    /*
+                     * Edit Enquiry
+                     */
+                    EnquiriesUI.editEnquiry(enquiries, attendee, currentCamp);
+                    break;
+                case 4:
+                    /*
+                    *  Delete Enquiry
+                    */
+                    EnquiriesUI.deleteEnquiry(enquiries, attendee, database);
+                    break;
+                case 5:
+                    System.out.println("Exiting enquiry management interface . . .");
+                    break;
+                default:
+                    System.out.println("Invalid option! Please try again!");
+            }
+    }
 }
+}
+

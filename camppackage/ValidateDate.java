@@ -9,6 +9,9 @@ import filehandler.Database;
  * To validate dates and also to check dates with student's collection
  */
 public class ValidateDate {
+    public static void main(String[] args){
+        System.out.println(isDateValid(20042024));
+    }
     /*
      * Ensure date follow DD/MM/YYYY format
      * Minimum of 7 digits when date column is single digit
@@ -16,6 +19,7 @@ public class ValidateDate {
      * Assume all months have 31 days
      */
     public static boolean isDateValid(int date){
+        int duplicate = date;
         /*
          * Check for negative values
          */
@@ -26,12 +30,12 @@ public class ValidateDate {
          * Check for 7-8 digits
          */
         int count = 0;
-        while(date != 0){
-            date /= 10;
+        while(duplicate != 0){
+            duplicate /= 10;
             count++;
         }
         if(count==7||count==8){
-            return (checkDay(date)&&checkMonth(date));
+            return (checkDay(date) && checkMonth(date));
         }
         return false;
     }
@@ -81,14 +85,46 @@ public class ValidateDate {
      * Compare 2 dates and check for collision, to be used by doDatesCollide
      */
     private static boolean checkDates(int[] date1, int[] date2){
-        if(date1[0] > date2[1]){
+        if(isDateSmaller(date2[1], date1[0])){
             return false;
         }
-        else if(date1[1] < date2[0]){
+        else if(isDateSmaller(date1[1] , date2[0])){
             return false;
         }
 
         return true;
+    }
+
+    /*
+     * Returns true if date1 is earlier than date2
+     * Otherwise return false
+     */
+    public static boolean isDateSmaller(int date1, int date2){
+        int date1Year = date1 % 10000;
+        int date2Year = date2 % 10000;
+        date1 /= 10000;
+        date2 /= 10000;
+        if(date1Year > date2Year){
+            return false;
+        }
+        else if(date1Year < date2Year){
+            return true;
+        }
+
+        int date1Month = date1 % 100;
+        int date2Month = date2 % 100;
+        date1 /= 100;
+        date2 /= 100;
+        if(date1Month > date2Month){
+            return false;
+        }
+        else if(date1Month < date2Month){
+            return true;
+        }
+        if(date1 < date2){
+            return true;
+        }
+        return false;
     }
 
     
@@ -97,6 +133,7 @@ public class ValidateDate {
      * Check if the value for day in the date is between 01 to 31
      * Assume all months have 31 days
      * To be used by isDateValid
+     * 20042024
      */
     private static boolean checkDay(int date){
         date /= 1_000_000; //divide by 1 million to retrieve value of DD
@@ -110,10 +147,8 @@ public class ValidateDate {
      * Check if the value of the month is between 1 to 12
      */
     private static boolean checkMonth(int date){
-        int day = date / 1_000_000; //divide by 1 million to retrieve value of DD
 
-        int month = date / 10_000 - day;
-
+        int month = (date / 10_000) % 100;
         if(month < 1||month > 12){
             return false;
         }

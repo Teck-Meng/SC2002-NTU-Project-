@@ -91,7 +91,8 @@ public class ListOfEnquiries{
      * Edits cannot be made after it has been answered
      * UI class will be responsible for system prompt, this method does not provide system prompt
      */
-    protected void editEnquiry(int index, String userID, String newEnquiry){
+    protected void editEnquiry(int id, String userID, String newEnquiry){
+        int index = getIndexFromID(id);
         if(userID != enquirer.get(index).getUserID()){
             System.out.println("Unauthorized personnel, you do not have permission to edit this enquiry");
             return;
@@ -108,7 +109,8 @@ public class ListOfEnquiries{
      * Method to delete enquiry
      * Enquiry can only be deleted by enquirer and if the enquiry is not yet answered
      */
-    protected void deleteEnquiry(int index, String userID){
+    protected void deleteEnquiry(int id, String userID){
+        int index = getIndexFromID(id);
         if(userID != enquirer.get(index).getUserID()){
             System.out.println("Unauthorized personnel, you do not have permission to delete this enquiry");
             return;
@@ -122,6 +124,7 @@ public class ListOfEnquiries{
         isAnswered.remove(index);
         enquiryID.remove(index);
         enquiredCamp.remove(index);
+        System.out.println("Enquiry deletion is successful!");
     }
     
     protected int getSize(){
@@ -204,8 +207,8 @@ public class ListOfEnquiries{
              */
             for(int i = 0; i < enquiries.size(); i++){
             if(userID == enquiredCamp.get(i).getStaffID()){
-                System.out.print("Enquiry for "+ enquiredCamp.get(i).getCampName() + " ");
-                System.out.print("Enquiry ID: "+ enquiryID.get(i)+ " : ");
+                System.out.print("Enquiry for "+ enquiredCamp.get(i).getCampName() + " , ");
+                System.out.println("Enquiry ID: "+ enquiryID.get(i)+ " : ");
                 System.out.println(enquiries.get(i));
                 returnIndexes.add(i);
                 count++;
@@ -223,27 +226,65 @@ public class ListOfEnquiries{
      * Used by committee member class to print out all their enquiries
      * returns arraylist containing the indexes of all enquiries, this will allow committee member to edit or delete their enquiries
      * using the return arraylist during console prompt
+     * Allow toggle to choose if committee member's own enquiry should be printed or not when calling this method
      */
-    public ArrayList<Integer> printAllEnquiries(Camp camp){
+    public ArrayList<Integer> printAllEnquiries(Camp camp, User self, boolean includeSelf){
          ArrayList<Integer> returnIndexes = new ArrayList<Integer>();
          /*
          * count will be used to check if student has any enquiries, if not, print out a message indicating so
          */
         int count = 0;
-         for(int i = 0; i < enquiries.size(); i++){
-            if(enquiredCamp.get(i) == camp){
-                count++;
-                System.out.print("Enquiry ID: "+ enquiryID.get(i)+ " : ");
-                System.out.println(enquiryID + " " + enquiries.get(i));
-                returnIndexes.add(i);
+        
+        if(includeSelf){
+            for(int i = 0; i < enquiries.size(); i++){
+                if(enquiredCamp.get(i) == camp){
+                    count++;
+                    System.out.print("Enquiry ID: "+ enquiryID.get(i)+ " , ");
+                    System.out.println(enquiries.get(i));
+                    returnIndexes.add(i);
+                } 
             }
-         }
-         if(count == 0){
+            if(count == 0){
             System.out.println("There are no enquiries for your camp!");
             return null;
+            }
+        }
+        else{
+            for(int i = 0; i < enquiries.size(); i++){
+                /*
+                 * This version is for when committee member wishes to reply to enquiry
+                 * We do not want committee Member to farm points hence they are unable to answer their own enquiry
+                 */
+                if(enquiredCamp.get(i) == camp && !enquirer.get(i).equals(self) && !isAnswered.get(i)){
+                    count++;
+                    System.out.print("Enquiry ID: "+ enquiryID.get(i)+ " , ");
+                    System.out.println(enquiries.get(i));
+                    returnIndexes.add(i);
+                } 
          }
-         return returnIndexes;
+            if(count == 0){
+            System.out.println("There are no enquiries for your camp!");
+            return null;
+        }
+        }
+
+        
+        return returnIndexes;
     }
 
-    
+    /*
+     * For staff UI's use to print out enquiries that have not yet been replied
+     */
+    public void printAllEnquiries(String userID){
+        for(int i = 0; i < enquiries.size(); i++){
+            /*
+             * Make sure enquiries that have not been answered are the only enquiries to be printed
+             */
+            if(userID == enquiredCamp.get(i).getStaffID() && !isAnswered.get(i)){
+                System.out.print("Enquiry for "+ enquiredCamp.get(i).getCampName() + " , ");
+                System.out.println("Enquiry ID: "+ enquiryID.get(i)+ " : ");
+                System.out.println(enquiries.get(i));
+            }
+        }
+    }
 }

@@ -1,5 +1,7 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.ArrayList;
+
 import user.*;
 import report.ReportGeneration;
 import filehandler.Database;
@@ -12,15 +14,15 @@ import clock.Time;
 
 public class StaffUI implements ReportGeneration{
 	
-	public static void main(Camp camp, CampInfo campinfo, String userID, Database database, 
-			ListOfEnquiries enquiries, ListOfSuggestions suggestions, ReplyToStudent replyToStudent,Time time, Staff staff)
+	public static void main(CampInfo campinfo, Database database, ListOfEnquiries enquiries, ListOfSuggestions suggestions,
+                             ReplyToStudent replyToStudent,Time time, Staff staff)
 	{
         boolean exit = false;
         int choice = 0;
         Scanner sc = new Scanner(System.in);
         while (!exit) {
             try{
-                System.out.println("Welcome to the Staff Menu");
+                System.out.println("--- Staff Menu ---");
                 System.out.println("1. Create/Edit/View Camps");
                 System.out.println("2. View/Reply Enquiries");
                 System.out.println("3. View/Approve Suggestions");
@@ -37,16 +39,16 @@ public class StaffUI implements ReportGeneration{
             
             switch (choice) {
                 case 1:
-                    staffCamps(camp, campinfo, userID, database, time, staff);
+                    staffCamps(campinfo, database, time, staff);
                     break;
                 case 2:
-                    staffEnquiries(userID, enquiries, replyToStudent);
+                    staffEnquiries(staff, enquiries, replyToStudent, campinfo);
                     break;
                 case 3:
-                    staffSuggestions(suggestions, camp, userID);
+                    // staffSuggestions(suggestions, camp, staff.getUserID());
                     break;
                 case 4:
-                    staffReports(staff, campinfo, database, userID);
+                    staffReports(staff, campinfo, database, staff.getUserID());
                     break;
                 case 5:
                     exit = true;
@@ -59,32 +61,48 @@ public class StaffUI implements ReportGeneration{
         }
 	} 
 	
-	private static void staffCamps(Camp camp, CampInfo campinfo, String userID, Database database, Time time, Staff staff)
+	private static void staffCamps(CampInfo campInfo, Database database, Time time, Staff staff)
     {
 		Scanner sc = new Scanner(System.in);
         boolean exitCamp = false;
         while(!exitCamp){
+            System.out.println("--- Camp Management Interface ---");
             System.out.println("1. Create new Camp");
             System.out.println("2. Edit Camp");
-            System.out.println("3. View All Camps");
-            System.out.println("4. Go back to main menu");
+            System.out.println("3. View All your Camps");
+            System.out.println("4. View all camps in system");
+            System.out.println("5. Go back to main menu");
             System.out.println("Enter your choice: ");
             int campChoice = sc.nextInt();
-            sc.nextLine();
             switch(campChoice){
                 case 1:
-                	staff.createCamp(campinfo, database, time);
+                    /*
+                     * Prompt staff to create camp
+                     */
+                	staff.createCamp(campInfo, database, time);
                 	break;
                 case 2:
-                	staff.getListOfCamps();
-                	System.out.println("Enter the camp ID of the camp you want to edit: ");
-                    int campID = sc.nextInt();
-                	staff.editCamp(campID, camp, campinfo, database, time);
+                    System.out.println("Your choice of camps are: ");
+                	staff.printListOfCamps();
+                	System.out.println("Enter the numerical index of the camp you want to edit: ");
+                    int index = sc.nextInt();
+                	staff.editCamp((index - 1), staff.getListOfCamps().get(index - 1) , campInfo, database, time);
                     break;
                 case 3:
-                    staff.printListOfCamps();
+                    ArrayList<Camp> listOfCamps = staff.getListOfCamps();
+                    for(int i = 0; i < listOfCamps.size(); i++){
+                        System.out.print((i + 1) + ": ");
+                        PrintCampDetails.print(listOfCamps.get(i));
+                    }
                     break;
                 case 4:
+                    ArrayList<Camp> list = campInfo.getFullList();
+                    for(int i = 0; i < list.size(); i++){
+                        System.out.print((i + 1) + ": ");
+                        PrintCampDetails.print(list.get(i));
+                    }
+                    break;
+                case 5:
                     exitCamp = true;                           
                     break;
                 default:
@@ -96,23 +114,24 @@ public class StaffUI implements ReportGeneration{
     }
 	
 	
-    private static void staffEnquiries(String userID, ListOfEnquiries enquiries, ReplyToStudent replyToStudent)
+    private static void staffEnquiries(Staff staff, ListOfEnquiries enquiries, ReplyToStudent replyToStudent, CampInfo campInfo)
     {
         Scanner sc = new Scanner(System.in);
         boolean exitEnquiries = false;
         while(!exitEnquiries){
             System.out.println("1. View Enquiries");
             System.out.println("2. Reply Enquiries");
-            System.out.println("3. Go back to main menu");
+            System.out.println("3. View all Replies");
+            System.out.println("4. Go back to main menu");
             System.out.println("Enter your choice: ");
             int enquiryChoice = sc.nextInt();
             sc.nextLine(); 
             switch(enquiryChoice){
                 case 1:
-                	enquiries.printAllEnquiries(userID, true);
+                	enquiries.printAllEnquiries(staff.getUserID(), true);
                 	break;
                 case 2:
-                	enquiries.printAllEnquiries(userID, true);
+                	enquiries.printAllEnquiries(staff.getUserID());
                     int enquiryID = -1;
                 	while(enquiryID == -1){
                         try{
@@ -124,11 +143,18 @@ public class StaffUI implements ReportGeneration{
                             System.out.println("Please enter valid integer choice!");
                         }
                     }
-                	System.out.println("Enter your reply");
+                    sc.nextLine();
+                	System.out.println("Enter your reply: ");
                 	String reply = sc.nextLine();
                 	replyToStudent.addReply(reply, enquiryID, enquiries);
                     break;
                 case 3:
+                    /*
+                     * Print all replies with corresponding enquiries
+                     */
+                    EnquiriesUI.printReplies(enquiries, campInfo, replyToStudent, staff);
+                    break;
+                case 4:
                 	exitEnquiries = true; 
                     break;
                 default:

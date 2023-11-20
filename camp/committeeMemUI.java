@@ -14,47 +14,61 @@ import enquiry.ReplyToStudent;
 public class CommitteeMemUI {
 
     public static void main(Camp camp, String userID, Database database, ListOfEnquiries enquiries, 
-                            ListOfSuggestions suggestions, ReplyToStudent replyToStudent, CampInfo campInfo) {
+                            ListOfSuggestions suggestions, ReplyToStudent replyToStudent, CampInfo campInfo, Student committeeMem) {
         boolean exit = false;
         while (!exit) {
             Scanner sc = new Scanner(System.in);
-                System.out.println("--- Camp Committee Member Menu ---");
-                System.out.println("1. View Camp Details");
-                System.out.println("2. Modify Suggestions for Camp");
-                System.out.println("3. Reply to Enquiries");
-                System.out.println("4. Generate Report");
-                System.out.println("5. Exit");
-                System.out.println("Enter your choice: ");
+            System.out.println("--- Camp Committee Member Menu ---");
+            System.out.println("1. View Camp Details");
+            System.out.println("2. Modify Suggestions for Camp");
+            System.out.println("3. Reply to Enquiries");
+            System.out.println("4. Generate Report");
+            System.out.println("5. View all Enquiries");
+            System.out.println("6. View all Replies");
+            System.out.println("7. Exit");
+            System.out.println("Enter your choice: ");
 
-                int choice = sc.nextInt();
-                // END: ed8c6549bwf9
-                switch (choice) {
-                    case 1:
-                        /*
-                        * Print all the camp details
+            int choice = sc.nextInt();
+            // END: ed8c6549bwf9
+            switch (choice) {
+                case 1:
+                    /*
+                    * Print all the camp details
+                    */
+                    PrintCampDetails.print(camp);
+                    break;
+                case 2:
+                    modifySuggestion(camp, userID, database, suggestions);
+                    break;
+                case 3:
+                    EnquiriesUI.replyToEnquiries(enquiries, camp, userID, replyToStudent, database);
+                    break;
+                case 4:
+                    AttendanceReport.attendeeReportHandling(camp.getAttendeeList().getListOfAttendees(), camp);
+                    System.out.println("Report generated successfully!");
+                    break;
+                case 5:
+                    enquiries.printAllEnquiries(camp, committeeMem, true);
+                    /*
+                        * View all enquiries
                         */
-                        PrintCampDetails.print(camp);
-                        break;
-                    case 2:
-                        modifySuggestion(camp, userID, database, suggestions);
-                        break;
-                    case 3:
-                        replyToEnquiries(enquiries, camp, userID, replyToStudent, database);
-                        break;
-                    case 4:
-                        AttendanceReport.attendeeReportHandling(camp.getAttendeeList().getListOfAttendees(), camp);
-                        System.out.println("Report generated successfully!");
-                        break;
-                    case 5:
-                        exit = true;
-                        break;
-                    default:
-                        System.out.println("Invalid choice");
-                    }
+                    break;
+                case 6:
+                    EnquiriesUI.printReplies(enquiries, camp, replyToStudent);
+                    /*
+                        * View all replies
+                        */
+                    break;
+                case 7:
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Invalid choice");
+                }
 
-                    }
+                }
 
-                 } 
+                } 
                     
         /*
          * Call this method when committee member wishes to modify suggestion 
@@ -73,7 +87,11 @@ public class CommitteeMemUI {
                 sc.nextLine(); // Consume the newline character left by previous nextInt()
                 switch(suggestionChoice){
                     case 1:
-                        sc.nextLine(); // Consume the newline character left by previous nextInt()
+                        String suggestion;
+                        System.out.println("Enter your suggestion for this camp: ");
+                        suggestion = sc.nextLine();
+                        suggestions.addSuggestion(suggestion, userID, database, camp);
+                        break;
                     case 2:
                         suggestions.printAllSuggestions(camp, userID, false);
                         break;
@@ -97,7 +115,7 @@ public class CommitteeMemUI {
                         sc.nextLine(); // Consume the newline character left by previous nextInt()
                         System.out.println("Enter your new suggestion: ");
                         String newSuggestion = sc.nextLine();
-                        suggestions.editSuggestion(suggestionID, userID, newSuggestion);
+                        suggestions.editSuggestion(suggestions.getIndexFromID(suggestionID), userID, newSuggestion);
                         break;
                     case 4:
                         int suggestionID2 = -1;
@@ -116,7 +134,7 @@ public class CommitteeMemUI {
                             }
                         }
                         sc.nextLine(); // Consume the newline character left by previous nextInt()
-                        suggestions.deleteSuggestion(suggestionID2, userID);
+                        suggestions.deleteSuggestion(suggestions.getIndexFromID(suggestionID2), userID);
                         break;
                     case 5:
                         manage = false;                           
@@ -127,31 +145,5 @@ public class CommitteeMemUI {
                 }
         }
 
-        private static void replyToEnquiries(ListOfEnquiries enquiries, Camp camp, String userID, ReplyToStudent replyToStudent, Database database){
-            Scanner sc = new Scanner(System.in);
-            int enquiryID = -1;
-
-            while(enquiryID == -1){
-                try{
-                    enquiries.printAllEnquiries(camp);
-                    System.out.println("Enter the enquiry ID of the enquiry you want to reply to: ");
-                    enquiryID = sc.nextInt();
-                }
-                catch(InputMismatchException e){
-                    sc.nextLine();
-                    System.out.println("Please enter a valid integer choice!");
-                }
-            }
-            
-            sc.nextLine(); // Consume the newline character left by previous nextInt()
-            System.out.println("Enter your reply: ");
-            String reply = sc.nextLine();
-            replyToStudent.addReply(reply, enquiryID, enquiries);
-
-            //points added to committee member
-
-            Student currentUser = (Student)database.getUser(userID);
-            currentUser.addCommitteePoints(1);
-
-        }
+        
 }

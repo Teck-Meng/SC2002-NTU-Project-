@@ -2,3 +2,4 @@ userID, campName, dateStart, dateEnd, regClosingDate, userGroup, location, total
 NEUVI,Enrichment Camp,16082024,19082024,11082024,ALL,Gaia,30,10,Oratrice Mecanique d'Analyse Cardinale,
 OURIN,Orientation,5082024,6082024,1082024,ALL,Fields,11,10,Fun for All,
 OURIN,Workout,11082024,12082024,3082024,SCSE,SCSE,9,20,SCSE needs to touch grass,
+NEUVI,test,30042024,30042024,11042024,ALL,loc,5,2,de,

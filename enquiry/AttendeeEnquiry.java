@@ -27,6 +27,27 @@ public class AttendeeEnquiry {
      */
     public static void viewQuestion(String userID, ListOfEnquiries list, Database database){
         int size = list.getSize();
+        int count = 0;
+        System.out.println("The following are the enquiries you have submitted: ");
+        for(int i = 0; i < size; i++){
+            String toPrint = list.getEnquiry(i, userID);
+            if(toPrint != null){
+                System.out.print((++count)+": ");
+                System.out.println(toPrint);
+            }
+        }
+        
+        if(count == 0){
+            System.out.println("You do not have any enquiries!");
+        }
+    }
+
+    /*
+     * View all student's own enquiries for a specific camp
+     */
+    public static void viewQuestion(String userID, ListOfEnquiries list, Database database, Camp camp){
+        int size = list.getSize();
+        int count = 0;
         if(size == 0){
             System.out.println("You do not have any enquiries!");
             return;
@@ -34,8 +55,8 @@ public class AttendeeEnquiry {
         System.out.println("The following are the enquiries you have submitted: ");
         for(int i = 0; i < size; i++){
             String toPrint = list.getEnquiry(i, userID);
-            if(toPrint != null){
-                System.out.print((i+1)+": ");
+            if(toPrint != null && list.getCampEnquiredID(i).matches(camp.getCampName())){
+                System.out.print((++count)+": ");
                 System.out.println(toPrint);
             }
         }
@@ -43,11 +64,9 @@ public class AttendeeEnquiry {
 
     public static void deleteQuestion(int index, String userID, ListOfEnquiries list, Database database){
         list.deleteEnquiry(index, userID);
-        System.out.println("Enquiry deletion successful!");
     }
 
     public static void editEnquiry(ListOfEnquiries list, String userID, String newEnquiry, int index){
         list.editEnquiry(index, userID, newEnquiry);
-        System.out.println("Enquiry edit successful!");
     }
 }

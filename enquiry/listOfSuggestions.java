@@ -18,7 +18,9 @@ public class ListOfSuggestions {
     private ArrayList<Boolean> isAnswered = new ArrayList<Boolean>();
     private ArrayList<Camp> suggestedCamp = new ArrayList<Camp>();
     private ArrayList<Integer> suggestionID = new ArrayList<Integer>();
-
+    /*
+     * For main program use
+     */
     public void addSuggestion(String suggestion, String userID, Database database, Camp camp){
         /*
          * Acquire user object from database using userID
@@ -41,12 +43,14 @@ public class ListOfSuggestions {
     /*
      * For readFromFile to add data from csv
      */
-    public void addSuggestion(String suggestion, String userID, Camp camp, int suggestionIndex, boolean isApproved, Database database){
+    public void addSuggestion(String suggestion, String userID, Camp camp, int suggestionIndex, boolean isItApproved, Database database){
         suggestions.add(suggestion);
         suggestor.add(database.getUser(userID));
         suggestedCamp.add(camp);
         suggestionID.add(suggestionIndex);
-        isAnswered.add(isApproved);
+        isAnswered.add(isItApproved);
+        isApproved.add(isItApproved);
+        id = ++suggestionIndex;
     }
 
     public String getSuggestion(int index){
@@ -60,6 +64,7 @@ public class ListOfSuggestions {
     /*
      * Method to edit suggestion
      * Suggestion can only be editted if the enquiry is not yet answered
+     * index does not refer to suggestionID here
      */
     public void editSuggestion(int index, String userID, String newSuggestion){
         if(userID != suggestor.get(index).getUserID()){
@@ -77,6 +82,8 @@ public class ListOfSuggestions {
     /*
      * Method to delete suggestion
      * Suggestion can only be deleted by enquirer and if the enquiry is not yet answered
+     * index does not refer to suggestionID here
+     * Make the necessary conversion first before passing @param index
      */
     public void deleteSuggestion(int index, String userID){
         if(userID != suggestor.get(index).getUserID()){
