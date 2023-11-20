@@ -112,5 +112,84 @@ public class PerformanceReport implements ReportGeneration{
         }
         System.out.println("Performance report successfully generated!");
     }
+    
+    public static void printReportByLoc(Camp camp, CampInfo campInfo){
+        /*
+         * Clear performance report to make way for new one
+         */
+        clearFiles.clearPerformanceReport();
+        System.out.println("Generating Report . . .");
+        /*
+         * Extract committee list for specific camp
+         */
+        ArrayList<Student> committeeList = camp.getCommitteeList().getListOfMembers();
+        try { 
+            PrintWriter csvWriter = new PrintWriter(new FileWriter("./data/Performance_Report.csv", true)); 
+
+            /*
+            * Extract every committee member iteratively
+                */
+            for(int j = 0; j < committeeList.size(); j++){
+                Student committeeMember = committeeList.get(j);
+                /*
+                * Extract all attributes to be written to csv
+                */
+                String userID = committeeMember.getUserID();
+                String faculty = committeeMember.getFaculty().toString();
+                int points = committeeMember.getCommitteePoints();
+                /*
+                * Input to csv
+                */
+                csvWriter.println(userID + "," + faculty + "," + camp.getCampName() + ",Committee member," + camp.getLocation() 
+                + "," + camp.getDescription() + "," + points + ","); // Write the data in CSV format  
+                
+            }
+            csvWriter.close(); 
+        } catch (IOException e) { 
+                e.printStackTrace(); 
+        }
+        System.out.println("Performance report successfully generated!");
+    }
+    
+    
+    public static void filterReportByLoc(Camp camp, CampInfo campInfo, String location){
+        /*
+         * Clear performance report to make way for new one
+         */
+        clearFiles.clearPerformanceReport();
+        System.out.println("Generating Report . . .");
+        /*
+         * Extract committee list for specific camp
+         */
+        ArrayList<Student> committeeList = camp.getCommitteeList().getListOfMembers();
+        try { 
+            PrintWriter csvWriter = new PrintWriter(new FileWriter("./data/Performance_Report.csv", true)); 
+
+            /*
+            * Extract every committee member iteratively
+                */
+            for(int j = 0; j < committeeList.size(); j++){
+                Student committeeMember = committeeList.get(j);
+                /*
+                * Extract all attributes to be written to csv
+                */
+                String userID = committeeMember.getUserID();
+                String faculty = committeeMember.getFaculty().toString();
+                int points = committeeMember.getCommitteePoints();
+                /*
+                * Input to csv
+                */
+                if (camp.getLocation() == location) {
+                	csvWriter.println(userID + "," + faculty + "," + camp.getCampName() + ",Committee member," + camp.getLocation() 
+                    + "," + camp.getDescription() + "," + points + ","); // Write the data in CSV format
+                }                
+            }
+            csvWriter.close(); 
+        } catch (IOException e) { 
+                e.printStackTrace(); 
+        }
+        System.out.println("Performance report successfully generated!");
+    }
+    
 
 }

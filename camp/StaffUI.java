@@ -41,7 +41,7 @@ public class StaffUI implements ReportGeneration{
                         staffSuggestions(suggestions, camp, userID, replytosuggestion);
                         break;
                     case 4:
-                    	staffReports(perfreport, attreport, staff, campinfo, database, userID);
+                    	staffReports(perfreport, attreport, staff, campinfo, camp);
                         break;
                     case 5:
                         exit = true;
@@ -158,8 +158,8 @@ public class StaffUI implements ReportGeneration{
         
     }
     
-    private void staffReports(PerformanceReport perfreport, AttendanceReport attreport, Staff staff, CampInfo campinfo,
-    		Database database, String Userid)
+    private void staffReports(PerformanceReport perfreport, AttendanceReport attreport,
+    		Staff staff, CampInfo campinfo, Camp camp)
     {
         Scanner sc = new Scanner(System.in);
         boolean exitReports = false;
@@ -182,10 +182,10 @@ public class StaffUI implements ReportGeneration{
                     		staff.getListOfCamps();
                         	System.out.println("Enter the camp ID of the camp you want to print the report for: ");
                             int campID = sc.nextInt();
-                    		perfreport.printReport(staff.getListOfCamps(), campinfo);//how to gen for 1 camp?
+                    		perfreport.printReport(camp, campinfo);
                     		break;
                     	case 2:
-                        	perfreport.printReport(database.getUser(Userid).getListOfCamps(), campinfo);//cant call the function
+                        	perfreport.printReport(staff.getListOfCamps(), campinfo);
                             break;
                         case 3:
                         	exitReports = true; 
@@ -206,10 +206,11 @@ public class StaffUI implements ReportGeneration{
                     		staff.getListOfCamps();
                         	System.out.println("Enter the camp ID of the camp you want to print the report for: ");
                             int campID = sc.nextInt();
-                    		attreport.printReport(staff.getListOfCamps(), campinfo);//how to gen for 1 camp?
+                            
+                    		attreport.printReport(camp, campinfo);
                     		break;
                     	case 2:
-                        	attreport.printReport(database.getUser(Userid).getListOfCamps(), campinfo);//cant call the function
+                        	attreport.printReport(staff.getListOfCamps(), campinfo);
                             break;
                         case 3:
                         	exitReports = true; 
