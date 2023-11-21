@@ -1,0 +1,8 @@
+For student testing:
+username: FURINA
+pw: Focalors
+
+For Staff testing:
+username: NEUVI
+pw: password
+NOTE: NEUVI's pw will be changed due to system prompt, to reset his password, delete is from passwords.csv
