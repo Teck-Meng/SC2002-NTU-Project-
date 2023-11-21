@@ -3,13 +3,21 @@ package enquiry;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import camppackage.Camp;
+import camppackage.CampInfo;
+import user.Staff;
+import filehandler.Database;
+import clock.Time;
+
+
 public class ReplyToSuggestion{
     /*
      * StaffUI class will be responsible to prompt which suggestion they want to reply to
      * @param index is the index of the enquiry
      * StaffUI class should prompt Staff will another function call to make the necessary edits to be made from approving suggestion
      */
-    public static void replyToSuggestion(int index, ListOfSuggestions list){
+    public static void replyToSuggestion(int index, ListOfSuggestions list, Staff staff, Camp camp, CampInfo campInfo,
+                                        Database database, Time time){
         Scanner sc = new Scanner(System.in);
         int userChoice = 0;
 
@@ -33,6 +41,7 @@ public class ReplyToSuggestion{
             case 1:
                 list.staffAction(index, true);
                 System.out.println("Suggestion has been approved! Kindly make the necessary edits as soon as possible!");
+                staff.editCamp(userChoice, camp, campInfo, database, time);
                 break;
             case 2:
                 list.staffAction(index, false);

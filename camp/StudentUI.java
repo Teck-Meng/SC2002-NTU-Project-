@@ -8,7 +8,9 @@ import camppackage.CampInfo;
 import camppackage.CommitteeList;
 import camppackage.PrintCampDetails;
 import user.Student;
+import user.UserAuthenticator;
 import filehandler.Database;
+import filehandler.PasswordManager;
 import clock.Time;
 import enquiry.AttendeeEnquiry;
 import enquiry.ListOfEnquiries;
@@ -31,7 +33,8 @@ public class StudentUI {
                 System.out.println("5: View all registered Camps");
                 System.out.println("6. View user status");
                 System.out.println("7. Manage your Enquiries");
-                System.out.println("8. Exit");
+                System.out.println("8. Change password");
+                System.out.println("9. Exit");
                 System.out.println("Please enter your choice: ");
                 choice = sc.nextInt();
                 sc.nextLine();
@@ -88,6 +91,13 @@ public class StudentUI {
                     enquiryManagement(campInfo, student, database, enquiries, student);
                     break;
                 case 8:
+                    /*
+                     * Change password
+                     */
+                    int index = database.getUserIndex(student.getUserID());
+                    PasswordManager.changePassword(index, database);
+                    break;
+                case 9:
                     int choiceToExit = -1;
                     while(choiceToExit == -1){
                         try{

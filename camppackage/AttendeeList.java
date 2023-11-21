@@ -1,6 +1,9 @@
 package camppackage;
-import user.Student;
+
 import java.util.ArrayList;
+
+import user.Student;
+import sort.AlphaSort;
 
 public class AttendeeList{
     private ArrayList<Student> listOfAttendees = new ArrayList<Student>();
@@ -13,7 +16,8 @@ public class AttendeeList{
 
     //addAttendee() will be called when student registers for camp
     public void addAttendee(Student attendee){
-        listOfAttendees.add(attendee);
+        AlphaSort.add(listOfAttendees, attendee);
+        
     }
 
     //deleteAttendee() to be called when student withdraws camp

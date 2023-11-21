@@ -1,6 +1,9 @@
 package camppackage;
 
 import java.util.ArrayList;
+import java.util.Collection;
+
+import sort.AlphaSort;
 import user.Student;
 
 public class CommitteeList {
@@ -17,7 +20,7 @@ public class CommitteeList {
             System.out.println("Registration unsuccessful!");
             return;
         }
-        listOfCCMembers.add(CommitteeMember);
+        AlphaSort.add(listOfCCMembers, CommitteeMember);
     }
 
     //deletion method not provided as CCMembers cannot quit camp

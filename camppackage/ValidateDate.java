@@ -192,4 +192,15 @@ public class ValidateDate {
         }
         return true;
     }
+
+    public static boolean withinRange(int date, int[] campDates){
+        if(date == campDates[0] || date == campDates[1]){
+            return true;
+        }
+
+        if(isDateSmaller(campDates[0], date) && isDateSmaller(date, campDates[1])){
+            return true;
+        }
+        return false;
+    }
 }

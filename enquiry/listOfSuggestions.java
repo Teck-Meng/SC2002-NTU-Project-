@@ -160,6 +160,7 @@ public class ListOfSuggestions {
      * This will also allow staff to see suggestions that they can approve or deny
      * boolean param isStaff to differentiate staff and committee member version of printAllSuggestions
      * using the return arraylist during console prompt
+     * Return list of suggestionIDs
      */
     public ArrayList<Integer> printAllSuggestions(Camp camp, String userID, boolean isStaff){
         ArrayList<Integer> returnIndexes = new ArrayList<Integer>();
@@ -170,6 +171,7 @@ public class ListOfSuggestions {
         if(isStaff){
             for(int i = 0; i < suggestions.size(); i++){
                 if(userID == suggestedCamp.get(i).getStaffID()){
+                    System.out.print("Camp: " + camp.getCampName());
                     System.out.print("Suggestion ID: " + suggestionID.get(i)+ " : ");
                     count++;
                     System.out.println(suggestions.get(i));
@@ -194,5 +196,47 @@ public class ListOfSuggestions {
         return returnIndexes;
    }
 
-   
+   /*
+    * Return false if no suggestions available
+    */
+    public boolean printAllSuggestions(String userID, Database database, boolean forApprovalUse){
+        int count = 0;
+        User staff = database.getUser(userID);
+        if(forApprovalUse){
+            /*
+             * For staff use when trying to approve suggestions
+             * Only print out suggestions that are not yet approved
+             */
+            for(int i = 0; i < suggestions.size(); i++){
+            Camp currentCamp = suggestedCamp.get(i);
+            if(currentCamp.verifyStaff(staff) && !isItApproved(i)){
+                System.out.print("Camp: " + currentCamp.getCampName());
+                System.out.println("Suggestion ID: " + suggestionID.get(i)+ " : ");
+                System.out.println(suggestions.get(i));
+                count++;
+            }
+        }
+    }
+        else{
+            /*
+             * For staff viewing purpose only
+             */
+            for(int i = 0; i < suggestions.size(); i++){
+            Camp currentCamp = suggestedCamp.get(i);
+            if(currentCamp.verifyStaff(staff)){
+                System.out.print("Camp: " + currentCamp.getCampName());
+                System.out.println("Suggestion ID: " + suggestionID.get(i)+ " : ");
+                System.out.println(suggestions.get(i));
+                count++;
+            }
+        }
+        }
+
+        if(count == 0){
+            System.out.println("There are no suggestions for you to view!");
+            return false;
+        }
+        return true;
+
+    }   
 }

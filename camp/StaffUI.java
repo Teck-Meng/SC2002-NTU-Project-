@@ -3,8 +3,8 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 import user.*;
-import report.ReportGeneration;
 import filehandler.Database;
+import filehandler.PasswordManager;
 import camppackage.*;
 import enquiry.*;
 import report.*;
@@ -14,7 +14,7 @@ import clock.Time;
 
 public class StaffUI implements ReportGeneration{
 	
-	public static void main(CampInfo campinfo, Database database, ListOfEnquiries enquiries, ListOfSuggestions suggestions,
+	public static void main(CampInfo campInfo, Database database, ListOfEnquiries enquiries, ListOfSuggestions suggestions,
                              ReplyToStudent replyToStudent,Time time, Staff staff)
 	{
         boolean exit = false;
@@ -27,7 +27,8 @@ public class StaffUI implements ReportGeneration{
                 System.out.println("2. View/Reply Enquiries");
                 System.out.println("3. View/Approve Suggestions");
                 System.out.println("4. Generate Report");
-                System.out.println("5. Exit");
+                System.out.println("5. Change Password");
+                System.out.println("6. Exit");
                 System.out.println("Enter your choice: ");
 
                 choice = sc.nextInt();
@@ -39,18 +40,34 @@ public class StaffUI implements ReportGeneration{
             
             switch (choice) {
                 case 1:
-                    staffCamps(campinfo, database, time, staff);
+                    /*
+                    * Allow staff to view, create or edit camps
+                    */
+                    staffCamps(campInfo, database, time, staff);
                     break;
                 case 2:
-                    staffEnquiries(staff, enquiries, replyToStudent, campinfo);
+                    /*
+                     * Call enquiries UI
+                     */
+                    staffEnquiries(staff, enquiries, replyToStudent, campInfo);
                     break;
                 case 3:
-                    // staffSuggestions(suggestions, camp, staff.getUserID());
+                    /*
+                     * Call suggestion UI
+                     */
+                    staffSuggestions(suggestions, staff.getUserID(), database, campInfo, time);
                     break;
                 case 4:
-                    staffReports(staff, campinfo, database, staff.getUserID());
+                    ReportUI.report(staff, campInfo);
                     break;
                 case 5:
+                    /*
+                    * Change password
+                    */
+                    int index = database.getUserIndex(staff.getUserID());
+                    PasswordManager.changePassword(index, database);
+                    break;
+                case 6:
                     exit = true;
                     break;
                 default:
@@ -163,12 +180,12 @@ public class StaffUI implements ReportGeneration{
             }
     }
 
-    private static void staffSuggestions(ListOfSuggestions suggestions, Camp camp, String userID)
+    private static void staffSuggestions(ListOfSuggestions suggestions, String userID, Database database, CampInfo campInfo, Time time)
     {
         Scanner sc = new Scanner(System.in);
         boolean exitSuggestions = false;
         while(!exitSuggestions){
-            System.out.println("1. View Suggestions");
+            System.out.println("1. View all Suggestions");
             System.out.println("2. Approve Suggestions");
             System.out.println("3. Go back to main menu");
             System.out.println("Enter your choice: ");
@@ -176,13 +193,14 @@ public class StaffUI implements ReportGeneration{
             sc.nextLine(); 
             switch(suggestionChoice){
                 case 1:
-                	suggestions.printAllSuggestions(camp, userID, true);
+                	suggestions.printAllSuggestions(userID, database, false);
                 	break;
                 case 2:
-                	suggestions.printAllSuggestions(camp, userID, true);
-                	System.out.println("Enter the suggestion ID of the camp you want to approve: ");
-                	int suggestionID = sc.nextInt();
-                	ReplyToSuggestion.replyToSuggestion(suggestionID, suggestions);
+                    /*
+                    * To allow staff to choose whether they want to approve suggestion
+                    * If yes, call the method to edit camp
+                    */
+                	approveSuggestions(suggestions, userID, database, campInfo, time);
                     break;
                 case 3:
                 	exitSuggestions = true; 
@@ -195,7 +213,7 @@ public class StaffUI implements ReportGeneration{
         
     }
     
-    private static void staffReports(Staff staff, CampInfo campinfo, Database database, String Userid)
+    private static void staffReports(Staff staff, CampInfo campInfo, Database database, String Userid)
     {
         Scanner sc = new Scanner(System.in);
         boolean exitReports = false;
@@ -219,10 +237,10 @@ public class StaffUI implements ReportGeneration{
                         	System.out.println("Enter the camp ID of the camp you want to print the report for: ");
                             int campID = sc.nextInt();
                             // Generate report for 1 camp only
-                    		PerformanceReport.printReport(staff.getListOfCamps().get(campID), campinfo);
+                    		PerformanceReport.printReport(staff.getListOfCamps().get(campID), campInfo);
                     		break;
                     	case 2:
-                        	PerformanceReport.printReport(staff.getListOfCamps(), campinfo);//cant call the function
+                        	PerformanceReport.printReport(staff.getListOfCamps(), campInfo);//cant call the function
                             break;
                         case 3:
                         	exitReports = true; 
@@ -243,10 +261,10 @@ public class StaffUI implements ReportGeneration{
                     		staff.getListOfCamps();
                         	System.out.println("Enter the camp ID of the camp you want to print the report for: ");
                             int campID = sc.nextInt();
-                    		AttendanceReport.printReport(staff.getListOfCamps(), campinfo);//how to gen for 1 camp?
+                    		AttendanceReport.printReport(staff.getListOfCamps(), campInfo);//how to gen for 1 camp?
                     		break;
                     	case 2:
-                        	AttendanceReport.printReport(staff.getListOfCamps(), campinfo);//cant call the function
+                        	AttendanceReport.printReport(staff.getListOfCamps(), campInfo);//cant call the function
                             break;
                         case 3:
                         	exitReports = true; 
@@ -267,5 +285,24 @@ public class StaffUI implements ReportGeneration{
         
     }
 	
-    
+    private static void approveSuggestions(ListOfSuggestions suggestions, String userID, Database database, CampInfo campInfo, Time time){
+        Scanner sc = new Scanner(System.in);
+        Staff staff = (Staff)database.getUser(userID);
+        /*
+         * Printing
+         */
+        boolean proceed = suggestions.printAllSuggestions(userID, database, true);
+        if(!proceed){
+            return;
+        }
+
+        System.out.println("Enter the suggestion ID of the camp you want to approve: ");
+        int suggestionID = sc.nextInt();
+        int index = suggestions.getIndexFromID(suggestionID);
+
+        String campName = suggestions.getCampEnquiredID(index);
+        Camp camp = campInfo.getCamp(campName);
+
+        ReplyToSuggestion.replyToSuggestion(index, suggestions, staff, camp, campInfo, database, time);
+    }
 }

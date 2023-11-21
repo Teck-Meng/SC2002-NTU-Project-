@@ -30,7 +30,7 @@ public class AttendanceReport implements ReportGeneration{
 
         while(userChoice < 0|| userChoice > 3){
             try{
-                System.out.println("What filters would you like to apply to the report that you want to print?");
+                System.out.println("What additonal filters would you like to apply to the report that you want to print?");
                 System.out.println("0 - Both attendees and committee members included");
                 System.out.println("1 - Only attendees included");
                 System.out.println("2 - Only camp committee members included");

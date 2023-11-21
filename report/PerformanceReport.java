@@ -16,6 +16,7 @@ public class PerformanceReport implements ReportGeneration{
      * To be used in StaffUI.java
      * StaffUI to be responsible to ask staff if they want to print performance report for all camps or one specific camp
      * Pass in @param listOfcamps by using database.getUser(@param String userID).getListOfCamps()
+     * Order of report is alphabetical order
      */
     public static void printReport(ArrayList<Camp> listOfCamps, CampInfo campInfo){
         /*
@@ -71,7 +72,7 @@ public class PerformanceReport implements ReportGeneration{
 
     /*
      * Overloaded version of printReport
-     * Prints performance report of commmittee members for all camps created by staff
+     * Prints performance report of commmittee members for a specific camp created by staff
      * To be used in StaffUI.java
      * Pass in @param listOfcamps by using database.getUser(@param String userID).getListOfCamps()
      */
@@ -112,5 +113,6 @@ public class PerformanceReport implements ReportGeneration{
         }
         System.out.println("Performance report successfully generated!");
     }
+
 
 }

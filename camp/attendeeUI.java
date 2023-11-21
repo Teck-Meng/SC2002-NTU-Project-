@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-import camppackage.AttendeeRegister;
+
 import enquiry.AttendeeEnquiry;
 import camppackage.Camp;
 import camppackage.CampInfo;
@@ -9,9 +9,6 @@ import enquiry.ListOfEnquiries;
 import enquiry.ReplyToStudent;
 import filehandler.Database;
 import user.Student;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-
 public class AttendeeUI {
     
     public static void DisplayUI(Camp camp, CampInfo campInfo, Student attendee, Database database, ListOfEnquiries enquiries,

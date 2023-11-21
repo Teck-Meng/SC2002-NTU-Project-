@@ -199,6 +199,7 @@ public class readFromFile extends convertString {
             int index = 0;
             while(attributeScanner.hasNext()){
                 attributeScanner.next();
+
                 Camp currentCamp = campInfo.getCamp(index);
                 campInfo.updateAttendeeSlotsUsed(true, currentCamp, stringToInt(attributeScanner.next()));
                 campInfo.updateCommitteeSlotUsed(currentCamp, stringToInt(attributeScanner.next()));

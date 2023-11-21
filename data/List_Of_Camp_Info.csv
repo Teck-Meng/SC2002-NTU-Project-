@@ -1,5 +1,6 @@
 userID, campName, dateStart, dateEnd, regClosingDate, userGroup, location, totalSlots, campCommitteeSlots, description,
-NEUVI,Enrichment Camp,16082024,19082024,11082024,ALL,Gaia,30,10,Oratrice Mecanique d'Analyse Cardinale,
+NEUVI,Culture Camp,30042024,30042024,11042024,ALL,location,5,2,description,
+NEUVI,Enrichment Camp,16082024,19082024,11082024,ALL,Gaia,30,10,There will be fruit loops,
 OURIN,Orientation,5082024,6082024,1082024,ALL,Fields,11,10,Fun for All,
+NEUVI,SCSE Math Camp,1052024,21052024,25042024,SCSE,Hall 2,30,10,Learn Math and have fun,
 OURIN,Workout,11082024,12082024,3082024,SCSE,SCSE,9,20,SCSE needs to touch grass,
-NEUVI,test,30042024,30042024,11042024,ALL,loc,5,2,de,

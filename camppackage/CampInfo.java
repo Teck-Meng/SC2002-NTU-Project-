@@ -5,6 +5,7 @@ import user.User;
 import user.Staff;
 import user.Faculty;
 import filehandler.Database;
+import sort.AlphaSort;
 import clock.Time;
 
 public class CampInfo {
@@ -151,22 +152,7 @@ public class CampInfo {
         /*
          * Add camp into camp list in alphabetical order
          */
-        for(int i = 0;i < listOfCamps.size();i++){
-            if(camp.getCampName().compareTo(listOfCamps.get(i).getCampName()) < 0){
-                listOfCamps.add(i, camp);
-                visibility.add(i, isVisible);
-                attendeeSlotsUsed.add(0);
-                campCommitteeSlotsUsed.add(0);
-                return;
-            }
-        }
-        /*
-         * Execute if list of camp has no elements or camp to be added to end of list of camp
-         */
-        listOfCamps.add(camp);
-        visibility.add(isVisible);
-        attendeeSlotsUsed.add(0);
-        campCommitteeSlotsUsed.add(0);
+        AlphaSort.add(listOfCamps, camp, visibility, isVisible, attendeeSlotsUsed, campCommitteeSlotsUsed);
     }
 
     public boolean deleteCamp(Camp camp){

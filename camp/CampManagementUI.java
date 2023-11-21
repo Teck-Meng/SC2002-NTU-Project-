@@ -13,6 +13,7 @@ import enquiry.ListOfEnquiries;
 import enquiry.ReplyToStudent;
 import filehandler.Database;
 import user.Student;
+import user.Staff;
 
 public class CampManagementUI {
     /*
@@ -30,6 +31,7 @@ public class CampManagementUI {
         }
         return listOfCamps;
     }
+
 
     protected static void registerCamp(CampInfo campInfo, Student student, Database database, Time clock){
         Scanner sc = new Scanner(System.in);
