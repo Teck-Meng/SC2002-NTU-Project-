@@ -55,7 +55,7 @@ public class StaffUI implements ReportGeneration{
                     /*
                      * Call suggestion UI
                      */
-                    staffSuggestions(suggestions, staff.getUserID(), database, campInfo, time);
+                    SuggestionsUI.staffSuggestions(suggestions, staff.getUserID(), database, campInfo, time);
                     break;
                 case 4:
                     ReportUI.report(staff, campInfo);
@@ -68,7 +68,24 @@ public class StaffUI implements ReportGeneration{
                     PasswordManager.changePassword(index, database);
                     break;
                 case 6:
-                    exit = true;
+                    int choiceToExit = -1;
+                    while(choiceToExit == -1){
+                        try{
+                            System.out.println("Are you sure you want to exit from CAM?:");
+                            System.out.println("Enter 1 if you wish to exit CAM");
+                            System.out.println("Enter any other number if you do not wish to exit CAM");
+                            System.out.println("Enter your choice: ");
+                            choiceToExit = sc.nextInt();
+                            sc.nextLine();
+                        }
+                        catch(InputMismatchException e){
+                            sc.nextLine();
+                            System.out.println("Please enter a valid integer value!");
+                        }
+                    }
+                    if(choiceToExit == 1){
+                        exit = true;
+                    }
                     break;
                 default:
                     System.out.println("Invalid choice");
@@ -180,129 +197,5 @@ public class StaffUI implements ReportGeneration{
             }
     }
 
-    private static void staffSuggestions(ListOfSuggestions suggestions, String userID, Database database, CampInfo campInfo, Time time)
-    {
-        Scanner sc = new Scanner(System.in);
-        boolean exitSuggestions = false;
-        while(!exitSuggestions){
-            System.out.println("1. View all Suggestions");
-            System.out.println("2. Approve Suggestions");
-            System.out.println("3. Go back to main menu");
-            System.out.println("Enter your choice: ");
-            int suggestionChoice = sc.nextInt();
-            sc.nextLine(); 
-            switch(suggestionChoice){
-                case 1:
-                	suggestions.printAllSuggestions(userID, database, false);
-                	break;
-                case 2:
-                    /*
-                    * To allow staff to choose whether they want to approve suggestion
-                    * If yes, call the method to edit camp
-                    */
-                	approveSuggestions(suggestions, userID, database, campInfo, time);
-                    break;
-                case 3:
-                	exitSuggestions = true; 
-                    break;
-                default:
-                    System.out.println("Invalid choice");
-                }                   
-            }
-
-        
-    }
     
-    private static void staffReports(Staff staff, CampInfo campInfo, Database database, String Userid)
-    {
-        Scanner sc = new Scanner(System.in);
-        boolean exitReports = false;
-        while(!exitReports){
-            System.out.println("1. Generate Attendance Report");
-            System.out.println("2. Generate Performance Report");
-            System.out.println("3. Go back to main menu");
-            System.out.println("Enter your choice: ");
-            int reportChoice = sc.nextInt();
-            sc.nextLine(); 
-            switch(reportChoice){
-                case 1:
-                	System.out.println("1. Print for one camp");
-                	System.out.println("2. Print for all camps");
-                	System.out.println("3. Go back to main menu");
-                	int performanceChoice = sc.nextInt();
-                    sc.nextLine();
-                    switch(performanceChoice){
-                    	case 1:
-                    		staff.getListOfCamps();
-                        	System.out.println("Enter the camp ID of the camp you want to print the report for: ");
-                            int campID = sc.nextInt();
-                            // Generate report for 1 camp only
-                    		PerformanceReport.printReport(staff.getListOfCamps().get(campID), campInfo);
-                    		break;
-                    	case 2:
-                        	PerformanceReport.printReport(staff.getListOfCamps(), campInfo);//cant call the function
-                            break;
-                        case 3:
-                        	exitReports = true; 
-                            break;
-                        default:
-                            System.out.println("Invalid choice");
-                    
-                    }
-                	break;
-                case 2:
-                	System.out.println("1. Print for one camp");
-                	System.out.println("2. Print for all camps");
-                	System.out.println("3. Go back to main menu");
-                	int attendanceChoice = sc.nextInt();
-                    sc.nextLine();
-                    switch(attendanceChoice){
-                    	case 1:
-                    		staff.getListOfCamps();
-                        	System.out.println("Enter the camp ID of the camp you want to print the report for: ");
-                            int campID = sc.nextInt();
-                    		AttendanceReport.printReport(staff.getListOfCamps(), campInfo);//how to gen for 1 camp?
-                    		break;
-                    	case 2:
-                        	AttendanceReport.printReport(staff.getListOfCamps(), campInfo);//cant call the function
-                            break;
-                        case 3:
-                        	exitReports = true; 
-                            break;
-                        default:
-                            System.out.println("Invalid choice");
-                    
-                    }
-                    break;
-                case 3:
-                	exitReports = true; 
-                    break;
-                default:
-                    System.out.println("Invalid choice");
-                }                   
-            }
-
-        
-    }
-	
-    private static void approveSuggestions(ListOfSuggestions suggestions, String userID, Database database, CampInfo campInfo, Time time){
-        Scanner sc = new Scanner(System.in);
-        Staff staff = (Staff)database.getUser(userID);
-        /*
-         * Printing
-         */
-        boolean proceed = suggestions.printAllSuggestions(userID, database, true);
-        if(!proceed){
-            return;
-        }
-
-        System.out.println("Enter the suggestion ID of the camp you want to approve: ");
-        int suggestionID = sc.nextInt();
-        int index = suggestions.getIndexFromID(suggestionID);
-
-        String campName = suggestions.getCampEnquiredID(index);
-        Camp camp = campInfo.getCamp(campName);
-
-        ReplyToSuggestion.replyToSuggestion(index, suggestions, staff, camp, campInfo, database, time);
-    }
 }
