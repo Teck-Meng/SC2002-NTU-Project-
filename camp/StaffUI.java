@@ -66,6 +66,12 @@ public class StaffUI implements ReportGeneration{
                     */
                     int index = database.getUserIndex(staff.getUserID());
                     PasswordManager.changePassword(index, database);
+                    while(true){
+                        int id = UserAuthenticator.verifyLogin(database);
+                        if(id > -1){
+                            break;
+                        }
+                    }
                     break;
                 case 6:
                     int choiceToExit = -1;
@@ -103,7 +109,7 @@ public class StaffUI implements ReportGeneration{
             System.out.println("--- Camp Management Interface ---");
             System.out.println("1. Create new Camp");
             System.out.println("2. Edit Camp");
-            System.out.println("3. View All your Camps");
+            System.out.println("3. View all your Camps");
             System.out.println("4. View all camps in system");
             System.out.println("5. Go back to main menu");
             System.out.println("Enter your choice: ");
@@ -153,6 +159,7 @@ public class StaffUI implements ReportGeneration{
         Scanner sc = new Scanner(System.in);
         boolean exitEnquiries = false;
         while(!exitEnquiries){
+            System.out.println("--- Enquiry Handling Interface ---");
             System.out.println("1. View Enquiries");
             System.out.println("2. Reply Enquiries");
             System.out.println("3. View all Replies");
@@ -165,6 +172,7 @@ public class StaffUI implements ReportGeneration{
                 	enquiries.printAllEnquiries(staff.getUserID(), true);
                 	break;
                 case 2:
+                    System.out.println("The following are all your enquiries:");
                 	enquiries.printAllEnquiries(staff.getUserID());
                     int enquiryID = -1;
                 	while(enquiryID == -1){

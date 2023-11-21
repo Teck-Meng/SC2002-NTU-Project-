@@ -211,7 +211,7 @@ public class ListOfSuggestions {
             Camp currentCamp = suggestedCamp.get(i);
             if(currentCamp.verifyStaff(staff) && !isItApproved(i)){
                 System.out.print("Camp: " + currentCamp.getCampName());
-                System.out.println("Suggestion ID: " + suggestionID.get(i)+ " : ");
+                System.out.println(", Suggestion ID: " + suggestionID.get(i)+ " : ");
                 System.out.println(suggestions.get(i));
                 count++;
             }
@@ -225,7 +225,7 @@ public class ListOfSuggestions {
             Camp currentCamp = suggestedCamp.get(i);
             if(currentCamp.verifyStaff(staff)){
                 System.out.print("Camp: " + currentCamp.getCampName());
-                System.out.println("Suggestion ID: " + suggestionID.get(i)+ " : ");
+                System.out.println(", Suggestion ID: " + suggestionID.get(i)+ " : ");
                 System.out.println(suggestions.get(i));
                 count++;
             }

@@ -24,7 +24,7 @@ public class PrintCampDetails {
     public static void printRemainingSlots(Camp camp, CampInfo campInfo){
         int attendeeSlotsLeft = campInfo.getAttendeeSlotsUsed(camp);
         int committeeSlotsLeft = campInfo.getCampCommitteeSlotsUsed(camp);
-        System.out.println("Attendee Slots Left: " + attendeeSlotsLeft + " Camp Committtee Slots Left: " + committeeSlotsLeft);
+        System.out.println("Attendee Slots taken: " + attendeeSlotsLeft + " Camp Committtee Slots taken: " + committeeSlotsLeft);
         System.out.println("--------------------------------------------");
     }
 }

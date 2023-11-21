@@ -26,6 +26,7 @@ public class ReportUI {
             System.out.println("2. Generate Performance Report");
             System.out.println("3. Add filter");
             System.out.println("4. Exit");
+            System.out.println("Enter you choice here:");
             try{
                 userChoice = sc.nextInt();
             }

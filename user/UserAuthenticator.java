@@ -108,6 +108,9 @@ public class UserAuthenticator {
             // if userID is correct, prompt password change using the index
             if(verifyIndex != -1){
                 PasswordManager.changePassword(verifyIndex, database);
+                if(verifyLogin(database) < 0){
+                    return -2;
+                }
             }
             else{
                 return -2;

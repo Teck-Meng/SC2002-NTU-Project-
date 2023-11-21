@@ -17,6 +17,7 @@ public class SuggestionsUI {
         Scanner sc = new Scanner(System.in);
         boolean manage = true;
         while(manage){
+            System.out.println("--- Suggestion Handling interface ---");
             System.out.println("1. Submit Suggestion");
             System.out.println("2. View Suggestions");
             System.out.println("3. Edit Suggestion");
@@ -90,6 +91,7 @@ public class SuggestionsUI {
     Scanner sc = new Scanner(System.in);
     boolean exitSuggestions = false;
     while(!exitSuggestions){
+        System.out.println("--- Suggestions handling interface ---");
         System.out.println("1. View all Suggestions");
         System.out.println("2. Approve Suggestions");
         System.out.println("3. Go back to main menu");
@@ -116,10 +118,10 @@ public class SuggestionsUI {
         }
 
     
-}
+    }
 
 
-private static void approveSuggestions(ListOfSuggestions suggestions, String userID, Database database, CampInfo campInfo, Time time){
+    private static void approveSuggestions(ListOfSuggestions suggestions, String userID, Database database, CampInfo campInfo, Time time){
     Scanner sc = new Scanner(System.in);
     Staff staff = (Staff)database.getUser(userID);
     /*

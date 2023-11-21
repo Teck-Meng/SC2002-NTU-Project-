@@ -9,11 +9,8 @@ import camppackage.CampInfo;
 import camppackage.CommitteeList;
 import camppackage.PrintCampDetails;
 import clock.Time;
-import enquiry.ListOfEnquiries;
-import enquiry.ReplyToStudent;
 import filehandler.Database;
 import user.Student;
-import user.Staff;
 
 public class CampManagementUI {
     /*
@@ -50,6 +47,7 @@ public class CampManagementUI {
         while(registerChoice < 0 || registerChoice > listOfCamps.size()){
             try{
                 for(int i = 0; i < listOfCamps.size(); i++){
+                    System.out.println((i + 1)+": ");
                     PrintCampDetails.print(listOfCamps.get(i));
                     PrintCampDetails.printRemainingSlots(listOfCamps.get(i), campInfo);
                     }
@@ -96,19 +94,26 @@ public class CampManagementUI {
             /*
                 * student want to be camp committee member
                 */
-            student.addCamp(selectedCamp, true);
             CommitteeList committeeList = selectedCamp.getCommitteeList();
             committeeList.addCommitteeMember(student, campInfo, selectedCamp);
+            if(selectedCamp.getCampCommitteeSlots() != campInfo.getCampCommitteeSlotsUsed(selectedCamp)){
+                student.addCamp(selectedCamp, true);
+                System.out.println("Camp registered Successfully!");
+            }
         }
         else{
             /*
                 * Register as attendee
                 */
-            student.addCamp(selectedCamp, false);
+            
             AttendeeList attendeeList = selectedCamp.getAttendeeList();
             attendeeList.addAttendee(student);
+            if(selectedCamp.getTotalSlots() - selectedCamp.getCampCommitteeSlots() != campInfo.getAttendeeSlotsUsed(selectedCamp)){
+                student.addCamp(selectedCamp, false);
+                System.out.println("Camp registered Successfully!");
+            }
         }
-        System.out.println("Camp registered Successfully!");
+        
         //Register for a camp
     }
     

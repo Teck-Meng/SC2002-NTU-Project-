@@ -277,8 +277,14 @@ public class CreateCampUI {
          * Camp total slots minimum is 2 as there are at least 1 attendee and 1 committee member in a camp
          */
         while(totalSlots < 2){
-            System.out.println("Enter the number of total slots for this camp(Number to be above 1): ");
-            totalSlots = sc.nextInt();
+            try{
+                System.out.println("Enter the number of total slots for this camp(Number to be above 1): ");
+                totalSlots = sc.nextInt();
+            }
+            catch(InputMismatchException e){
+                sc.nextLine();
+                System.out.println("Please enter a valid integer option!");
+            }
         }
         return totalSlots;
     }

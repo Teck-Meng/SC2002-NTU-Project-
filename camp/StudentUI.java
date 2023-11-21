@@ -96,6 +96,12 @@ public class StudentUI {
                      */
                     int index = database.getUserIndex(student.getUserID());
                     PasswordManager.changePassword(index, database);
+                    while(true){
+                        int id = UserAuthenticator.verifyLogin(database);
+                        if(id > -1){
+                            break;
+                        }
+                    }
                     break;
                 case 9:
                     int choiceToExit = -1;

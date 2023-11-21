@@ -141,7 +141,8 @@ public class AttendanceReport implements ReportGeneration{
     }
 
     public static void attendeeReportHandling(ArrayList<Student> attendeeList, Camp camp){
-             try { 
+            clearFiles.clearAttendanceReport();
+            try { 
                     /*
                      * Initialize printwriter
                      */
