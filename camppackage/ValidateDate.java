@@ -9,9 +9,6 @@ import filehandler.Database;
  * To validate dates and also to check dates with student's collection
  */
 public class ValidateDate {
-    public static void main(String[] args){
-        System.out.println(isDateValid(20042024));
-    }
     /*
      * Ensure date follow DD/MM/YYYY format
      * Minimum of 7 digits when date column is single digit

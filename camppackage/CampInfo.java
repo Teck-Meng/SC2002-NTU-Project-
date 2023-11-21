@@ -196,17 +196,6 @@ public class CampInfo {
         }
         return null;
     }
-
-    //To test method usability, should delete this method for the final product
-    public void print(){
-        for(int i = 0;i < listOfCamps.size();i++){
-            System.out.println();
-            System.out.print("name: "+listOfCamps.get(i).getCampName());
-            System.out.print("Att slot: " + attendeeSlotsUsed.get(i));
-            System.out.print(" CC slot: " + campCommitteeSlotsUsed.get(i));
-            System.out.print(" V:" + visibility.get(i));
-        }
-    }
 }
 
     

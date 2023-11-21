@@ -8,20 +8,19 @@ import java.util.ArrayList;
 
 import camppackage.Camp;
 import user.Student;
-import user.Staff;
+
 import user.User;
 import camppackage.CampInfo;
 import enquiry.ListOfEnquiries;
 import enquiry.ListOfSuggestions;
 import enquiry.ReplyToStudent;
-import report.PerformanceReport;
 
 
 /*
  * Class will contain all methods to write to csv
  * csv file name will be passed as @param_type String
  */
-public class writeToFile {
+public class WriteToFile {
     /*
      * Method to write blacklist information on corresponding csv file
      */
@@ -199,8 +198,8 @@ public class writeToFile {
      * Method to store enquiries and corresponding replies into csv
      * 
      */
-    public static void writeToEnquiries(ListOfEnquiries enquries, ReplyToStudent replies){
-        ArrayList<String> listOfEnquiries = enquries.getEnquiries();
+    public static void writeToEnquiries(ListOfEnquiries enquiries, ReplyToStudent replies){
+        ArrayList<String> listOfEnquiries = enquiries.getEnquiries();
         
 
 
@@ -211,12 +210,12 @@ public class writeToFile {
                     /*
                     * Extract all attributes to write into csv
                     */
-                    String enquiry = enquries.getEnquiry(i);
-                    String userID = enquries.getUserID(i);
-                    String campName = enquries.getCampEnquiredID(i);
-                    int enquiryID = enquries.getEnquiryID(i);
+                    String enquiry = enquiries.getEnquiry(i);
+                    String userID = enquiries.getUserID(i);
+                    String campName = enquiries.getCampEnquiredID(i);
+                    int enquiryID = enquiries.getEnquiryID(i);
 
-                    if(enquries.isEnquiryAnswered(i)){
+                    if(enquiries.isEnquiryAnswered(i)){
                         String reply = replies.getReplyFromPtr(enquiryID);
                         csvWriter.println(enquiry + "," + userID + "," + campName + "," + enquiryID + "," + reply + "," +
                                             enquiryID + ",");

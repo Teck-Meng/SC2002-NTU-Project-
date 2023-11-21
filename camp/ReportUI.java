@@ -11,7 +11,7 @@ import report.Filter;
 import report.PerformanceReport;
 
 public class ReportUI {
-    public static void report(Staff staff, CampInfo campInfo){
+    protected static void report(Staff staff, CampInfo campInfo){
         Scanner sc = new Scanner(System.in);
         int userChoice = -1;
         boolean filterAdded = false;
@@ -187,7 +187,7 @@ public class ReportUI {
         }
     }
 
-    public static ArrayList<Camp> filterUI(ArrayList<Camp> filteredList, ArrayList<Camp> originalList, boolean filtered){
+    protected static ArrayList<Camp> filterUI(ArrayList<Camp> filteredList, ArrayList<Camp> originalList, boolean filtered){
         int userChoice = -1;
         boolean exit = false;
         Scanner sc = new Scanner(System.in);

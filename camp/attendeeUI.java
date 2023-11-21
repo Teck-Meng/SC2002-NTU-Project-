@@ -11,7 +11,7 @@ import filehandler.Database;
 import user.Student;
 public class AttendeeUI {
     
-    public static void DisplayUI(Camp camp, CampInfo campInfo, Student attendee, Database database, ListOfEnquiries enquiries,
+    protected static void displayUI(Camp camp, CampInfo campInfo, Student attendee, Database database, ListOfEnquiries enquiries,
                                 ReplyToStudent replies){
         Scanner sc = new Scanner(System.in);
         boolean exit = false;

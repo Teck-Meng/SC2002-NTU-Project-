@@ -13,7 +13,7 @@ import enquiry.ReplyToStudent;
 
 public class CommitteeMemUI {
 
-    public static void main(Camp camp, String userID, Database database, ListOfEnquiries enquiries, 
+    protected static void main(Camp camp, String userID, Database database, ListOfEnquiries enquiries, 
                             ListOfSuggestions suggestions, ReplyToStudent replyToStudent, CampInfo campInfo, Student committeeMem) {
         boolean exit = false;
         while (!exit) {

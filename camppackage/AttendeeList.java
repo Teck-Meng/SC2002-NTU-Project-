@@ -43,11 +43,6 @@ public class AttendeeList{
        
     }
 
-    public void print(){
-        for(int i = 0;i<listOfAttendees.size();i++){
-            System.out.println(listOfAttendees.get(i).getUserID());
-        }
-    }
 
     
 }

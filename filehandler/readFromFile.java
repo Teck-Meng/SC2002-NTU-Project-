@@ -17,41 +17,7 @@ import camppackage.Camp;
 /*
  * Class will be contain all methods to read from csv
  */
-public class readFromFile extends convertString {
-    public static void main(String args[]){
-        /*
-         * Testing environment for read methods
-         */
-        Database db = new Database();
-        readUserList(db);
-        readPasswords(db);
-        
-        CampInfo test = new CampInfo();
-        readListOfCamps(test, db);
-
-        readAttendeeList(test, db);
-        readCommitteeList(test, db);
-        readBlacklist(test, db);
-       
-        ListOfEnquiries enquiries = new ListOfEnquiries();
-        ListOfSuggestions suggest = new ListOfSuggestions();
-        ReplyToStudent replies = new ReplyToStudent();
-        readEnquiries(test, db, enquiries, replies);
-        readSuggestions(test, db, suggest);
-
-        System.out.println(suggest.getSuggestion(0));
-        System.out.println(suggest.getCampEnquiredID(0));
-        System.out.println(suggest.isItApproved(0));
-
-        suggest.addSuggestion("Get Cake!", "FURINA", test.getCamp("Workout"), 1, false, db);
-
-        clearFiles.clearSuggestions();
-        writeToFile.writeToSuggestion(suggest);
-
-    }
-
-
-
+public class ReadFromFile extends ConvertString {
     /*
      * To read staff list and student list and translate into database
      */

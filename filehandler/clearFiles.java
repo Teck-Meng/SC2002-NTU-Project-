@@ -8,7 +8,7 @@ import java.io.PrintWriter;
  * The purpose of this class is to empty out the csv file to prepare for writing
  * Clearing out the entire csv and rewriting is more efficient than having to match inputs of csv with inputs from application data
  */
-public class clearFiles {
+public class ClearFiles {
     /*
      * Clear the blacklist, attendee list and committee list
      * To be used before calling corresponding write methods

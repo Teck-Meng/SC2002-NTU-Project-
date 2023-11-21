@@ -22,7 +22,4 @@ public class CommitteeSuggestion {
         list.printAllSuggestions(committeeMember.getCommitteeCamp(), committeeMember.getUserID(), false);
     }
 
-    public static void deleteSuggestion(){
-        
-    }
 }

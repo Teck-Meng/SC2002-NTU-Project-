@@ -44,7 +44,7 @@ public class MainProgram {
             /*
             * Login verification by calling loginUI class
             */
-            userIDIndex = loginUI.promptLogin(database);
+            userIDIndex = LoginUI.promptLogin(database);
             if(userIDIndex < 0){
                 /*
                  * Terminate program if login inside loginUI has failed
@@ -70,7 +70,7 @@ public class MainProgram {
                 /*
                 * Call student UI
                 */
-                StudentUI.Main((Student)currentUser, campInfo, database, time, enquiries, suggestions, replies);
+                StudentUI.main((Student)currentUser, campInfo, database, time, enquiries, suggestions, replies);
             }
 
             System.out.println("Would you like to terminate program?");
@@ -98,31 +98,31 @@ public class MainProgram {
 
     public static void readFileInfo(CampInfo campInfo, Database database, ListOfEnquiries enquiries, ListOfSuggestions suggestions,
                                     ReplyToStudent replies){
-        readFromFile.readUserList(database); 
-        readFromFile.readPasswords(database);
-        readFromFile.readListOfCamps(campInfo, database); 
-        readFromFile.readAttendeeList(campInfo, database);
-        readFromFile.readCommitteeList(campInfo, database);
-        readFromFile.readBlacklist(campInfo, database);
-        readFromFile.readEnquiries(campInfo, database, enquiries, replies);
-        readFromFile.readSuggestions(campInfo, database, suggestions);   
+        ReadFromFile.readUserList(database); 
+        ReadFromFile.readPasswords(database);
+        ReadFromFile.readListOfCamps(campInfo, database); 
+        ReadFromFile.readAttendeeList(campInfo, database);
+        ReadFromFile.readCommitteeList(campInfo, database);
+        ReadFromFile.readBlacklist(campInfo, database);
+        ReadFromFile.readEnquiries(campInfo, database, enquiries, replies);
+        ReadFromFile.readSuggestions(campInfo, database, suggestions);   
     }
 
     public static void saveFileInfo(CampInfo campInfo, Database database, ListOfEnquiries enquiries, ListOfSuggestions suggestions,
                                     ReplyToStudent replies){
-        clearFiles.clearAttendanceLists();
-        clearFiles.clearPasswords();
-        clearFiles.clearCampInfoAttributes();
-        clearFiles.clearCampInfo();
-        clearFiles.clearEnquiries();
-        clearFiles.clearSuggestions();
+        ClearFiles.clearAttendanceLists();
+        ClearFiles.clearPasswords();
+        ClearFiles.clearCampInfoAttributes();
+        ClearFiles.clearCampInfo();
+        ClearFiles.clearEnquiries();
+        ClearFiles.clearSuggestions();
 
-        writeToFile.writeToBlacklist(campInfo);
-        writeToFile.writeToAttendeeList(campInfo);
-        writeToFile.writeToCommitteeList(campInfo);
-        writeToFile.writeToPasswords(database);
-        writeToFile.writeCampInfo(campInfo);
-        writeToFile.writeToEnquiries(enquiries, replies);
-        writeToFile.writeToSuggestion(suggestions);
+        WriteToFile.writeToBlacklist(campInfo);
+        WriteToFile.writeToAttendeeList(campInfo);
+        WriteToFile.writeToCommitteeList(campInfo);
+        WriteToFile.writeToPasswords(database);
+        WriteToFile.writeCampInfo(campInfo);
+        WriteToFile.writeToEnquiries(enquiries, replies);
+        WriteToFile.writeToSuggestion(suggestions);
     }
 }

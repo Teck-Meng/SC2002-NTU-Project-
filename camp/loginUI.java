@@ -5,8 +5,8 @@ import filehandler.Database;
 import filehandler.PasswordManager;
 
 
-public class loginUI {
-    public static int promptLogin(Database database){
+public class LoginUI {
+    protected static int promptLogin(Database database){
         
         /*
          * Intialize integer variable to track user choice in the app

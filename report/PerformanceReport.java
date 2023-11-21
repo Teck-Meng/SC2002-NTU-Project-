@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import camppackage.Camp;
 import camppackage.CampInfo;
-import filehandler.clearFiles;
+import filehandler.ClearFiles;
 import user.Student;
 
 public class PerformanceReport implements ReportGeneration{
@@ -22,7 +22,7 @@ public class PerformanceReport implements ReportGeneration{
         /*
          * Clear attendance report to make way for new one
          */
-        clearFiles.clearPerformanceReport();
+        ClearFiles.clearPerformanceReport();
         System.out.println("Generating Report . . .");
         for(int i = 0; i < listOfCamps.size(); i++){
             /*
@@ -80,7 +80,7 @@ public class PerformanceReport implements ReportGeneration{
         /*
          * Clear attendance report to make way for new one
          */
-        clearFiles.clearPerformanceReport();
+        ClearFiles.clearPerformanceReport();
         System.out.println("Generating Report . . .");
         /*
          * Extract committee list for specific camp

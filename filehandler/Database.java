@@ -90,16 +90,4 @@ public class Database {
         passwords.set(index, password);
     }
 
-    
-    /*
-     * Testing only, later delete
-     */
-    protected void printAllUsers(){
-        for(int i = 0; i <users.size();i++){
-            System.out.print("user id: "+users.get(i).getUserID());
-            System.out.print("faculty: "+users.get(i).getFaculty().toString());
-            System.out.println("pw: "+passwords.get(i));
-            System.out.println();
-        }
-    }
 }

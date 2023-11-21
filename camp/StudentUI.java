@@ -18,7 +18,7 @@ import enquiry.ListOfSuggestions;
 import enquiry.ReplyToStudent;
 
 public class StudentUI {
-    public static void Main(Student student, CampInfo campInfo, Database database, Time clock, ListOfEnquiries enquiries,
+    protected static void main(Student student, CampInfo campInfo, Database database, Time clock, ListOfEnquiries enquiries,
                             ListOfSuggestions suggestions, ReplyToStudent replies){
         Scanner sc = new Scanner(System.in);
         boolean exit = false;
@@ -156,10 +156,10 @@ public class StudentUI {
             return;
         }
         Camp camp = registeredCamps.get(attendeeChoice - 1);
-        AttendeeUI.DisplayUI(camp, campInfo, student, database, enquiries, replies);
+        AttendeeUI.displayUI(camp, campInfo, student, database, enquiries, replies);
     }
    
-    public static void enquiryManagement(CampInfo campInfo, Student student, Database database, ListOfEnquiries enquiries,
+    private static void enquiryManagement(CampInfo campInfo, Student student, Database database, ListOfEnquiries enquiries,
                                         Student attendee){
         Scanner sc = new Scanner(System.in);
         ArrayList<Camp> listOfCamps = CampManagementUI.printListOfCamps(campInfo, student);

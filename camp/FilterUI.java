@@ -5,7 +5,7 @@ import camppackage.ValidateDate;
 import user.Faculty;
 
 public class FilterUI {
-    public static Faculty askFaculty(){
+    protected static Faculty askFaculty(){
         Scanner sc = new Scanner(System.in);
         int userChoice = 0;
         while(userChoice < 1 || userChoice > 16){
@@ -81,7 +81,7 @@ public class FilterUI {
         return userGroup;
     }
 
-    public static String askLocation(){
+    protected static String askLocation(){
         Scanner sc = new Scanner(System.in);
         String location;
 
@@ -90,7 +90,7 @@ public class FilterUI {
         return location;
     }
 
-    public static int askDate(){
+    protected static int askDate(){
         Scanner sc = new Scanner(System.in);
         int date = -1;
 

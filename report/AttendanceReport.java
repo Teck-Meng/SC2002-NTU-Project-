@@ -4,7 +4,7 @@ import user.Faculty;
 import user.Student;
 import camppackage.CampInfo;
 import camppackage.Camp;
-import filehandler.clearFiles;
+import filehandler.ClearFiles;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -56,7 +56,7 @@ public class AttendanceReport implements ReportGeneration{
         /*
          * Clear attendance report to make way for new one
          */
-        clearFiles.clearAttendanceReport();
+        ClearFiles.clearAttendanceReport();
         /*
          * Extract staff's list of camps
          */
@@ -124,7 +124,7 @@ public class AttendanceReport implements ReportGeneration{
         /*
          * Clear attendance report to make way for new one
          */
-        clearFiles.clearAttendanceReport();
+        ClearFiles.clearAttendanceReport();
         switch(userChoice){
                 case 0:
                     attendeeReportHandling(committeeCamp.getAttendeeList().getListOfAttendees(), committeeCamp);
@@ -141,7 +141,7 @@ public class AttendanceReport implements ReportGeneration{
     }
 
     public static void attendeeReportHandling(ArrayList<Student> attendeeList, Camp camp){
-            clearFiles.clearAttendanceReport();
+            ClearFiles.clearAttendanceReport();
             try { 
                     /*
                      * Initialize printwriter
@@ -196,110 +196,5 @@ public class AttendanceReport implements ReportGeneration{
                 }
         }
 
-    public static void facultyFilteredReport(ArrayList<Student> attendeeList, ArrayList<Student> committeeList, Camp camp, Faculty faculty){
-        Scanner sc = new Scanner(System.in);
-        int userChoice = -1;
-
-        while(userChoice < 0|| userChoice > 3){
-            try{
-                System.out.println("What filters would you like to apply to the report that you want to print?");
-                System.out.println("0 - Both attendees and committee members included");
-                System.out.println("1 - Only attendees included");
-                System.out.println("2 - Only camp committee members included");
-                System.out.println("3 - Quit report generation");
-                userChoice = sc.nextInt();
-            }
-            catch(InputMismatchException e){
-                System.out.println("Kindly enter a valid integer choice!");
-                sc.nextLine();
-            }
-            if(userChoice < 0|| userChoice > 3){
-                System.out.println("Please enter a choice from 0 to 3!");
-            }
-        }
-        /*
-         * Terminate printing of report if staff does not wish to continue
-         */
-        if(userChoice == 3){
-            System.out.println("Exiting report generation page . . .");
-            return;
-        }
-        System.out.println("Generating report . . .");
-        /*
-         * Clear attendance report to make way for new one
-         */
-        clearFiles.clearAttendanceReport();
-        switch(userChoice){
-                case 0:
-                    facultyFilteredAttendee(attendeeList, camp, faculty);
-                    facultyFilteredCommittee(committeeList, camp, faculty);
-                    break;
-                case 1:
-                    facultyFilteredAttendee(attendeeList, camp, faculty);
-                    break;
-                case 2:
-                    facultyFilteredCommittee(committeeList, camp, faculty);
-                    break;
-            }
-        System.out.println("Attendance Report successfully generated");
-    }
-
-    public static void facultyFilteredAttendee(ArrayList<Student> attendeeList, Camp camp, Faculty filter){
-             try { 
-                    /*
-                     * Initialize printwriter
-                     */
-                    PrintWriter csvWriter = new PrintWriter(new FileWriter("./data/AttendanceReport.csv", true));
-                    String campName = camp.getCampName();
-                    String role = "Attendee";
-                    String location = camp.getLocation();
-                    String description = camp.getDescription();
-                    for(int i = 0; i < attendeeList.size(); i++){
-                        Student attendee = attendeeList.get(i);
-                        /*
-                         * Write to csv
-                         */
-                        if(attendee.getFaculty() == filter){
-                            String userID = attendee.getUserID();
-                            String faculty = attendee.getFaculty().toString();
-                            
-                            csvWriter.println(userID + "," + faculty + "," + campName + "," + role + "," + location + "," +
-                                            description + ",");   
-                        }           
-                    }
-                    csvWriter.close(); 
-                } catch (IOException e) { 
-                    e.printStackTrace(); 
-                }
-            
-        }
-
-    public static void facultyFilteredCommittee(ArrayList<Student> committeeList, Camp camp, Faculty filter){
-            try { 
-                    /*
-                     * Initialize printwriter
-                     */
-                    PrintWriter csvWriter = new PrintWriter(new FileWriter("./data/AttendanceReport.csv", true));
-                    String campName = camp.getCampName();
-                    String role = "Camp committee member";
-                    String location = camp.getLocation();
-                    String description = camp.getDescription();
-                    for(int i = 0; i < committeeList.size(); i++){
-                        Student committeeMember = committeeList.get(i);
-                        /*
-                         * Write to csv
-                         */
-                        if(committeeMember.getFaculty() == filter){
-                            String userID = committeeMember.getUserID();
-                            String faculty = committeeMember.getFaculty().toString();
-                            
-                            csvWriter.println(userID + "," + faculty + "," + campName + "," + role + "," + location + "," +
-                                            description + ",");
-                        }              
-                    }
-                    csvWriter.close(); 
-                } catch (IOException e) { 
-                    e.printStackTrace(); 
-                }
-        }
+    
 }

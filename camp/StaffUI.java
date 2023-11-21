@@ -14,7 +14,7 @@ import clock.Time;
 
 public class StaffUI implements ReportGeneration{
 	
-	public static void main(CampInfo campInfo, Database database, ListOfEnquiries enquiries, ListOfSuggestions suggestions,
+	protected static void main(CampInfo campInfo, Database database, ListOfEnquiries enquiries, ListOfSuggestions suggestions,
                              ReplyToStudent replyToStudent,Time time, Staff staff)
 	{
         boolean exit = false;
