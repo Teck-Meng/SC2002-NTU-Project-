@@ -14,12 +14,14 @@ import enquiry.ListOfSuggestions;
 import enquiry.ReplyToStudent;
 import camppackage.Camp;
 
-/*
+/**
  * Class will be contain all methods to read from csv
  */
 public class ReadFromFile extends ConvertString {
-    /*
+    /**
      * To read staff list and student list and translate into database
+     * 
+     * @param database Database of Users
      */
     public static void readUserList(Database database){
         final int NUMBEROFLISTS = 2;
@@ -60,13 +62,15 @@ public class ReadFromFile extends ConvertString {
                 System.out.println("Error! File not found! ");
             }
             catch(NoSuchElementException n){
-                // Make program continue even if got this error
-            }
+            // Make program continue even if got this error
+        }
         }
     }
 
-    /*
-     * To be called right after calling readUserList()
+    /**
+     * To be called right after calling readUserList() to read passwords
+     * 
+     * @param database Database of Users
      */
     public static void readPasswords(Database database){
         File file = new File("./data/passwords.csv");
@@ -76,9 +80,6 @@ public class ReadFromFile extends ConvertString {
             sc.useDelimiter(",");
             sc.nextLine();
             while(sc.hasNext()){
-                /*
-                 * Extract the index that the password is at to edit passwords database using index
-                 */
                 String userID = sc.next();
                 int pos = database.getUserIndex(userID);
                 database.initializePassword(pos, sc.next());
@@ -94,9 +95,12 @@ public class ReadFromFile extends ConvertString {
         }
     }
     
-    /*
+    /**
      * To intialize campInfo object, to be called after using readPassWords()
      * Will also update staff's list of camp list
+     * 
+     * @param campInfo Database of Camps
+     * @param database Database of Users
      */
     public static void readListOfCamps(CampInfo campInfo, Database database){
         File listOfCamps = new File("./data/List_Of_Camp_Info.csv");
@@ -118,39 +122,23 @@ public class ReadFromFile extends ConvertString {
                 Camp newCamp = new Camp(userID, database);
 
                 newCamp.setCampName(listScanner.next());
-                /*
-                 * date init
-                 */
                 
                 int[] dates = new int[2];
                 dates[0] = stringToInt(listScanner.next());
                 dates[1] = stringToInt(listScanner.next());
                 newCamp.setDates(dates);
-                /*
-                 * regClosingDate init
-                 */
+
                 newCamp.setRegClosingDate(stringToInt(listScanner.next()));
-                /*
-                 * Faculty
-                 */
+                
                 newCamp.setUserGroup(setFaculty(listScanner.next()));
                 
-                /*
-                 * location init
-                 */
+                
                 newCamp.setLocation(listScanner.next());
-                /*
-                 * totalSlots init
-                 */
+                
                 newCamp.setTotalSlots(stringToInt(listScanner.next()));
                 
-                /*
-                 * committeeSlots init
-                 */
                 newCamp.setCampCommitteeSlots(stringToInt(listScanner.next()));
-                /*
-                 * description init
-                 */
+                
                 newCamp.setDescription(listScanner.next());
                 campInfo.addCamp(newCamp, true);
 
@@ -184,9 +172,12 @@ public class ReadFromFile extends ConvertString {
         }
     }
     
-    /*
+    /**
      * To update attendeeList
      * Simultaneously update myCamps in student class and attendee list in camp object
+     * 
+     * @param campInfo Database of Camps
+     * @param database Database of Users
      */
     public static void readAttendeeList(CampInfo campInfo, Database database){
         File attendeeList = new File("./data/Attendee_List.csv");
@@ -196,9 +187,6 @@ public class ReadFromFile extends ConvertString {
             sc.useDelimiter(",");
             sc.nextLine();
             while(sc.hasNext()){
-                /*
-                 * Update attendee list and student object's myCamps simultaneously
-                 */
                 String userID = sc.next();
                 Student attendee = (Student)database.getUser(userID);
                 Camp correspondingCamp = campInfo.getCamp(sc.next());
@@ -216,9 +204,12 @@ public class ReadFromFile extends ConvertString {
         }
     }
     
-    /*
+    /**
      * To update committeeList
      * Simultaneously update student's committee camp attribute and committee member list in camp object
+     * 
+     * @param campInfo Database of Camps
+     * @param database Database of Users
      */
     public static void readCommitteeList(CampInfo campInfo, Database database){
         File committeeList = new File("./data/Committee_Member_Camp_List.csv");
@@ -249,8 +240,11 @@ public class ReadFromFile extends ConvertString {
         }
     }
     
-    /*
+    /**
      * To update blacklist
+     * 
+     * @param campInfo Database of Camps
+     * @param database Database of Users
      */
     public static void readBlacklist(CampInfo campInfo, Database database){
         File blacklist = new File("./data/BlackList.csv");
@@ -260,9 +254,6 @@ public class ReadFromFile extends ConvertString {
             sc.useDelimiter(",");
             sc.nextLine();
             while(sc.hasNext()){
-                /*
-                 * Update blacklist
-                 */
                 String userID = sc.next();
                 Student student = (Student)database.getUser(userID);
 
@@ -280,6 +271,14 @@ public class ReadFromFile extends ConvertString {
         }
     }
 
+    /**
+     * To read enquiries csv into list of enquiries and replies into ReplyToStudent
+     * 
+     * @param campInfo Database of Camps
+     * @param database Database of Users
+     * @param enquiryList List of Enquiries
+     * @param replies List Of Replies
+     */
     public static void readEnquiries(CampInfo campInfo, Database database, ListOfEnquiries enquiryList, ReplyToStudent replies){
         File enquiries = new File("./data/Enquiries.csv");
         try{
@@ -322,8 +321,12 @@ public class ReadFromFile extends ConvertString {
         }
     }
 
-    /*
-     * suggestion,suggestor,suggestedCamp,suggestionID,isApproved
+    /**
+     * Read suggestions csv into list of suggestions
+     * 
+     * @param campInfo Database of Camps
+     * @param database Database of Users
+     * @param suggestions List of suggestions
      */
     public static void readSuggestions(CampInfo campInfo, Database database, ListOfSuggestions suggestions){
         File suggestionList = new File("./data/Suggestions.csv");

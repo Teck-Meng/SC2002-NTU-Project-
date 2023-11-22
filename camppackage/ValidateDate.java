@@ -5,27 +5,24 @@ import java.util.ArrayList;
 
 import filehandler.Database;
 
-/*
- * To validate dates and also to check dates with student's collection
+/**
+ * Class responsible for validating the legality of date inputs
  */
 public class ValidateDate {
-    /*
+    /**
      * Ensure date follow DD/MM/YYYY format
      * Minimum of 7 digits when date column is single digit
      * Maximum of 8 digits
      * Assume all months have 31 days
+     * 
+     * @param date Date to check
+     * @return Boolean value indicating if a given date is valid or not
      */
     public static boolean isDateValid(int date){
         int duplicate = date;
-        /*
-         * Check for negative values
-         */
         if(date<1){
             return false;
         }
-        /*
-         * Check for 7-8 digits
-         */
         int count = 0;
         while(duplicate != 0){
             duplicate /= 10;
@@ -37,36 +34,26 @@ public class ValidateDate {
         return false;
     }
 
-    /*
-     * 
-     * parameter dates is to be size 2
-     * return true if dates collide
-     * To be used by classes AttendeeRegister and CommitteeRegister for date validation
+    /**
+     * Method that checks if the dates of a camp collides with the current camps that a student has registered for
+     * @param dates Dates of camp that is being checked
+     * @param userID User identification of student that is being checked
+     * @param database Database of Users
+     * @return Boolean value indicating if the dates collide or not
      */
     public static boolean doDatesCollide(int[] dates, String userID, Database database){
-        /*
-         * Extract student object from database
-         */
         Student student = (Student)database.getUser(userID);
         ArrayList<Camp> studentCamps = student.getListOfCamps();
         Camp committeeCamp = student.getCommitteeCamp();
-        /*
-         * Contains current dates array used for checking
-         */
+
         int[] compareDatesWith;
 
-        /*
-         * Check the camp date for the camp that the student is a committee of
-         */
         if(committeeCamp != null){
             if(checkDates(dates, committeeCamp.getDates()) == true){
                 return true;
             }
         }
 
-        /*
-         * Check the list of camp dates that the student is an attendee of
-         */
         for(int i = 0; i < studentCamps.size(); i++){
             compareDatesWith = studentCamps.get(i).getDates();
             if(checkDates(dates, compareDatesWith) == true){
@@ -77,9 +64,12 @@ public class ValidateDate {
     }
 
     
-
-    /*
-     * Compare 2 dates and check for collision, to be used by doDatesCollide
+    /**
+     * Computes if dates collide in doDatesCollide() for a pair of dates
+     * 
+     * @param date1 First set of dates
+     * @param date2 Second set of dates
+     * @return boolean value indicating if dates collide or not
      */
     private static boolean checkDates(int[] date1, int[] date2){
         if(isDateSmaller(date2[1], date1[0])){
@@ -92,9 +82,11 @@ public class ValidateDate {
         return true;
     }
 
-    /*
-     * Returns true if date1 is earlier than date2
-     * Otherwise return false
+    /**
+     * Method that checks if a set of dates(date1) is earlier than another set of dates(date2)
+     * @param date1 First set of dates
+     * @param date2 Second set of dates
+     * @return Boolean value indicating if date1 is earlier than date2
      */
     public static boolean isDateSmaller(int date1, int date2){
         int date1Year = date1 % 10000;
@@ -125,23 +117,26 @@ public class ValidateDate {
     }
 
     
-
-    /*
-     * Check if the value for day in the date is between 01 to 31
-     * Assume all months have 31 days
-     * To be used by isDateValid
-     * 20042024
+    /**
+     * Verifies if the day section of the date is valid
+     * Assumption is that day ranges from 1-31 regardless of month
+     * 
+     * @param date Date to be checked
+     * @return Boolean value indicating if the day section of date is valid
      */
     private static boolean checkDay(int date){
-        date /= 1_000_000; //divide by 1 million to retrieve value of DD
+        date /= 1_000_000; 
         if(date < 1||date > 31){
             return false;
         }
         return true;
     }
 
-    /*
-     * Check if the value of the month is between 1 to 12
+    /**
+     * Verifies if the month section of the date is valid
+     * 
+     * @param date Date to be checked
+     * @return Boolean value indicating if the month section of date is valid
      */
     private static boolean checkMonth(int date){
 
@@ -152,9 +147,11 @@ public class ValidateDate {
         return true;
     }
 
-    /*
-     * Checks if registration closing date has been passed
-     * returns true if registration closing date has passed
+    /**
+     * Method that checks if registration closing date has passed
+     * @param currentTime Current time
+     * @param regClosingDate Registration closing date
+     * @return Boolean value indicating if registration closing date has passed
      */
     public static boolean checkRegClosingDate(int currentTime, int regClosingDate){
         int currentTimeYear = currentTime % 10000;
@@ -178,9 +175,6 @@ public class ValidateDate {
 
         currentTime /= 100;
         regClosingDate /= 100;
-        /*
-         * compare days
-         */
         if(currentTime > regClosingDate){
             return true;
         }
@@ -190,6 +184,13 @@ public class ValidateDate {
         return true;
     }
 
+    /**
+     * Method that checks if a given date is within range of a pair of dates
+     * 
+     * @param date Date that is being checked
+     * @param campDates Pair of dates 
+     * @return Boolean value if a given date is in range set by pair of dates
+     */
     public static boolean withinRange(int date, int[] campDates){
         if(date == campDates[0] || date == campDates[1]){
             return true;

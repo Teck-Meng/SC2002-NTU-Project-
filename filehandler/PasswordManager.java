@@ -4,13 +4,17 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import user.User;
 
+/**
+ * Class responsible for handling passwords
+ */
 public class PasswordManager {
+    /**
+     * System prompt to change password
+     * 
+     * @param index Index positioning of user trying to change their password
+     * @param database Database of Users
+     */
     public static void changePassword(int index, Database database){
-        /*
-         * After receiving index position of user, attempt to change password
-         * Password is assummed to not have any requirements for this app
-         * 
-         */
         Scanner sc = new Scanner(System.in);
         String newPassword, confirmPassword;
         boolean passwordChanged = false;
@@ -20,9 +24,6 @@ public class PasswordManager {
             System.out.println("Enter your new password again: ");
             confirmPassword = sc.nextLine();
             if(newPassword.equals(confirmPassword)){
-                /*
-         * Invoke database method to save password into database
-         */
                 database.setPassword(index, newPassword);
                 passwordChanged = true;
             }
@@ -42,15 +43,17 @@ public class PasswordManager {
         
     }
 
+    /**
+     * Method to verify if user inputted password matches the password in the database
+     * 
+     * @param userID User identification for 
+     * @param enteredPassword User inputted password
+     * @param database Database of User
+     * @return Boolean value of whether an inputted password is correct(true) or not(false)
+     */
     public static boolean checkPassword(String userID, String enteredPassword, Database database){
-        /*
-         * Retrieve passwords and users from database
-         */
         ArrayList<User> users = database.getUsers();
         ArrayList<String> passwords = database.getPasswords();
-        /*
-         * Iterate through users to find the index that the user is in 
-         */
         int index = 0;
         for(int i = 0; i < users.size(); i++){
             if(userID.equals(users.get(i).getUserID())){
@@ -58,25 +61,21 @@ public class PasswordManager {
                 break;
             }
         }
-        /*
-         * Verify password and return true if passwords match
-         */
         return (enteredPassword.equals(passwords.get(index)));
     }
 
 
-    /*
+    /**
      * Overloaded checkPassword method that checks password if index of user is already known
+     * 
+     * @param index Index positioning of a User
+     * @param enteredPassword User inputted password
+     * @param database Database of Users
+     * @return Boolean value of whether an inputted password is correct(true) or not(false)
      */
     public static boolean checkPassword(int index, String enteredPassword, Database database){
-        /*
-         * Retrieve passwords and users from database
-         */
         ArrayList<String> passwords = database.getPasswords();
         
-        /*
-         * Verify password and return true if passwords match
-         */
         return (enteredPassword.equals(passwords.get(index)));
     }
 }

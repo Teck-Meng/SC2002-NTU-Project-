@@ -4,11 +4,14 @@ import java.util.ArrayList;
 
 import user.Student;
 import camppackage.Camp;
-
+/**
+ * Class responsible for alphabetical sorting to ensure report printed is in alphabetical order
+ */
 public class AlphaSort {
-    /*
-     * Finds the position that the student should be in in the list and add them in that position
-     * This will allow committeeList and attendeeList to always be in alphabetical order
+    /**
+     * Add student into attendee list or committee list in its alphabetical order
+     * @param list to insert student object in, list is either attendee or committee list
+     * @param student is the new student that has registered for camp
      */
     public static void add(ArrayList<Student> list, Student student){
         String studentName = student.getUserID();
@@ -20,14 +23,17 @@ public class AlphaSort {
                 return;
             }
         }
-        /*
-         * Add student to end of the list if their name is greater in alphabetical than the rest of the elements in list
-         */
         list.add(student);
     }
 
-    /*
-     * Overloaded method for alphabetical sorting in camp list
+    /**
+     * Method for alphabetical sorting
+     * @param listOfCamps is the list of created camps
+     * @param camp refers to the new created camp to be added into list
+     * @param visibility refers to the list of visibility storing the visibility of all camps
+     * @param isVisible refers to the visiblity of the newly created camp
+     * @param attendeeSlotsUsed refers to the list that contains the number of attendee slots used in each camp
+     * @param campCommitteeSlotsUsed refers to the list that contains the number of committee slots used in each camp
      */
     public static void add(ArrayList<Camp> listOfCamps, Camp camp, ArrayList<Boolean> visibility, boolean isVisible,
                             ArrayList<Integer> attendeeSlotsUsed, ArrayList<Integer> campCommitteeSlotsUsed){
@@ -40,9 +46,6 @@ public class AlphaSort {
                 return;
             }
         }
-        /*
-         * Execute if list of camp has no elements or camp to be added to end of list of camp
-         */
         listOfCamps.add(camp);
         visibility.add(isVisible);
         attendeeSlotsUsed.add(0);

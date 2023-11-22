@@ -6,12 +6,24 @@ import user.User;
 import clock.Time;
 import filehandler.Database;
 
+/**
+ * Implements CampRegister interface
+ * Class is responsiple for handling registration of attendees into a camp
+ */
 public class AttendeeRegister implements CampRegister {
 
+    /**
+     * Method to register an attendee to a camp
+     * 
+     * @param campInfo Database of Camps
+     * @param camp Camp to add the attendee to
+     * @param userID User identification of attendee to be registered
+     * @param database Database of Users
+     * @param clock Current date
+     * @return Boolean value indicating success of registration
+     * @Override
+     */
     public boolean registerCamp(CampInfo campInfo, Camp camp, String userID, Database database, Time clock){
-        /*
-         * Verify if camp is full, if yes, terminate registration
-         */
         if(isCampFull(campInfo, camp)){
             System.out.println("Unable to process registration due to camp being at full capacity!");
             return false;
@@ -22,36 +34,41 @@ public class AttendeeRegister implements CampRegister {
         if(!ValidateRegister.canRegister(campInfo, camp, userID, database, clock)){
             return false;
         }
-        /*
-         * Update the attendancelist, attendance slot value and also keeping data of the camp into
-         * student's own database
-         */
         User toAddUser = database.getUser(userID);
 
         camp.getAttendeeList().addAttendee((Student)toAddUser);
         campInfo.updateAttendeeSlotsUsed(true, camp, 1);
-        // Adds student into camp while denoting that the student is joining as attendee with boolean param
         ((Student)toAddUser).addCamp(camp, false);
         return true;
     }
     
-    //gets the camp list that attendee registered, do implement the printing of camp list in user package
-    public ArrayList<Camp> viewCamps(CampInfo campInfo, String UserID, Database database){
-        User user = database.getUser(UserID);
+    /**
+     * Method to allow stude to fetch all the camps they are registered for
+     * 
+     * @param campInfo Database of Camps
+     * @param userID User identification of attendee
+     * @param databse Database of Users
+     * @return List of camps registered by attendee
+     * @Override
+     */
+    public ArrayList<Camp> viewCamps(CampInfo campInfo, String userID, Database database){
+        User user = database.getUser(userID);
         return campInfo.getCampList(user);
     }
 
+    /**
+     * Method for attendee to withdraw from a camp
+     * 
+     * @param campInfo Database of Camps
+     * @param camp Camp that attendee wishes to withdraw from
+     * @param userID User identification of attendee trying to withdraw from camp
+     * @param database Database of Users
+     */
     public static void withdrawCamp(CampInfo campInfo, Camp camp, String userID, Database database){
         Student withdrawee = (Student)database.getUser(userID);
-        /*
-         * Checks if user's own database of registered camps contains the current camp
-         * If successful, procceed to update all data structures of withdrawee's withdrawal
-         */ 
         if(withdrawee.withdrawCamp(camp)){
-            //Update blacklist to ensure student is unable to re-register for this particular camp
             camp.getBlacklist().addStudent(withdrawee);
             camp.getAttendeeList().deleteAttendee(withdrawee);
-            //reduce value of slots used by 1 as student is removed from camp
             campInfo.updateAttendeeSlotsUsed(false, camp, 1);
             System.out.println(withdrawee.getUserID()+" has successfully withdrawn from "+camp.getCampName());
             return;
@@ -60,8 +77,13 @@ public class AttendeeRegister implements CampRegister {
         
     }
 
-    /*
-     * Checks if camp is full for attendees
+    /**
+     * Method to check if a camp is full
+     * 
+     * @param campInfo Database of Camps
+     * @param camp The camp that is being checked for vacancy
+     * @return Boolean value indicating if camp is full or not
+     * @Override
      */
     public boolean isCampFull(CampInfo campInfo, Camp camp){
         int total = camp.getTotalSlots();

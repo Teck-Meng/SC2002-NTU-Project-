@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -12,10 +13,16 @@ import clock.Time;
 import filehandler.Database;
 import user.Student;
 
+/**
+ * Class responsible to manage camp operations in console
+ */
 public class CampManagementUI {
-    /*
-     *  Student version to print all camps
-     * Returns camp list that student have access to
+    /**
+     * Prints list of camp available to a student to the console
+     * 
+     * @param campInfo Database of Camps
+     * @param student Student who is requesting to print list of camps
+     * @return List of Camps that are available to the student
      */
     protected static ArrayList<Camp> printListOfCamps(CampInfo campInfo, Student student){
         int count = 0;
@@ -29,15 +36,19 @@ public class CampManagementUI {
         return listOfCamps;
     }
 
-
+    /**
+     * System prompt to register camps
+     * 
+     * @param campInfo Database of Camps
+     * @param student Student who is trying to register for a camp
+     * @param database Database of Users
+     * @param clock Current date
+     */
     protected static void registerCamp(CampInfo campInfo, Student student, Database database, Time clock){
         Scanner sc = new Scanner(System.in);
         int registerChoice = -1;
         int campCommitteeChoice = -1;
-        /*
-            * Get a new arraylist containing only camps that are open to student
-            * Exclude camps that they have already registered for or are blacklisted from
-            */
+
         ArrayList<Camp> listOfCamps = campInfo.getCampList(student, campInfo, database, clock);
         if(listOfCamps.size() == 0){
             System.out.println("No camps are available for registration!");
@@ -54,9 +65,7 @@ public class CampManagementUI {
                     System.out.println("Enter 0 if you wish to quit the registration interface.");
                     System.out.println("Enter your choice of camp based on its numerical index: ");
                     registerChoice = sc.nextInt();
-                /*
-                    * Error message if choice is out of bound
-                    */
+
                 if(registerChoice < 0 || registerChoice > listOfCamps.size()){
                     System.out.println("Please enter a choice between 0 to " + listOfCamps.size());
                 }
@@ -71,10 +80,6 @@ public class CampManagementUI {
         }
         Camp selectedCamp = listOfCamps.get(registerChoice - 1);
 
-        /*
-            * Check if student is already a committee member for another camp
-            * This is as a student can only be committee member for one camp
-            */
         if(student.getCommitteeCamp() == null){
             while(campCommitteeChoice == -1){
                 try{
@@ -113,10 +118,14 @@ public class CampManagementUI {
                 System.out.println("Camp registered Successfully!");
             }
         }
-        
-        //Register for a camp
     }
     
+    /**
+     * Prints list of camps that a student has registered for in console
+     * 
+     * @param student Student who is requesting to see list of registered camps
+     * @param campInfo Database of campas
+     */
     protected static void printListOfRegisteredCamps(Student student, CampInfo campInfo){
         ArrayList<Camp> registeredCamps = student.getListOfCamps();
         System.out.println("The following are the camps you have registered for as an attendee: ");
@@ -132,6 +141,15 @@ public class CampManagementUI {
         }
     }
 
+    /**
+     * System prompt for students to withdraw from a camp
+     * 
+     * @param camp Camp that student wishes to withdraw from
+     * @param campInfo Database of Camps
+     * @param attendee Attendee who wish to withdraw from camp
+     * @param database Database of Users
+     * @return Boolean value indicating if withdrawal is successful or not
+     */
     protected static boolean withdrawCamp(Camp camp, CampInfo campInfo, Student attendee, Database database){
         Scanner sc = new Scanner(System.in);
         int withdrawChoice = -1;

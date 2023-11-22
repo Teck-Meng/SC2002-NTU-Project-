@@ -1,6 +1,5 @@
 import java.util.Scanner;
 
-
 import enquiry.AttendeeEnquiry;
 import camppackage.Camp;
 import camppackage.CampInfo;
@@ -9,8 +8,21 @@ import enquiry.ListOfEnquiries;
 import enquiry.ReplyToStudent;
 import filehandler.Database;
 import user.Student;
+/**
+ * Attendee interface for the main program
+ */
 public class AttendeeUI {
     
+    /**
+     * Opens up Attendee interface in main program
+     * 
+     * @param camp Camp selected by student for attendee interface
+     * @param campInfo Database of camps
+     * @param attendee Student object of attendee
+     * @param database Database of Users
+     * @param enquiries List of enquiries
+     * @param replies List of replies
+     */
     protected static void displayUI(Camp camp, CampInfo campInfo, Student attendee, Database database, ListOfEnquiries enquiries,
                                 ReplyToStudent replies){
         Scanner sc = new Scanner(System.in);
@@ -30,25 +42,19 @@ public class AttendeeUI {
             int choice = sc.nextInt();
             switch (choice) {
                 case 1:
-                    //print camp descriptions
                     PrintCampDetails.print(camp);
                     System.out.println("--------------------------------------------");
                     break;
 
                 case 2:
-                    /*
-                    * Peform double check to see if student wishes to withdraw
-                    */
                     exit = CampManagementUI.withdrawCamp(camp, campInfo, attendee, database);
                     break;
 
                 case 3:
-                    // assume we are displaying all enquiries of this user
                     AttendeeEnquiry.viewQuestion(attendee.getUserID(), enquiries, database);  
                     break;
 
                 case 4:
-                    // submit new enquiries regarding this specific camp
                     AttendeeEnquiry.askQuestion(attendee.getUserID(), camp, enquiries, database);
                     break;
                     
@@ -57,13 +63,9 @@ public class AttendeeUI {
                     break;
 
                 case 6:
-                    // delete a chosen enquiry by the user
                     EnquiriesUI.deleteEnquiry(enquiries, attendee, database);
                     break;
                 case 7:
-                    /*
-                     * Print out replies together with its corresponding enquiry
-                     */
                     EnquiriesUI.printReplies(enquiries, attendee, replies);
                     break;
                 case 8:

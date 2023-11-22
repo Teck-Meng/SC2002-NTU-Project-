@@ -1,16 +1,21 @@
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import user.UserAuthenticator;
 import filehandler.Database;
 import filehandler.PasswordManager;
 
-
+/**
+ * Login interface of main program
+ */
 public class LoginUI {
+    /**
+     * System prompt for user to log in
+     * 
+     * @param database Database of Users
+     * @return user identification number if login successful and -1 if unsuccessful
+     */
     protected static int promptLogin(Database database){
-        
-        /*
-         * Intialize integer variable to track user choice in the app
-         */
         int userInput = 0;
         int userIDIndex = -1;
         Scanner sc = new Scanner(System.in);
@@ -23,9 +28,6 @@ public class LoginUI {
             }
             catch(InputMismatchException e){
                 System.out.println("Input mismatch! Kindly enter an integer value as your choice");
-                /*
-                 * Use of sc.nextLine() to prevent infinite looping
-                 */
                 sc.nextLine();
             }
             catch(NumberFormatException n){
@@ -34,31 +36,18 @@ public class LoginUI {
             }
             switch(userInput){
                 case 1:
-                    /*
-                     * Check for userID and password using UserAuthenticator class
-                     */
                     userIDIndex = UserAuthenticator.verifyLogin(database);
-                    /*
-                     * Prompt app to allow users to utilize app features
-                     */
                     if(userIDIndex >= 0){
                         return userIDIndex;
                     }
                     break;
                 case 2:
-                    /*
-                     * 
-                     */
                     int verifyIndex = UserAuthenticator.verifyChangePassword(database);
-                    // if userID is correct, prompt password change using the index
                     if(verifyIndex != -1){
                         PasswordManager.changePassword(verifyIndex, database);
                     }
                     break;
                 case 3:
-                    /*
-                     * Prompt application to close completely
-                     */
                     return -1;
                 default:
                     System.out.println("Kindly enter a valid choice!");

@@ -1,4 +1,4 @@
-import java.util.InputMismatchException;
+
 import java.util.Scanner;
 
 import user.*;
@@ -11,8 +11,22 @@ import enquiry.ListOfEnquiries;
 import enquiry.ListOfSuggestions;
 import enquiry.ReplyToStudent;
 
+/**
+ * Class representing the committee member interface in the main program
+ */
 public class CommitteeMemUI {
-
+    /**
+     * Method to call committee member interface in main program
+     * 
+     * @param camp Camp that the commitee member registered for
+     * @param userID User identification of camp committee member
+     * @param database Database of Users
+     * @param enquiries List of enquiries
+     * @param suggestions List of suggestions
+     * @param replyToStudent List of replies
+     * @param campInfo Database of Camps
+     * @param committeeMem Student object representing committee member
+     */
     protected static void main(Camp camp, String userID, Database database, ListOfEnquiries enquiries, 
                             ListOfSuggestions suggestions, ReplyToStudent replyToStudent, CampInfo campInfo, Student committeeMem) {
         boolean exit = false;
@@ -29,12 +43,8 @@ public class CommitteeMemUI {
             System.out.println("Enter your choice: ");
 
             int choice = sc.nextInt();
-            // END: ed8c6549bwf9
             switch (choice) {
                 case 1:
-                    /*
-                    * Print all the camp details
-                    */
                     PrintCampDetails.print(camp);
                     break;
                 case 2:
@@ -49,15 +59,9 @@ public class CommitteeMemUI {
                     break;
                 case 5:
                     enquiries.printAllEnquiries(camp, committeeMem, true);
-                    /*
-                        * View all enquiries
-                        */
                     break;
                 case 6:
                     EnquiriesUI.printReplies(enquiries, camp, replyToStudent);
-                    /*
-                        * View all replies
-                        */
                     break;
                 case 7:
                     exit = true;

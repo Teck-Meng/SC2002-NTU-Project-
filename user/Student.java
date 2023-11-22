@@ -2,6 +2,11 @@ package user;
 import java.util.ArrayList;
 import camppackage.Camp;
 
+/**
+ * Class representing a student user
+ * Student will have access to Student UI
+ * Subclass of User
+ */
 public class Student extends User{
     private ArrayList<Camp> myCamps = new ArrayList<Camp>();
     /*
@@ -13,33 +18,38 @@ public class Student extends User{
      */
     private int committeePoints;
 
+    /**
+     * Standard constructor for Student
+     * 
+     * @param UserID User identification
+     * @param facultyInfo Faculty of a student
+     */
     public Student(String UserID, Faculty facultyInfo){
         super(UserID, facultyInfo);
         committeeCamp = null;
-        /*
-         * Set all intitial points to 0
-         */
         committeePoints = 0;
     }
 
+    /**
+     * 
+     * @return List of attendee Camps
+     */
     public ArrayList<Camp> getListOfCamps(){
-        /*
-         * For date validation
-         */
         return myCamps;
     }
 
+    /**
+     * 
+     * @return List of committee Camps
+     */
     public Camp getCommitteeCamp(){
-        /*
-         * For date validation
-         */
         return committeeCamp;
     }
 
-    /*
-     * Return number of points for camp committee
-     * Return -1 if user is not in camp committee
-     * System will print warning statement if user is not in camp committee
+    /**
+     * If student is not a committee member, return -1
+     * 
+     * @return number of committee points of a committee member
      */
     public int getCommitteePoints(){
         if(committeeCamp == null){
@@ -49,11 +59,13 @@ public class Student extends User{
         return committeePoints;
     }
 
-    /*
-     * Every call will check if student is camp committee
-     * Return false if student is not in camp committee
-     * Return true and add 1 point if student is in camp committee
-     * To be used by staff class
+    /**
+     * Add points to committee member
+     * Method checks if student is committee member before awarding points
+     * Return false if student is not a committee member
+     * 
+     * @param points Number of points to award Committee Member
+     * @return Boolean value of whether a student is a committee member
      */
     public boolean addCommitteePoints(int points){
         if(committeeCamp == null){
@@ -64,9 +76,13 @@ public class Student extends User{
         return true;
     }
 
-
+    /**
+     * Update student's own database of newly added camp
+     * 
+     * @param camp Newly registered Camp
+     * @param isJoiningCommitteeMem Indication of whether a Student is joining camp as attendee or committee member
+     */
     public void addCamp(Camp camp, boolean isJoiningCommitteeMem){
-        // update student's database to save the camp he has registered
         if(isJoiningCommitteeMem==false){
             myCamps.add(camp);
         }
@@ -75,7 +91,13 @@ public class Student extends User{
         }
     }
 
-    //returns true if withdraw successful
+    /**
+     * Method to withdraw from camp
+     * Return true if withdrawal is successful
+     * 
+     * @param camp Camp that a student wishes to withdraw from
+     * @return Success of withdrawal
+     */
     public boolean withdrawCamp(Camp camp){
         int initialSize = myCamps.size();
         myCamps.remove(camp);
@@ -85,6 +107,11 @@ public class Student extends User{
         return false;
     }
 
+
+    /**
+     * 
+     * @return Whether a student is a committee member or not
+     */
     public boolean hasCommitteePos(){
         if(committeeCamp == null){
             return false;

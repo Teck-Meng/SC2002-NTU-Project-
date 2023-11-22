@@ -1,3 +1,4 @@
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -9,10 +10,18 @@ import enquiry.ReplyToSuggestion;
 import filehandler.Database;
 import user.Staff;
 
+/**
+ * Class responsible for managing suggestion on the console level
+ */
 public class SuggestionsUI {
-    /*
-         * Call this method when committee member wishes to modify suggestion 
-         */
+    /**
+     * Suggestion handling interface for camp committee member
+     * 
+     * @param camp Camp committee member's camp
+     * @param userID User identification of camp committee member
+     * @param database Database of users
+     * @param suggestions List of suggestions
+     */
     protected static void modifySuggestion(Camp camp, String userID, Database database, ListOfSuggestions suggestions){
         Scanner sc = new Scanner(System.in);
         boolean manage = true;
@@ -25,7 +34,7 @@ public class SuggestionsUI {
             System.out.println("5. Go back to main menu");
             System.out.println("Enter your choice: ");
             int suggestionChoice = sc.nextInt();
-            sc.nextLine(); // Consume the newline character left by previous nextInt()
+            sc.nextLine(); 
             switch(suggestionChoice){
                 case 1:
                     String suggestion;
@@ -40,9 +49,6 @@ public class SuggestionsUI {
                     int suggestionID = -1;
                     while(suggestionID == -1){
                         try{
-                            /*
-                                * Show the user the suggestions they can edit
-                                */
                             suggestions.printAllSuggestions(camp, userID, false);
 
                             System.out.println("Enter the suggestion ID of the suggestion you want to edit: ");
@@ -53,7 +59,7 @@ public class SuggestionsUI {
                             System.out.println("Please enter a valid integer choice!");
                         }
                     }
-                    sc.nextLine(); // Consume the newline character left by previous nextInt()
+                    sc.nextLine();
                     System.out.println("Enter your new suggestion: ");
                     String newSuggestion = sc.nextLine();
                     suggestions.editSuggestion(suggestions.getIndexFromID(suggestionID), userID, newSuggestion);
@@ -62,9 +68,6 @@ public class SuggestionsUI {
                     int suggestionID2 = -1;
                     while(suggestionID2 == -1){
                         try{
-                            /*
-                                * Show the user the suggestions they can delete
-                                */
                             suggestions.printAllSuggestions(camp, userID, false);
                             System.out.println("Enter the suggestion ID of the suggestion you want to delete: ");
                             suggestionID2 = sc.nextInt();
@@ -74,7 +77,7 @@ public class SuggestionsUI {
                             System.out.println("Please enter a valid integer choice!");
                         }
                     }
-                    sc.nextLine(); // Consume the newline character left by previous nextInt()
+                    sc.nextLine();
                     suggestions.deleteSuggestion(suggestions.getIndexFromID(suggestionID2), userID);
                     break;
                 case 5:
@@ -86,6 +89,15 @@ public class SuggestionsUI {
             }
     }
 
+    /**
+     * Suggestion handling interface for staff
+     * 
+     * @param suggestions List of suggestions
+     * @param userID User identification of staff
+     * @param database Database of users
+     * @param campInfo Database of camps
+     * @param time Current date
+     */
     protected static void staffSuggestions(ListOfSuggestions suggestions, String userID, Database database, CampInfo campInfo, Time time)
     {
     Scanner sc = new Scanner(System.in);
@@ -103,10 +115,6 @@ public class SuggestionsUI {
                 suggestions.printAllSuggestions(userID, database, false);
                 break;
             case 2:
-                /*
-                * To allow staff to choose whether they want to approve suggestion
-                * If yes, call the method to edit camp
-                */
                 approveSuggestions(suggestions, userID, database, campInfo, time);
                 break;
             case 3:
@@ -120,7 +128,15 @@ public class SuggestionsUI {
     
     }
 
-
+    /**
+     * System prompt for staff to approve or reject suggestions
+     * 
+     * @param suggestions List of suggestions
+     * @param userID User identification of staff
+     * @param database Database of users
+     * @param campInfo Database of camps
+     * @param time Current date
+     */
     private static void approveSuggestions(ListOfSuggestions suggestions, String userID, Database database, CampInfo campInfo, Time time){
     Scanner sc = new Scanner(System.in);
     Staff staff = (Staff)database.getUser(userID);

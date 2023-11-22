@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -10,7 +11,16 @@ import report.AttendanceReport;
 import report.Filter;
 import report.PerformanceReport;
 
+/**
+ * Class responsible for handling report generation on main program
+ */
 public class ReportUI {
+    /**
+     * Method that opens up report generation interface
+     * 
+     * @param staff Staff that is requesting to generate report
+     * @param campInfo Database of Camps
+     */
     protected static void report(Staff staff, CampInfo campInfo){
         Scanner sc = new Scanner(System.in);
         int userChoice = -1;
@@ -37,9 +47,6 @@ public class ReportUI {
 
             switch(userChoice){
                 case 1:
-                    /*
-                     * Generate attendance report
-                     */
                     if(filterAdded){
                         attendanceReportGen(listOfCamps, staff, campInfo);
                     }
@@ -48,9 +55,6 @@ public class ReportUI {
                     }
                     break;
                 case 2:
-                    /*
-                     * Generate performance report
-                     */
                     if(filterAdded){
                         performanceReportGen(listOfCamps, staff, campInfo);
                     }
@@ -59,9 +63,6 @@ public class ReportUI {
                     }
                     break;
                 case 3:
-                    /*
-                     * Add filter
-                     */
                     listOfCamps = filterUI(listOfCamps, staff.getListOfCamps(), filterAdded);
                     if(listOfCamps.size() != 0){
                         filterAdded = true;
@@ -78,6 +79,13 @@ public class ReportUI {
         }
     }
 
+    /**
+     * Attendance Report generation interface
+     * 
+     * @param list List of Camps to generate report for
+     * @param staff Staff that requested for report generation
+     * @param campInfo Database of Camps
+     */
     private static void attendanceReportGen(ArrayList<Camp> list, Staff staff, CampInfo campInfo){
         boolean exit = false;
         Scanner sc = new Scanner(System.in);
@@ -99,15 +107,9 @@ public class ReportUI {
 
             switch(userChoice){
                 case 1:
-                    /*
-                     * Generate for all camps
-                     */
                     AttendanceReport.printReport(list, campInfo);
                     break;
                 case 2:
-                    /*
-                     * Generate for one camp, prompt staff to choose camp first
-                     */
                     printForOneCamp(campInfo, staff, true);
                     break;
                 case 3:
@@ -119,8 +121,12 @@ public class ReportUI {
         }
     }
 
-    /*
-     * For Attendance Report
+    /**
+     * Prints out attendance report or performance report for only one camp
+     * 
+     * @param campInfo Database of Camps
+     * @param staff Staff requesting to print attendance report
+     * @param isAttdReport Boolean value denoting if the report to print is an attendance report or performance report
      */
     private static void printForOneCamp(CampInfo campInfo, Staff staff, boolean isAttdReport){
         boolean exit = false;
@@ -146,6 +152,13 @@ public class ReportUI {
         }
     }
 
+    /**
+     * Generates performance report for all camps created by the staff
+     * 
+     * @param list List of camps that will be included in the performance report
+     * @param staff Staff requesting to generate performance report
+     * @param campInfo Database of Camps
+     */
     private static void performanceReportGen(ArrayList<Camp> list, Staff staff, CampInfo campInfo){
         boolean exit = false;
         Scanner sc = new Scanner(System.in);
@@ -167,15 +180,9 @@ public class ReportUI {
 
             switch(userChoice){
                 case 1:
-                    /*
-                     * Generate for all camps
-                     */
                     PerformanceReport.printReport(list, campInfo);
                     break;
                 case 2:
-                    /*
-                     * Generate for one camp, prompt staff to choose camp first
-                     */
                     printForOneCamp(campInfo, staff, false);
                     break;
                 case 3:
@@ -208,9 +215,6 @@ public class ReportUI {
 
             switch(userChoice){
                 case 1:
-                    /*
-                     * faculty filter prompt
-                     */
                     Faculty faculty = FilterUI.askFaculty();
                     if(filtered){
                         filteredList = Filter.filterByCampFaculty(filteredList, faculty);
@@ -221,9 +225,6 @@ public class ReportUI {
                     }
                     break;
                 case 2:
-                    /*
-                     * Location filter prompt
-                     */
                     String location = FilterUI.askLocation();
                     if(filtered){
                         filteredList = Filter.filterByLocation(filteredList, location);
@@ -236,9 +237,6 @@ public class ReportUI {
                     }
                     break;
                 case 3:
-                    /*
-                     * Date Filter prompt
-                     */
                     int date = FilterUI.askDate();
                     if(filtered){
                         filteredList = Filter.filterByDate(filteredList, date);

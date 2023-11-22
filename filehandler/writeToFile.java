@@ -21,8 +21,10 @@ import enquiry.ReplyToStudent;
  * csv file name will be passed as @param_type String
  */
 public class WriteToFile {
-    /*
+    /**
      * Method to write blacklist information on corresponding csv file
+     * 
+     * @param campInfo Database of Camps
      */
     public static void writeToBlacklist(CampInfo campInfo){
         ArrayList<Camp> listOfCamps = campInfo.getFullList();
@@ -50,16 +52,15 @@ public class WriteToFile {
            }
     }
         }
-    /*
+    
+    /**
      * Method to write attendee list information on corresponding csv file
+     * 
+     * @param campInfo Database of Camps
      */
     public static void writeToAttendeeList(CampInfo campInfo){
         ArrayList<Camp> listOfCamps = campInfo.getFullList();
-        //iterate through all the camps to update the csv file corresponding to attendee list
         for(int i = 0; i < listOfCamps.size(); i++){
-            /*
-             * Extract attendee list for current camp
-             */
             Camp currentCamp = listOfCamps.get(i);
             ArrayList<Student> currentList = currentCamp.getAttendeeList().getListOfAttendees();
             String campName = currentCamp.getCampName();
@@ -67,9 +68,6 @@ public class WriteToFile {
                 PrintWriter csvWriter = new PrintWriter(new FileWriter("./data/Attendee_List.csv", true)); 
              
                 for (int j = 0;j < currentList.size();j++) {
-                    /*
-                     * Extract userID to write to csv
-                     */
                     String userID = currentList.get(j).getUserID();
                     csvWriter.println(userID + "," + campName + ","); // Write the data in CSV format 
                 }   
@@ -80,16 +78,14 @@ public class WriteToFile {
     }
         }
 
-    /*
+    /**
      * Method to write camp committee member list information on corresponding csv file
+     * 
+     * @param campInfo Database of Camps
      */
     public static void writeToCommitteeList(CampInfo campInfo){
         ArrayList<Camp> listOfCamps = campInfo.getFullList();
-        //iterate through all the camps to update the csv file corresponding to blacklist
         for(int i = 0; i < listOfCamps.size(); i++){
-            /*
-             * Extract blacklist for current camp
-             */
             Camp currentCamp = listOfCamps.get(i);
             ArrayList<Student> currentList = currentCamp.getCommitteeList().getListOfMembers();
             String campName = currentCamp.getCampName();
@@ -97,9 +93,6 @@ public class WriteToFile {
                 PrintWriter csvWriter = new PrintWriter(new FileWriter("./data/Committee_Member_Camp_List.csv", true)); 
              
                 for (int j = 0;j < currentList.size();j++) {
-                    /*
-                     * Extract userID to write to csv
-                     */
                     Student currentMember = currentList.get(j);
                     String userID = currentMember.getUserID();
                     csvWriter.println(userID + "," + campName + "," + currentMember.getCommitteePoints() + ","); 
@@ -112,11 +105,12 @@ public class WriteToFile {
     }
         }
 
-    /*
+    /**
      * Method to store passwords for users who do not have default password
-    */
+     * 
+     * @param database Database of Users
+     */
     public static void writeToPasswords(Database database){
-        //iterate through all the users to update the csv file corresponding to password
         ArrayList<User> users = database.getUsers();
         for(int i = 0; i < users.size(); i++){
             String currentUserID = users.get(i).getUserID();
@@ -135,8 +129,10 @@ public class WriteToFile {
         
     }
 
-    /*
+    /**
      * Method to store campInfo into csv
+     * 
+     * @param campInfo Database of Camps
      */
     public static void writeCampInfo(CampInfo campInfo){
 
@@ -145,21 +141,11 @@ public class WriteToFile {
          * Iterate every camp and input the information into corresponding excel files
          */
         for(int i = 0; i < listOfCamps.size(); i++){
-            /*
-             * Extract current camp object to reduce unnecessary reference calls to campInfo 
-             */
             Camp currentCamp = listOfCamps.get(i);
             try { 
-                /*
-                 * Initialize Printwriter for both list of camps and camp info attributes csv files
-                 */
                 PrintWriter campInfoCsvWriter = new PrintWriter(new FileWriter("./data/List_Of_Camp_Info.csv", true)); 
                 PrintWriter campInfoAttributesWriter = new PrintWriter(new FileWriter("./data/CampInfo_Attrib.csv", true)); 
                 
-                /*
-                 * Update list of camps csv
-                 * First, extract all attributes of camp object
-                 */
                 String staffID = currentCamp.getStaffID();
                 String campName = currentCamp.getCampName();
                 int[] dates = currentCamp.getDates();
@@ -175,10 +161,7 @@ public class WriteToFile {
                 campInfoCsvWriter.println(staffID + "," + campName + "," + dates[0] + "," + dates[1] + "," + regClosingDate + ","
                                         + userGroup + "," + location + "," + totalSlots + "," + campCommitteeSlots + "," + 
                                         description + ",");    
-                /*
-                 * Update camp info attributes csv
-                 * Extract attributes first
-                 */
+                
                 int attendeeSlotsUsed = campInfo.getAttendeeSlotsUsed(currentCamp);
                 int campCommitteeSlotsUsed = campInfo.getCampCommitteeSlotsUsed(currentCamp);
                 boolean visibility = campInfo.getVisibility(currentCamp);
@@ -186,7 +169,6 @@ public class WriteToFile {
 
                 campInfoAttributesWriter.println(campName + "," + attendeeSlotsUsed + "," + campCommitteeSlotsUsed + "," + 
                                                 visibility + ",");
-                // Close Printwriter
                 campInfoCsvWriter.close(); 
                 campInfoAttributesWriter.close();
             } catch (IOException e) { 
@@ -194,22 +176,18 @@ public class WriteToFile {
             }
     }
     }
-    /*
+    /**
      * Method to store enquiries and corresponding replies into csv
      * 
+     * @param enquiries List of Enquiries
+     * @param replies List of Replies
      */
     public static void writeToEnquiries(ListOfEnquiries enquiries, ReplyToStudent replies){
         ArrayList<String> listOfEnquiries = enquiries.getEnquiries();
-        
-
-
             try { 
                 PrintWriter csvWriter = new PrintWriter(new FileWriter("./data/Enquiries.csv", true)); 
                 
                 for(int i = 0; i < listOfEnquiries.size(); i++){
-                    /*
-                    * Extract all attributes to write into csv
-                    */
                     String enquiry = enquiries.getEnquiry(i);
                     String userID = enquiries.getUserID(i);
                     String campName = enquiries.getCampEnquiredID(i);
@@ -232,8 +210,10 @@ public class WriteToFile {
         
     }
 
-    /*
+    /**
      * Method to store suggestions into csv
+     * 
+     * @param suggestions List of suggestions
      */
     public static void writeToSuggestion(ListOfSuggestions suggestions){
         ArrayList<String> listOfSuggestions = suggestions.getListOfSuggestions();
@@ -244,10 +224,6 @@ public class WriteToFile {
                 PrintWriter csvWriter = new PrintWriter(new FileWriter("./data/Suggestions.csv", true)); 
                 
                 for(int i = 0; i < listOfSuggestions.size(); i++){
-                    /*
-                    * Extract all attributes to write into csv
-                    suggestion,suggestor,suggestedCamp,suggestionID,isApproved,
-                    */
                     String suggestion = suggestions.getSuggestion(i);
                     String userID = suggestions.getUserID(i);
                     String campName = suggestions.getCampEnquiredID(i);

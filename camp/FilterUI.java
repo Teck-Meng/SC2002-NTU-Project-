@@ -1,17 +1,22 @@
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import camppackage.ValidateDate;
 import user.Faculty;
 
+/**
+ * Class responsible for filters for report generation
+ */
 public class FilterUI {
+    /**
+     * System prompt asking user which faculty filter the user wishes to apply for report
+     * @return Faculty that will be filtered
+     */
     protected static Faculty askFaculty(){
         Scanner sc = new Scanner(System.in);
         int userChoice = 0;
         while(userChoice < 1 || userChoice > 16){
-            /*
-             * Prompt staff to input the user group of the camp
-             */
             try{
                 System.out.println("Enter which user group you wish to print out later in report generation: ");
                 System.out.println("1. EEE, 2. ADM, 3. NBS");
@@ -23,9 +28,6 @@ public class FilterUI {
             }
             catch(InputMismatchException e){
                 System.out.println("Input Mismatch! Please enter an integer value for the date!");
-                /*
-                 * Use of sc.nextLine() to prevent infinite looping
-                 */
                 sc.nextLine();
             }
 
@@ -81,6 +83,10 @@ public class FilterUI {
         return userGroup;
     }
 
+    /**
+     * System prompt asking user which location filter the user wishes to apply for report
+     * @return Location that will be filtered
+     */
     protected static String askLocation(){
         Scanner sc = new Scanner(System.in);
         String location;
@@ -90,6 +96,10 @@ public class FilterUI {
         return location;
     }
 
+    /**
+     * System prompt asking user which date filter the user wishes to apply for report
+     * @return Date that will be filtered
+     */
     protected static int askDate(){
         Scanner sc = new Scanner(System.in);
         int date = -1;

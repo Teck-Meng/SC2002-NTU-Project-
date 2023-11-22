@@ -1,3 +1,4 @@
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -10,18 +11,17 @@ import filehandler.*;
 import user.User;
 import user.Staff;
 import user.Student;
-/*
- * Main program will call methods to operate the features of the app
+/**
+ * The main program 
  */
 public class MainProgram {
+    /**
+     * 
+     * @param args
+     */
     public static void main(String[] args) {
-        /*
-         * Set the current time of the program
-         */
         Time time = new Time(10_29_2023);
-        /*
-         * Initialize campInfo and database data structures from csv files
-         */
+
         Database database = new Database();
         CampInfo campInfo = new CampInfo();
         ListOfSuggestions suggestions = new ListOfSuggestions();
@@ -29,47 +29,24 @@ public class MainProgram {
         ReplyToStudent replies = new ReplyToStudent();
         
         readFileInfo(campInfo, database, enquiries, suggestions, replies);
-        /*
-         * Intialize integer variable to track user choice in the app
-         */
+
         int userIDIndex;
-        /*
-         * currentUser will store the object of the current user after they have successfully logged in
-         */
         User currentUser;
         
         Scanner sc = new Scanner(System.in);
         while(true){
             System.out.println("Welcome to the Camp Application and Management System!");
-            /*
-            * Login verification by calling loginUI class
-            */
             userIDIndex = LoginUI.promptLogin(database);
             if(userIDIndex < 0){
-                /*
-                 * Terminate program if login inside loginUI has failed
-                 */
                 System.out.println("Terminating program. . .");
                 sc.close();
                 break;
             }
-            /*
-            * Else grab user object from database and prepare interfaces
-            */
             currentUser = database.getUser(userIDIndex);
-            /*
-            * To have another method call to 2 other classes called staffUI and studentUI
-            */
             if(currentUser instanceof Staff){
-                /*
-                * To call Staff UI
-                */
                 StaffUI.main(campInfo, database, enquiries, suggestions, replies, time, (Staff)currentUser);
             }
             else{
-                /*
-                * Call student UI
-                */
                 StudentUI.main((Student)currentUser, campInfo, database, time, enquiries, suggestions, replies);
             }
 
@@ -87,15 +64,20 @@ public class MainProgram {
                 break;
             }
         }
-         
-         /*
-          * To be called upon program termination, write updated information into csv files
-          */
         saveFileInfo(campInfo, database, enquiries, suggestions, replies);
 
         sc.close();
     }
 
+    /**
+     * Method to read data from csv files into corresponding databases
+     * 
+     * @param campInfo Database of Camps
+     * @param database Database of Users
+     * @param enquiries Database of Enquiries
+     * @param suggestions Database of Suggestions
+     * @param replies Database of Replies to Enquiries
+     */
     public static void readFileInfo(CampInfo campInfo, Database database, ListOfEnquiries enquiries, ListOfSuggestions suggestions,
                                     ReplyToStudent replies){
         ReadFromFile.readUserList(database); 
@@ -108,6 +90,15 @@ public class MainProgram {
         ReadFromFile.readSuggestions(campInfo, database, suggestions);   
     }
 
+    /**
+     * Methods to write data from databases into csv files
+     * 
+     * @param campInfo Database of Camps
+     * @param database Database of Users
+     * @param enquiries Database of Enquiries
+     * @param suggestions Database of Suggestions
+     * @param replies Database of Replies
+     */
     public static void saveFileInfo(CampInfo campInfo, Database database, ListOfEnquiries enquiries, ListOfSuggestions suggestions,
                                     ReplyToStudent replies){
         ClearFiles.clearAttendanceLists();

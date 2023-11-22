@@ -5,37 +5,52 @@ import java.util.ArrayList;
 import user.Student;
 import sort.AlphaSort;
 
+/**
+ * Class representing list of attendees
+ * Every camp object contains an attendee list
+ */
 public class AttendeeList{
     private ArrayList<Student> listOfAttendees = new ArrayList<Student>();
 
-    //default empty constructor to be used as all attributes starts off empty 
-    
+    /**
+     * Standard get method for list of attendees
+     * @return List of attendees
+     */
     public ArrayList<Student> getListOfAttendees(){
         return listOfAttendees;
     }
 
-    //addAttendee() will be called when student registers for camp
+    /**
+     * Standard set method to add an attendee to attendee list
+     * @param attendee Attendee to be added to list
+     */
     public void addAttendee(Student attendee){
         AlphaSort.add(listOfAttendees, attendee);
         
     }
 
-    //deleteAttendee() to be called when student withdraws camp
-    //return true if attendee exist and deletion is successful
-    //else return false
+
+    /**
+     * Method to be called when attendee withdraws from camp
+     * 
+     * @param attendee Attendee to delete from attendee list
+     * @return Existence of Student in list
+     */
     public boolean deleteAttendee(Student attendee){
         int index = CampUtility.userPos(attendee, listOfAttendees);
-        //terminate method if student does not exist in committee list
         if(index == -1){
             return false;
         }
-        //successful removal of attendee
         listOfAttendees.remove(index);
         return true;
     }
 
+    /**
+     * Method to see if student is in a specific camp
+     * @param userID User identification of Student to find in attendee list
+     * @return Boolean value of whether a student is attending a specific camp
+     */
     public boolean findStudent(String userID){
-        // Use userPos to verify existence of student in blacklist
         if(CampUtility.userPos(userID, listOfAttendees) != -1){
             return true;
         }

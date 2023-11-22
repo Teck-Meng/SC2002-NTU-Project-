@@ -2,7 +2,16 @@ package filehandler;
 
 import user.Faculty;
 
+/**
+ * Class responsible for converting attributes into String/String to attributes during reading and writing of csv
+ */
 public class ConvertString {
+        /**
+         * Converts string input to Faculty attribute
+         * 
+         * @param faculty String representation of faculty
+         * @return Faculty attribute
+         */
         protected static Faculty setFaculty(String faculty){
         Faculty returnFaculty = Faculty.ADM;
         switch(faculty){
@@ -58,6 +67,12 @@ public class ConvertString {
         return returnFaculty;
     }
 
+    /**
+     * Convert string to integer
+     * 
+     * @param string String
+     * @return integer representation of string
+     */
     protected static int stringToInt(String string){
         return (int)Integer.parseInt(string);
     }

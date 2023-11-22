@@ -1,11 +1,11 @@
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import camppackage.AttendeeList;
+
 import camppackage.Camp;
 import camppackage.CampInfo;
-import camppackage.CommitteeList;
 import camppackage.PrintCampDetails;
 import user.Student;
 import user.UserAuthenticator;
@@ -17,7 +17,21 @@ import enquiry.ListOfEnquiries;
 import enquiry.ListOfSuggestions;
 import enquiry.ReplyToStudent;
 
+/**
+ * Student interface
+ */
 public class StudentUI {
+    /**
+     * Method that opens up student interface
+     * 
+     * @param student Student that opened up the student interface
+     * @param campInfo Database of camps
+     * @param database Database of users
+     * @param clock Current date
+     * @param enquiries List of enquiries
+     * @param suggestions List of suggestions
+     * @param replies List of replies
+     */
     protected static void main(Student student, CampInfo campInfo, Database database, Time clock, ListOfEnquiries enquiries,
                             ListOfSuggestions suggestions, ReplyToStudent replies){
         Scanner sc = new Scanner(System.in);
@@ -46,22 +60,15 @@ public class StudentUI {
 
             switch(choice){
                 case 1:
-                    // View list of camps
                     CampManagementUI.printListOfCamps(campInfo, student);
                     break;
                 case 2:
-                    // Camp Registration
                     CampManagementUI.registerCamp(campInfo, student, database, clock);
                     break;
                 case 3:
                     callAttendeeUI(student, campInfo, database, enquiries, replies);
-                    // Modify registered Camp, give user choice of camp and call AttendeeUI afterwards
                     break;
                 case 4:
-                    /*
-                     * Call Camp Committee UI if Student has committee camp
-                     * Else print out error message
-                     */
                     if(student.getCommitteeCamp() == null){
                         System.out.println("You are not authorized to use this feature yet!");
                     }
@@ -71,11 +78,9 @@ public class StudentUI {
                     }
                     break;
                 case 5:
-                    // View all registered camps
                     CampManagementUI.printListOfRegisteredCamps(student, campInfo);
                     break;
                 case 6:
-                    // Shows whether student is a camp committee member in system prompt
                     if(student.getCommitteeCamp() == null){
                         System.out.println("You are not a committee member in any camp.");
                     }
@@ -85,15 +90,9 @@ public class StudentUI {
                     }
                     break;
                 case 7:
-                    /*
-                    * Call method to allow students to manage enquiries
-                    */
-                    enquiryManagement(campInfo, student, database, enquiries, student);
+                    enquiryManagement(campInfo, student, database, enquiries);
                     break;
                 case 8:
-                    /*
-                     * Change password
-                     */
                     int index = database.getUserIndex(student.getUserID());
                     PasswordManager.changePassword(index, database);
                     while(true){
@@ -129,6 +128,15 @@ public class StudentUI {
         }
     }
 
+    /**
+     * The method that prompts student to choose which camp they want to access the attendee UI for
+     * 
+     * @param student Student requesting to enter attendee interface
+     * @param campInfo Database of camps
+     * @param database Database of users
+     * @param enquiries List of enquiries
+     * @param replies List of replies
+     */
     private static void callAttendeeUI(Student student, CampInfo campInfo, Database database, ListOfEnquiries enquiries, 
                                         ReplyToStudent replies){
         Scanner sc = new Scanner(System.in);
@@ -159,8 +167,16 @@ public class StudentUI {
         AttendeeUI.displayUI(camp, campInfo, student, database, enquiries, replies);
     }
    
-    private static void enquiryManagement(CampInfo campInfo, Student student, Database database, ListOfEnquiries enquiries,
-                                        Student attendee){
+    /**
+     * Enquiry management interface for students
+     * 
+     * @param campInfo Database of camps
+     * @param student Student who opened the enquiry management interface
+     * @param database Database of users
+     * @param enquiries List of enquiries
+     * @param attendee A
+     */
+    private static void enquiryManagement(CampInfo campInfo, Student student, Database database, ListOfEnquiries enquiries){
         Scanner sc = new Scanner(System.in);
         ArrayList<Camp> listOfCamps = CampManagementUI.printListOfCamps(campInfo, student);
         Camp currentCamp;
@@ -204,25 +220,25 @@ public class StudentUI {
                     /*
                      * View enquiries for camp
                      */
-                    AttendeeEnquiry.viewQuestion(attendee.getUserID(), enquiries, database, currentCamp);  
+                    AttendeeEnquiry.viewQuestion(student.getUserID(), enquiries, database, currentCamp);  
                     break;
                 case 2:
                     /*
                     * Make enquiry
                     */
-                    AttendeeEnquiry.askQuestion(attendee.getUserID(), currentCamp, enquiries, database);
+                    AttendeeEnquiry.askQuestion(student.getUserID(), currentCamp, enquiries, database);
                     break;
                 case 3:
                     /*
                      * Edit Enquiry
                      */
-                    EnquiriesUI.editEnquiry(enquiries, attendee, currentCamp);
+                    EnquiriesUI.editEnquiry(enquiries, student, currentCamp);
                     break;
                 case 4:
                     /*
                     *  Delete Enquiry
                     */
-                    EnquiriesUI.deleteEnquiry(enquiries, attendee, database);
+                    EnquiriesUI.deleteEnquiry(enquiries, student, database);
                     break;
                 case 5:
                     System.out.println("Exiting enquiry management interface . . .");

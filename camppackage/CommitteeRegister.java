@@ -7,51 +7,61 @@ import user.User;
 import clock.Time;
 import filehandler.Database;
 
-
+/**
+ * Class responsible for registration of camp committee member to a camp
+ * Implements CampRegister interface
+ */
 public class CommitteeRegister implements CampRegister {
+    /**
+     * Method that registers a student to a camp as camp committee member
+     * 
+     * @param campInfo Database of Camps
+     * @param camp Camp that student is registering for
+     * @param userID User identification of student that is registering for camp
+     * @param database Database of Users
+     * @param clock Current date
+     * @return Boolean value indicating if registration is successful or not
+     * @Override
+     */
     public boolean registerCamp(CampInfo campInfo, Camp camp, String userID, Database database, Time clock){
-        /*
-         * Verify if camp is full, if yes, terminate registration
-         */
         if(isCampFull(campInfo, camp)){
             System.out.println("Unable to process registration due to camp being at full capacity!");
             return false;
         }
-        /*
-         * Check if student satisfies all the requirements for registration
-         */
         if(!ValidateRegister.canRegister(campInfo, camp, userID, database, clock)){
             return false;
         }
-        /*
-        /*
-         * Extract user object from database
-         */
         User user = database.getUser(userID);
         
-        // checks if the user has withdrew from this particular camp as an attendee before
         if(camp.getBlacklist().findStudent(userID)){
             System.out.println(user.getUserID()+" has previously withdraw from camp, unable to process re-registration request!");
             return false;
         }
-        /*
-         * Update the committee list, Committee slot value and also keeping data of the camp into
-         * student's own database
-         */
         camp.getCommitteeList().addCommitteeMember((Student)user, campInfo, camp);
         campInfo.updateAttendeeSlotsUsed(true, camp, 1);
-        // Adds student into camp while denoting that the student is joining as committee member with boolean param
         ((Student)user).addCamp(camp, true);
         return true;
     }
     
+    /**
+     * Method to view list of camps
+     * 
+     * @param campInfo Database of camps
+     * @param userID User identification of user trying to view camps
+     * @param database Database of Users
+     * @return List of Camps visible to user
+     * @Override
+     */
     public ArrayList<Camp> viewCamps(CampInfo campInfo, String userID, Database database){
         User user = database.getUser(userID);
         return campInfo.getCampList(user);
     }
 
-    /*
-     * Checks if camp committee is full
+    /**
+     * Method to check if camp committee slots is full
+     * @param campInfo Database of Camps
+     * @param camp Specific camp that is being checked
+     * @return Boolean value indicating if a camp is full or not
      */
     public boolean isCampFull(CampInfo campInfo, Camp camp){
         int committeeSlots = camp.getCampCommitteeSlots();

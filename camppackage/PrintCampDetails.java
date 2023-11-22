@@ -1,6 +1,13 @@
 package camppackage;
 
+/**
+ * Class responsible for printing camp details on console
+ */
 public class PrintCampDetails {
+    /**
+     * Method that prints camp details on console
+     * @param camp Camp whose details are to be printed on console
+     */
     public static void print(Camp camp){
         System.out.println("Camp Name: " + camp.getCampName());
         System.out.print("Start Date: ");
@@ -21,6 +28,11 @@ public class PrintCampDetails {
         
     }
 
+    /**
+     * Method that prints remaining slots of a camp on console
+     * @param camp Camp whose details are to be printed on console
+     * @param campInfo Database of Camps
+     */
     public static void printRemainingSlots(Camp camp, CampInfo campInfo){
         int attendeeSlotsLeft = campInfo.getAttendeeSlotsUsed(camp);
         int committeeSlotsLeft = campInfo.getCampCommitteeSlotsUsed(camp);

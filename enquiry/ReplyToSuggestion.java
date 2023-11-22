@@ -9,12 +9,22 @@ import user.Staff;
 import filehandler.Database;
 import clock.Time;
 
-
+/**
+ * Class handling replies to committee suggestion
+ */
 public class ReplyToSuggestion{
-    /*
+    /**
      * StaffUI class will be responsible to prompt which suggestion they want to reply to
-     * @param index is the index of the enquiry
+     * index is the index of the suggestion
      * StaffUI class should prompt Staff will another function call to make the necessary edits to be made from approving suggestion
+     * 
+     * @param index Index positioning of Suggestion in list of suggestions
+     * @param list List of suggestions
+     * @param staff Staff trying to reply to suggestion
+     * @param camp Camp that received suggestion
+     * @param campInfo Database of Camps
+     * @param database Database of Users
+     * @param time Current date
      */
     public static void replyToSuggestion(int index, ListOfSuggestions list, Staff staff, Camp camp, CampInfo campInfo,
                                         Database database, Time time){
@@ -41,7 +51,7 @@ public class ReplyToSuggestion{
             case 1:
                 list.staffAction(index, true);
                 System.out.println("Suggestion has been approved! Kindly make the necessary edits as soon as possible!");
-                staff.editCamp(userChoice, camp, campInfo, database, time);
+                staff.editCamp(camp, campInfo, database, time);
                 break;
             case 2:
                 list.staffAction(index, false);

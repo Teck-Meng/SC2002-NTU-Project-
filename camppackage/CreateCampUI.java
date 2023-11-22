@@ -4,11 +4,18 @@ import java.util.Scanner;
 import user.Faculty;
 import clock.Time;
 
+/**
+ * Class containing system prompt for creation and editing of camp 
+ */
 public class CreateCampUI {
 
-    /*
+    /**
      * Check if certain features of a camp can be edited
      * Criteria for allowing edit when allowEdit is called: no person has registered for the camp yet.
+     * 
+     * @param camp Camp that is being checked 
+     * @param campInfo Database of Camps
+     * @return Boolean indication if a camp can be edited or not
      */
     private static boolean allowEdit(Camp camp, CampInfo campInfo){
         if(campInfo.getAttendeeSlotsUsed(camp) != 0){
@@ -19,8 +26,10 @@ public class CreateCampUI {
         }
         return true;
     }
-    /*
-     * Prompt staff to enter camp name to create a brand new camp
+    
+    /**
+     * Prompt Staff to enter camp name for a new camp
+     * @return Camp name
      */
     public static String askCampName(){
         String CampName;
@@ -30,19 +39,16 @@ public class CreateCampUI {
         System.out.println("Camp Name successfully added/changed!");
         return CampName;
     }
-    /*
-     * Prompt staff to enter camp name and allow editing of camp name
-     * Assume that camp name cannot be edited if at least 1 person has registered for the camp
-     * return empty string if unable to edit camp name
+    
+    /**
+     * Prompt staff to enter camp name for editing a current camp
+     * @param camp Camp that is being edited
+     * @param campInfo Database of camps
+     * @return Camp Name if edits are allowed and empty string if edits are not allowed
      */
     public static String askCampName(Camp camp, CampInfo campInfo){
         Scanner sc = new Scanner(System.in);
         String CampName;
-        
-        
-        /*
-         * Ensure that camp name can be edited
-         */
         if(!allowEdit(camp, campInfo)){
             System.out.println("Unable to edit camp name as camp has at least 1 person registered!");
             return "";
@@ -53,8 +59,12 @@ public class CreateCampUI {
         return CampName;
     }
 
-    /*
-     * Prompt staff to enter the dates for the camp in the format DD/MM/YYYY
+    /**
+     * Prompt staff to enter the dates for the camp in the format DD/MM/YYYY without the slashes
+     * Can be used in both camp creation and camp editing
+     * 
+     * @param time Current Date
+     * @return Dates
      */
     public static int[] askDates(Time time){
         Scanner sc = new Scanner(System.in);
@@ -64,27 +74,15 @@ public class CreateCampUI {
         boolean validDate = false;
         while(validDate == false){
             startDate = 0;
-            /*
-             * Prompt staff to input start date of camp and validate if staff inputted a valid date
-             */
             while(startDate == time.getDate() || ValidateDate.isDateSmaller(startDate, time.getDate())){
-                /*
-                 * Prompt user to enter date till they enter a valid date
-                 */
                 try{
                     System.out.println("Enter starting date of camp: ");
                     startDate = sc.nextInt();
                 }
                 catch(InputMismatchException e){
                     System.out.println("Input Mismatch! Please enter an integer value for the date!");
-                    /*
-                    * Use of sc.nextLine() to prevent infinite looping
-                    */
                     sc.nextLine();
                 }
-                /*
-                 * Staff must enter a date in the future, send a warning message to staff if they fail to do so
-                 */
                 if(startDate == time.getDate() || ValidateDate.isDateSmaller(startDate, time.getDate())){
                     System.out.println("Invalid date input! Enter a date from tomorrow onwards!");
                 }
@@ -95,9 +93,6 @@ public class CreateCampUI {
         }
         validDate = false;
         while(validDate == false){
-            /*
-             * Prompt staff to input end date of camp and validate if staff inputted a valid end date
-             */
             while(endDate == time.getDate() || ValidateDate.isDateSmaller(endDate, time.getDate())){
                 try{
                     System.out.println("Enter end date of camp: ");
@@ -105,14 +100,8 @@ public class CreateCampUI {
                 }
                 catch(InputMismatchException e){
                     System.out.println("Input Mismatch! Please enter an integer value for the date!");
-                    /*
-                    * Use of sc.nextLine() to prevent infinite looping
-                    */
                     sc.nextLine();
                 }
-                /*
-                 * Staff must enter a date in the future, send a warning message to staff if they fail to do so
-                 */
                 if(endDate == time.getDate() || ValidateDate.isDateSmaller(endDate, time.getDate())){
                     System.out.println("Invalid date input! Enter a date from tomorrow onwards!");
                 }
@@ -133,34 +122,29 @@ public class CreateCampUI {
 
     }
 
+    /**
+     * Prompt staff to enter registration closing date in the format DD/MM/YYYY without the slashes
+     * Can be used in both camp creation and camp editing
+     * 
+     * @param time Current date
+     * @param startDate Starting date of camp
+     * @return Registration closing date
+     */
     public static int askRegClosingDate(Time time, int startDate){
         Scanner sc = new Scanner(System.in);
         boolean validDate = false;
         int regClosingDate = 0;
         while(validDate == false){
             regClosingDate = 0;
-            /*
-             * Prompt user to input registration closing date and validate the date
-             * if it is invalid, prompt user to enter date again
-             */
             while(regClosingDate == time.getDate() || ValidateDate.isDateSmaller(regClosingDate, time.getDate())){
-                /*
-                 * Use of try-catch block to continuously prompt for input till the input is valid
-                 */
                 try{
                     System.out.println("Enter registration closing date of camp: ");
                     regClosingDate = sc.nextInt();
                 }
                 catch(InputMismatchException e){
                     System.out.println("Input Mismatch! Please enter an integer value for the date!");
-                    /*
-                    * Use of sc.nextLine() to prevent infinite looping
-                    */
                     sc.nextLine();
                 }
-                /*
-                 * Prompt user to enter a date in the future, send warning message if staff fails to do so
-                 */
                 if(regClosingDate == time.getDate() || ValidateDate.isDateSmaller(regClosingDate, time.getDate())){
                     System.out.println("Invalid date input! Enter a date from tomorrow onwards!");
                 }
@@ -178,13 +162,15 @@ public class CreateCampUI {
         return regClosingDate;
     }
 
+    /**
+     * Prompt staff to choose user group during camp creation
+     * 
+     * @return User group
+     */
     public static Faculty askUserGroup(){
         Scanner sc = new Scanner(System.in);
         int userChoice = 0;
         while(userChoice < 1 || userChoice > 16){
-            /*
-             * Prompt staff to input the user group of the camp
-             */
             try{
                 System.out.println("Enter your choice of user group this camp is open to: ");
                 System.out.println("1. EEE, 2. ADM, 3. NBS");
@@ -196,9 +182,6 @@ public class CreateCampUI {
             }
             catch(InputMismatchException e){
                 System.out.println("Input Mismatch! Please enter an integer value for the date!");
-                /*
-                 * Use of sc.nextLine() to prevent infinite looping
-                 */
                 sc.nextLine();
             }
 
@@ -257,8 +240,10 @@ public class CreateCampUI {
         return userGroup;
     }
 
-    /*
-     * Prompt staff to set location of camp
+    /**
+     * Prompt staff to enter location during camp creation and camp editing
+     * 
+     * @return Location
      */
     public static String askLocation(){
         Scanner sc = new Scanner(System.in);
@@ -267,8 +252,10 @@ public class CreateCampUI {
         return location;
     }
 
-    /*
-     * Prompt staff to indicate the total number of slots available for the camp
+    /**
+     * Prompt Staff to enter the number of total slots of camp during camp creation and camp editing
+     * 
+     * @return Total slots
      */
     public static int askTotalSlots(){
         Scanner sc = new Scanner(System.in);
@@ -289,6 +276,13 @@ public class CreateCampUI {
         return totalSlots;
     }
 
+    /**
+     * Prompt staff to enter the number of attendee slots of a camp during camp editing
+     * 
+     * @param camp Camp object that is being edited
+     * @param campInfo Database of camps
+     * @return Attendee slots
+     */
     public static int askAttendeeSlots(Camp camp, CampInfo campInfo){
         Scanner sc = new Scanner(System.in);
         int attendeeSlots = -1;
@@ -316,8 +310,10 @@ public class CreateCampUI {
         return attendeeSlots;
     }
 
-    /*
-     * Prompt Staff to enter the number of slots for camp committee
+    /**
+     * Prompt staff to enter number of camp committee slots during camp creation
+     * 
+     * @return Camp committee slots
      */
     public static int askCampCommitteeSlots(){
         Scanner sc = new Scanner(System.in);
@@ -340,8 +336,12 @@ public class CreateCampUI {
         return campCommitteeSlots;
     }
 
-    /*
-     * Edit version of askCommitteeListCamp()
+    /**
+     * Prompt staff to enter number of camp committee slots during camp editing
+     * 
+     * @param camp Camp being edited
+     * @param campInfo Database of Camps
+     * @return Camp committee slots
      */
     public static int askCampCommitteeSlots(Camp camp, CampInfo campInfo){
         Scanner sc = new Scanner(System.in);
@@ -361,23 +361,20 @@ public class CreateCampUI {
             }
             catch(InputMismatchException e){
                 System.out.println("Input Mismatch! Please enter an integer value for the date!");
-                /*
-                 * Use of sc.nextLine() to prevent infinite looping
-                 */
                 sc.nextLine();
             }
             if(campCommitteeSlots == -1){
-                /*
-                 * Exit method if user wishes to quit
-                 */
                 return -1;
             }
         }while(campCommitteeSlots < minSlots&&campCommitteeSlots > 10);
 
         return campCommitteeSlots;
     }
-    /*
-     * Prompt staff to enter description of camp
+    
+    /**
+     * Prompt staff to enter description during camp creation and camp editing
+     * 
+     * @return Description
      */
     public static String askDescription(){
         Scanner sc = new Scanner(System.in);
@@ -387,8 +384,10 @@ public class CreateCampUI {
     }
 
 
-    /*
-     * Prompt Staff to set visiblity of the camp
+    /**
+     * Prompt staff to enter visibility during camp creation and camp editing
+     * 
+     * @return Boolean value indicating if the camp is visible or not
      */
     public static boolean askVisibility(){
         Scanner sc = new Scanner(System.in);

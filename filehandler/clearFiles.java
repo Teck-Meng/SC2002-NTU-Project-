@@ -4,12 +4,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-/*
+/**
  * The purpose of this class is to empty out the csv file to prepare for writing
  * Clearing out the entire csv and rewriting is more efficient than having to match inputs of csv with inputs from application data
  */
 public class ClearFiles {
-    /*
+    /**
      * Clear the blacklist, attendee list and committee list
      * To be used before calling corresponding write methods
      */
@@ -34,7 +34,7 @@ public class ClearFiles {
         }
     }
     
-    /*
+    /**
      * Clear passwords csv file
      * To be used before calling corresponding write methods
      */
@@ -53,7 +53,7 @@ public class ClearFiles {
         }
     }
     
-    /*
+    /**
      * Clear list of camps info csv file
      * To be used before calling corresponding write methods
      */
@@ -72,7 +72,7 @@ public class ClearFiles {
         }
     }
     
-    /*
+    /**
      * Clear CampInfo Attributes csv file
      * To be used before calling corresponding write methods
      */
@@ -91,7 +91,7 @@ public class ClearFiles {
         }
     }
 
-    /*
+    /**
      * Clears attendance report to set up a new attendance report to be written
      * To only be called by AttendanceReport.java
      */
@@ -110,7 +110,7 @@ public class ClearFiles {
         }
     }
 
-    /*
+    /**
      * Clears performance report to set up a new performance report to be written
      * To only be called by Performance_Report.java
      */
@@ -129,6 +129,10 @@ public class ClearFiles {
         }
     }
     
+    /**
+     * Clears enquiries csv
+     * To be used before reading enquiries into csv
+     */
     public static void clearEnquiries(){
         try{
                 PrintWriter reportCsvWriter = new PrintWriter(new FileWriter("./data/Enquiries.csv", false));
@@ -144,6 +148,10 @@ public class ClearFiles {
         }
     }
 
+    /**
+     * Clears suggestion csv
+     * To be used before reading suggestions into csv
+     */
     public static void clearSuggestions(){
         try{
                 PrintWriter reportCsvWriter = new PrintWriter(new FileWriter("./data/Suggestions.csv", false));

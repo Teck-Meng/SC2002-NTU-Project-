@@ -8,25 +8,29 @@ import filehandler.Database;
 import sort.AlphaSort;
 import clock.Time;
 
+/**
+ * Class representing database of camps
+ */
 public class CampInfo {
     private ArrayList<Camp> listOfCamps = new ArrayList<Camp>();
     private ArrayList<Integer> attendeeSlotsUsed = new ArrayList<Integer>();
     private ArrayList<Integer> campCommitteeSlotsUsed = new ArrayList<Integer>();
     private ArrayList<Boolean> visibility = new ArrayList<Boolean>();
 
-    //default empty constructor as arraylist is empty for all attributes
 
+    /**
+     * Method to get list of camps visible to a student
+     * 
+     * @param user Student requesting to get camp list
+     * @return List of camps visible to student
+     */
     public ArrayList<Camp> getCampList(User user){
         if(user instanceof Staff){
             return listOfCamps;
         }
         else{
-            /* For students, we return a filtered-out camp list that matches the criteria for visibility */
             ArrayList<Camp> returnList = new ArrayList<Camp>();
             for(int i = 0; i < listOfCamps.size(); i++){
-                /* For every iteration, check if camp is open to all students, if not, check if
-                 * user group matches student's faculty, if yes, insert into arrayList
-                 */
                 if(visibility.get(i) && matchFaculty(user, listOfCamps.get(i).getUserGroup())){
                     returnList.add(listOfCamps.get(i));
                 }
@@ -35,12 +39,18 @@ public class CampInfo {
         }
     }
 
+    /**
+     * Overloaded method to fetch list of camps that a specific student can register for
+     * 
+     * @param user Specific student
+     * @param campInfo Database of Camps
+     * @param database Database of Users
+     * @param clock Current date
+     * @return List of camps a specific student can register for
+     */
     public ArrayList<Camp> getCampList(User user, CampInfo campInfo, Database database, Time clock){
         ArrayList<Camp> returnList = new ArrayList<Camp>();
         for(int i = 0; i < listOfCamps.size(); i++){
-                /* For every iteration, check if camp is open to all students, if not, check if
-                 * user group matches student's faculty, if yes, insert into arrayList
-                 */
                 Camp currentCamp = listOfCamps.get(i);
                 if(visibility.get(i) && matchFaculty(user, listOfCamps.get(i).getUserGroup()) 
                     && ValidateRegister.canRegisterForCamp(campInfo, currentCamp, user.getUserID(), database, clock)){
@@ -50,13 +60,18 @@ public class CampInfo {
         return returnList;
     }
 
+    /**
+     * Method to update attendee slots used for a specific camp
+     * 
+     * @param isIncrement Indication of whether attendee slots used should be increased or decreased
+     * @param camp Specific camp that requires updating of attendee slots used
+     * @param value Number to increase or decrease by during updating of attendee slots used
+     */
     public void updateAttendeeSlotsUsed(boolean isIncrement, Camp camp, int value){
-        // store return value of campPos due to possible repeated usage
         int index = CampUtility.CampPos(camp, listOfCamps);
-        // checks for existence of camp
         if(index == -1){
             return;
-        } // check if there is space for students
+        } 
         else if(CampUtility.isFull(camp, attendeeSlotsUsed.get(index),campCommitteeSlotsUsed.get(index)) == true){
             System.out.println("Camp is at full capacity! Unable to register more attendees!");
             return;
@@ -70,56 +85,82 @@ public class CampInfo {
         }
     }
 
+    /**
+     * Method to add committee slots used for a specific camp
+     * @param camp Specific camp that requires updating of camp committee slots used
+     * @param value Number to increase by during updating of camp committee slots used
+     */
     public void updateCommitteeSlotUsed(Camp camp, int value){
-        // store return value of campPos due to possible repeated usage
         int index = CampUtility.CampPos(camp, listOfCamps);
-        // checks for existence of camp
         if(index == -1){
             return;
-        } // check if capacity of committee is already at maximum
+        } 
         else if(campCommitteeSlotsUsed.get(index) >= 10){
             System.out.println("Camp Committee is full! Unable to process registration!");
         }
-        //Process the addition of camp committee member
         int intialValue = campCommitteeSlotsUsed.get(index);
         campCommitteeSlotsUsed.set(index, (intialValue + value));
     }
 
+    /**
+     * Method to fetch attendee slots used for a specific camp
+     * 
+     * @param camp Specific Camp
+     * @return Attendee slots used for that specific camp, returns -1 if camp does not exist
+     */
     public int getAttendeeSlotsUsed(Camp camp){
         int index = CampUtility.CampPos(camp, listOfCamps);
         if(index == -1){
-            //if unsuccessful, return -1
             return -1;
         }
         return attendeeSlotsUsed.get(index);
     }
 
+    /**
+     * Method to get camp committee slots used for a specific camp
+     * 
+     * @param camp Specific camp
+     * @return Camp committee slots used for that specific camp, returns -1 if camp does not exist
+     */
     public int getCampCommitteeSlotsUsed(Camp camp){
         int index = CampUtility.CampPos(camp, listOfCamps);
         if(index == -1){
-            //return -1 if unsuccessful
             return index;
         }
         return campCommitteeSlotsUsed.get(index);
     }
 
-    /*
-     * To be called by filehandler package
+    /**
+     * Standard get method to get full list of camps
+     * 
+     * @return List of camps
      */
     public ArrayList<Camp> getFullList(){
         return listOfCamps;
     }
 
+    /**
+     * Method to fetch visibility of a specific camp
+     * 
+     * @param camp Specific Camp
+     * @return Boolean value indicating if specific camp is visible or not
+     */
     public boolean getVisibility(Camp camp){
         int index = CampUtility.CampPos(camp, listOfCamps);
-        // Check for existence of camp, if it does not exist, exit program immediately
         if(index == -1){
             return false;
         }
         return visibility.get(index);
     }
 
-    //allows staff to set visiblity of a specific camp that they have created
+    /**
+     * Standard method to set visibility of a specific camp
+     * 
+     * @param camp Specific camp
+     * @param isVisible Visibility to set specific camp
+     * @param isStaff Indicates whether method caller is a Staff object(true) or is from filehandler package(false)
+     * @return Boolean value indicating success of setting visibility
+     */
     public boolean setVisiblity(Camp camp, boolean isVisible, boolean isStaff){
         int index = CampUtility.CampPos(camp, listOfCamps);
         if(!isStaff){
@@ -129,16 +170,9 @@ public class CampInfo {
             visibility.set(index, isVisible);
             return true;
         }
-         /*
-          * terminate method if camp does not exist
-          */
         if(index == -1){
             return false;
         }
-        /*
-         * Check if camp already has students registered in the camp
-         * If yes, prevent staff from toggling visibility
-         */
         if(campCommitteeSlotsUsed.get(index) > 0 || attendeeSlotsUsed.get(index) > 0){
             System.out.println("Camp already has at least 1 person registered, unable to toggle visiblity!");
             return false;
@@ -147,14 +181,22 @@ public class CampInfo {
         return true;
     }
 
+    /**
+     * Method to add specific camp into list of camps
+     * 
+     * @param camp Specific camp
+     * @param isVisible Visibility of specific camp
+     */
     public void addCamp(Camp camp, boolean isVisible){
-
-        /*
-         * Add camp into camp list in alphabetical order
-         */
         AlphaSort.add(listOfCamps, camp, visibility, isVisible, attendeeSlotsUsed, campCommitteeSlotsUsed);
     }
 
+    /**
+     * Method to delete camp from list of camps
+     * 
+     * @param camp
+     * @return Boolean Value indicating success of deletion of camp from list of camps
+     */
     public boolean deleteCamp(Camp camp){
         for(int i = 0; i < listOfCamps.size(); i++){
                 if(camp == listOfCamps.get(i)){
@@ -172,7 +214,13 @@ public class CampInfo {
 
     
 
-    //private method to check if faculty of user matches that of the camp
+    /**
+     * Compares user faculty with user group of camp
+     * 
+     * @param user User object to check faculty for
+     * @param faculty User Group of camp
+     * @return Whether the user's faculty matches the camp's user group
+     */
     private boolean matchFaculty(User user, Faculty faculty){
         if(faculty == Faculty.ALL){
             return true;
@@ -183,10 +231,22 @@ public class CampInfo {
         return false;
     }
 
+    /**
+     * Method that fetches a camp given its numerical index in list of camps
+     * 
+     * @param index Numerical index position of camp in list of camps
+     * @return Camp object at index in list of camps
+     */
     public Camp getCamp(int index){
         return listOfCamps.get(index);
     }
 
+    /**
+     * Method that fetches a camp given its camp name
+     * 
+     * @param campName Name of camp
+     * @return Corresponding Camp object
+     */
     public Camp getCamp(String campName){
         for(int i = 0; i < listOfCamps.size(); i++){
             Camp compareWith = listOfCamps.get(i);

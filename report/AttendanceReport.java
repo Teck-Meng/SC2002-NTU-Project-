@@ -1,6 +1,6 @@
 package report;
 
-import user.Faculty;
+
 import user.Student;
 import camppackage.CampInfo;
 import camppackage.Camp;
@@ -13,16 +13,24 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * Class responsible for generating attendance report
+ * Class implements ReportGeneration interface
+ */
 public class AttendanceReport implements ReportGeneration{
-    /*
-     * Author's note:
-     * This is the staff version of printReport
+
+    /**
+     * * This is the staff version of printReport
      * To be added to StaffUI
-     * Pass in @param listOfcamps by using database.getUser(@param String userID).getListOfCamps()
+     * Pass in listOfcamps by using database.getUser(userID).getListOfCamps(), ensure that database.getUser is typecasted to staff first
      * To apply sorting in the future, it is recommended to apply sorting on listOfCamps of staff object first based on whatever
      * attributes one wishes to sort by
      * The default arrangement is based on which camp is registered first
      * This method will work as a console prompt to simulate filter
+     * 
+     * @param listOfCamps List of camps that a staff has created
+     * @param campInfo Database of Camps
+     * @Override
      */
     public static void printReport(ArrayList<Camp> listOfCamps, CampInfo campInfo){
         Scanner sc = new Scanner(System.in);
@@ -45,29 +53,17 @@ public class AttendanceReport implements ReportGeneration{
                 System.out.println("Please enter a choice from 0 to 3!");
             }
         }
-        /*
-         * Terminate printing of report if staff does not wish to continue
-         */
         if(userChoice == 3){
             System.out.println("Exiting report generation page . . .");
             return;
         }
         System.out.println("Generating report . . .");
-        /*
-         * Clear attendance report to make way for new one
-         */
+
         ClearFiles.clearAttendanceReport();
-        /*
-         * Extract staff's list of camps
-         */
-        /*
-         * Iterate through each camp and extract attendee list and camp committee list 
-         */
+
         for(int i = 0; i < listOfCamps.size(); i++){
-            /*
-             * Extract the necessary list for attendance report generation
-             */
             Camp currentCamp = listOfCamps.get(i);
+
             switch(userChoice){
                 case 0:
                     attendeeReportHandling(currentCamp.getAttendeeList().getListOfAttendees(), currentCamp);
@@ -92,7 +88,20 @@ public class AttendanceReport implements ReportGeneration{
      * Use getCommitteCamp() on Student object in committeMemUI.java for @param committeeCamp
      * For StaffUI, kindly add a console prompt method in the UI class to prompt staff to choose the camp to be passed in as arg
      */
-    public static void printReport(Camp committeeCamp, CampInfo campInfo){
+    /**
+     * Overloaded method of printReport
+     * This can also be used by staff if they only want to print report for one specific camp
+     * To be used by camp committee member
+     * Overall, this method to be added to StaffUI and CommitteeMemUI
+     * Use getCommitteCamp() on Student object in committeMemUI.java for committeeCamp paramaeter
+     * For StaffUI, kindly add a console prompt method in the UI class to prompt staff to choose the camp to be passed in as arg 
+     * 
+     * @param camp Specific camp that the report will be printed for
+     * @param campInfo Database of Camps
+     * 
+     * @Override
+     */
+    public static void printReport(Camp camp, CampInfo campInfo){
         Scanner sc = new Scanner(System.in);
         int userChoice = -1;
 
@@ -113,39 +122,38 @@ public class AttendanceReport implements ReportGeneration{
                 System.out.println("Please enter a choice from 0 to 3!");
             }
         }
-        /*
-         * Terminate printing of report if staff does not wish to continue
-         */
         if(userChoice == 3){
             System.out.println("Exiting report generation page . . .");
             return;
         }
         System.out.println("Generating report . . .");
-        /*
-         * Clear attendance report to make way for new one
-         */
+
         ClearFiles.clearAttendanceReport();
+
         switch(userChoice){
                 case 0:
-                    attendeeReportHandling(committeeCamp.getAttendeeList().getListOfAttendees(), committeeCamp);
-                    committeeReportHandling(committeeCamp.getCommitteeList().getListOfMembers(), committeeCamp);
+                    attendeeReportHandling(camp.getAttendeeList().getListOfAttendees(), camp);
+                    committeeReportHandling(camp.getCommitteeList().getListOfMembers(), camp);
                     break;
                 case 1:
-                    attendeeReportHandling(committeeCamp.getAttendeeList().getListOfAttendees(), committeeCamp);
+                    attendeeReportHandling(camp.getAttendeeList().getListOfAttendees(), camp);
                     break;
                 case 2:
-                    committeeReportHandling(committeeCamp.getCommitteeList().getListOfMembers(), committeeCamp);
+                    committeeReportHandling(camp.getCommitteeList().getListOfMembers(), camp);
                     break;
             }
         System.out.println("Attendance Report successfully generated");
     }
 
+    /**
+     * Method called by printReport to allow Staff to choose to print only attendees in report
+     * Call this together with committeeReportHandling to print for all
+     * 
+     * @param attendeeList List of attendees in specific camp
+     * @param camp Current camp to generate report for
+     */
     public static void attendeeReportHandling(ArrayList<Student> attendeeList, Camp camp){
-            ClearFiles.clearAttendanceReport();
             try { 
-                    /*
-                     * Initialize printwriter
-                     */
                     PrintWriter csvWriter = new PrintWriter(new FileWriter("./data/AttendanceReport.csv", true));
                     String campName = camp.getCampName();
                     String role = "Attendee";
@@ -153,9 +161,7 @@ public class AttendanceReport implements ReportGeneration{
                     String description = camp.getDescription();
                     for(int i = 0; i < attendeeList.size(); i++){
                         Student attendee = attendeeList.get(i);
-                        /*
-                         * Write to csv
-                         */
+                        // write to csv
                         String userID = attendee.getUserID();
                         String faculty = attendee.getFaculty().toString();
                         
@@ -168,32 +174,33 @@ public class AttendanceReport implements ReportGeneration{
                 }
             
         }
-
-    public static void committeeReportHandling(ArrayList<Student> committeeList, Camp camp){
+    /**
+     * Method called by printReport to allow Staff to choose to print only committee members in report
+     * Call this together with attendeeReportHandling to print for all
+     * 
+     * @param committeeList List of committee members in specific camp
+     * @param camp Specific canp
+     */
+    private static void committeeReportHandling(ArrayList<Student> committeeList, Camp camp){
             try { 
-                    /*
-                     * Initialize printwriter
-                     */
-                    PrintWriter csvWriter = new PrintWriter(new FileWriter("./data/AttendanceReport.csv", true));
-                    String campName = camp.getCampName();
-                    String role = "Camp committee member";
-                    String location = camp.getLocation();
-                    String description = camp.getDescription();
-                    for(int i = 0; i < committeeList.size(); i++){
-                        Student committeeMember = committeeList.get(i);
-                        /*
-                         * Write to csv
-                         */
-                        String userID = committeeMember.getUserID();
-                        String faculty = committeeMember.getFaculty().toString();
-                        
-                        csvWriter.println(userID + "," + faculty + "," + campName + "," + role + "," + location + "," +
-                                        description + ",");              
-                    }
-                    csvWriter.close(); 
-                } catch (IOException e) { 
-                    e.printStackTrace(); 
+                PrintWriter csvWriter = new PrintWriter(new FileWriter("./data/AttendanceReport.csv", true));
+                String campName = camp.getCampName();
+                String role = "Camp committee member";
+                String location = camp.getLocation();
+                String description = camp.getDescription();
+                for(int i = 0; i < committeeList.size(); i++){
+                    Student committeeMember = committeeList.get(i);
+                    // write to csv
+                    String userID = committeeMember.getUserID();
+                    String faculty = committeeMember.getFaculty().toString();
+                    
+                    csvWriter.println(userID + "," + faculty + "," + campName + "," + role + "," + location + "," +
+                                    description + ",");              
                 }
+                csvWriter.close(); 
+            } catch (IOException e) { 
+                e.printStackTrace(); 
+            }
         }
 
     

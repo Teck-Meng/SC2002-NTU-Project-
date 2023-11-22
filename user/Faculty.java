@@ -1,5 +1,9 @@
 package user;
 
+/**
+ * Faculty is an attribute that indicates the faculty that a student or staff belongs to
+ * Faculty is also an attribute used in the camp class to indicate its user group
+ */
 public enum Faculty {
     EEE(1, "EEE"), ADM(2, "ADM"), 
     NBS(3, "NBS"), CCEB(4, "CCEB"), CEE(5, "CEE"),
@@ -12,16 +16,29 @@ public enum Faculty {
 
     private final int index;
     private final String name;
+
+    /**
+     * Constructor for faculty
+     * @param index Numerical index of a faculty type
+     * @param nameString notation of a faculty
+     */
     private Faculty(int index, String name){
         this.index = index;
         this.name = name;
     }
 
+    /**
+     * 
+     * @return Index of faculty
+     */
     public int toInt(){
         return index;
     }
 
-    
+    /**
+     * @Override
+     * @return Dtring representation of a faculty
+     */
     public String toString(){
         return name;
     }

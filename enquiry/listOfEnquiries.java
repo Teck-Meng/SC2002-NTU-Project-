@@ -5,7 +5,11 @@ import user.User;
 import camppackage.Camp;
 import filehandler.Database;
 
+/**
+ * Class acting as a database of enquiries
+ */
 public class ListOfEnquiries{
+    //unique identification number given to an enquiry for ReplyToStudent to use
     private int id = 0;
 
     private ArrayList<String> enquiries = new ArrayList<String>();
@@ -14,63 +18,71 @@ public class ListOfEnquiries{
     private ArrayList<Camp> enquiredCamp = new ArrayList<Camp>();
     private ArrayList<Integer> enquiryID = new ArrayList<Integer>();
 
+    /**
+     * Standard get method for list of enquiries
+     * 
+     * @return List of Enquiries
+     */
     public ArrayList<String> getEnquiries(){
         return enquiries;
     }
 
+    /**
+     * Standard set method to add an enquiry into list of enquiries
+     * 
+     * @param enquiry Enquiry to be added
+     * @param userID User identification for User who submitted enquiry
+     * @param database Database of Users
+     * @param camp Camp that received the enquiry
+     */
     public void addEnquiry(String enquiry, String userID, Database database, Camp camp){
-        /*
-         * Acquire user object from database using userID
-         * In main program, userID for this method is to be acquired using the getUserID method from the user class
-         */
         User student = database.getUser(userID);
 
         enquiries.add(enquiry);
         enquirer.add(student);
         isAnswered.add(false);
         enquiredCamp.add(camp);
-        /*
-         * Ensure that id value is unique by always incrementing it when a new enquiry is added
-         */
         enquiryID.add(id++);
         System.out.println("Successfully added enquiry!");
 
     }
 
-    /*
+    /**
      * For readFromFile to add enquiry from excel sheet
+     * 
+     * @param enquiry Enquiry to be added
+     * @param userID User identification attached to the enquiry
+     * @param database Database of Users
+     * @param camp Camp that received the enquiry
+     * @param enquiryIndex Unique identification for an enquiry acting as a pointer
+     * @param isItAnswered Status of whether an enquiry is replied to or not
      */
     public void addEnquiry(String enquiry, String userID, Database database, Camp camp, int enquiryIndex, boolean isItAnswered){
-        /*
-         * Acquire user object from database using userID
-         * In main program, userID for this method is to be acquired using the getUserID method from the user class
-         */
         User student = database.getUser(userID);
 
         enquiries.add(enquiry);
         enquirer.add(student);
         isAnswered.add(isItAnswered);
         enquiredCamp.add(camp);
-        /*
-         * Ensure that id value is unique by always incrementing it when a new enquiry is added
-         */
         enquiryID.add(enquiryIndex);
-        /*
-         * Update id so that id is unique for every new entry within the app
-         */
         id = ++enquiryIndex;
     }
 
-    /*
-     * Update isAnswered at the specific index that the staff or CCMember has answered the enquiry
+    /**
+     * To update the status of an enquiry after it has been answered
+     * 
+     * @param index Index positioning of enquiry that has just been answered
      */
     public void answeredEnquiry(int index){
         isAnswered.set(index, true);
     }
 
-    /*
-     * Returns string value of enquiry at a specific index
-     * This version is for attendeeUI
+    /**
+     * Get method to fetch an enquiry for a student that belong to them
+     * 
+     * @param index Index positioning of enquiry in list of enquiries
+     * @param userID User identification requesting to fetch the enquiry
+     * @return Enquiry if verification successful and null if verification unsuccessful
      */
     public String getEnquiry(int index, String userID){
         if(userID != enquirer.get(index).getUserID()){
@@ -79,17 +91,25 @@ public class ListOfEnquiries{
         return enquiries.get(index);
     }
 
-    /*
-     * To be used by Staff and Camp Committee Member
+    /**
+     * For Staff/Committee Member to fetch an enquiry
+     * 
+     * @param index Index positioning of an enquiry
+     * @return Enquiry at that given position
      */
     public String getEnquiry(int index){
         return enquiries.get(index);
     }
-    /*
+    
+    /**
      * Method to edit enquiry
      * Unauthorized users will not be able to edit
      * Edits cannot be made after it has been answered
      * UI class will be responsible for system prompt, this method does not provide system prompt
+     * 
+     * @param id Unique identification number(pointer) of an enquiry
+     * @param userID User identification of User trying to edit an enquiry
+     * @param newEnquiry New enquiry to replace the old enquiry
      */
     protected void editEnquiry(int id, String userID, String newEnquiry){
         int index = getIndexFromID(id);
@@ -105,9 +125,12 @@ public class ListOfEnquiries{
         System.out.println("Enquiry edited successfully!");
     }
 
-    /*
+    /**
      * Method to delete enquiry
      * Enquiry can only be deleted by enquirer and if the enquiry is not yet answered
+     * 
+     * @param id Unique identification number(pointer) of an enquiry
+     * @param userID User identification of User trying to edit an enquiry
      */
     protected void deleteEnquiry(int id, String userID){
         int index = getIndexFromID(id);
@@ -127,43 +150,60 @@ public class ListOfEnquiries{
         System.out.println("Enquiry deletion is successful!");
     }
     
+    /**
+     * Standard get method for size of list of enquiries
+     * @return Size of list of Enquiries
+     */
     protected int getSize(){
         return enquiries.size();
     }
 
-    /*
-     * Returns the status of the enquiry
+    /**
+     * Return answered status of an enquiry given their index
+     * 
+     * @param index Index positioning in list of enquriies
+     * @return Answered Status of an enquiry
      */
     public boolean isEnquiryAnswered(int index){
         return isAnswered.get(index);
     }
 
-    /* 
-     * Returns userID of student who sent enquiry
-    */
+    /**
+     * Get method to get enquirer for a specific enquiry given the enquiry's index positioning
+     * 
+     * @param index Index positioning of enquiry in list of enquiries
+     * @return User identification of enquirer
+     */
     public String getUserID(int index){
         return enquirer.get(index).getUserID();
     }
 
-    /*
+    /**
      * To be used to ensure only Camp Committee Members and staff of that specific camp can view enquiries
-     * Camp Name is a unique ID and will be returned to do the check
+     * Camp Name is a unique identification and will be returned to do the check
+     * 
+     * @param index Index positioning of enquiry in list of enquiries
+     * @return Camp Name that received the enquiry
      */
     public String getCampEnquiredID(int index){
         return enquiredCamp.get(index).getCampName();
     }
 
-    /*
-     * To be used by Replies Class as a reference id to link the replies to the enquiry
+    /**
+     * Used by ReplyToStudent to get unique enquiry identification number given newly added index position for an enquiry
+     * 
+     * @param index Index positioning of an enquiry
+     * @return Unique identification number for a given enquiry
      */
     public int getEnquiryID(int index){
         return enquiryID.get(index);
     }
 
-    /*
-     * To be used by Replies Class to get the current index of an enquiry using the id as reference
-     * This will allow Replies Class to call the other methods using the id
-     * returns the index position of the enquiry with the corresponding userID
+    /**
+     * Conert unique identification number of an enquiry to its current index positioning in list of enquiries
+     * 
+     * @param id Unique identification number of an enquiry
+     * @return Index position of enquiry in list of enquiries, if enquiry not found, returns -1 instead
      */
     public int getIndexFromID(int id){
         for(int i = 0; i < enquiryID.size(); i++){
@@ -174,17 +214,18 @@ public class ListOfEnquiries{
         return -1;
     }
 
-    /*
+    /**
      * Used by attendee and staff class to print out all their enquiries
      * returns arraylist containing the indexes of all enquiries, this will allow attendees to edit or delete their enquiries
      * using the return arraylist during console prompt
      * Set isStaff to be true to use staff version and false for attendee version
+     * 
+     * @param userID User Identification
+     * @param isStaff Indication of whether method is called by a Staff object
+     * @return List of unique identification number of enquiries
      */
     public ArrayList<Integer> printAllEnquiries(String userID, boolean isStaff){
         ArrayList<Integer> returnIndexes = new ArrayList<Integer>();
-        /*
-         * count will be used to check if student has any enquiries, if not, print out a message indicating so
-         */
         int count = 0;
         if(!isStaff){
             for(int i = 0; i < enquiries.size(); i++){
@@ -222,17 +263,19 @@ public class ListOfEnquiries{
         }
     }
 
-    /*
+    /**
      * Used by committee member class to print out all their enquiries
      * returns arraylist containing the indexes of all enquiries, this will allow committee member to edit or delete their enquiries
      * using the return arraylist during console prompt
      * Allow toggle to choose if committee member's own enquiry should be printed or not when calling this method
+     * 
+     * @param camp Specific camp to print all enquiries for
+     * @param self User object requesting to print all enquiries
+     * @param includeSelf Indication of whether enquiries printed should include enquiries from User object: self
+     * @return
      */
     public ArrayList<Integer> printAllEnquiries(Camp camp, User self, boolean includeSelf){
          ArrayList<Integer> returnIndexes = new ArrayList<Integer>();
-         /*
-         * count will be used to check if student has any enquiries, if not, print out a message indicating so
-         */
         int count = 0;
         
         if(includeSelf){
@@ -272,14 +315,13 @@ public class ListOfEnquiries{
         return returnIndexes;
     }
 
-    /*
+    /**
      * For staff UI's use to print out enquiries that have not yet been replied
+     * 
+     * @param userID User identification of staff trying to print out enquiries
      */
     public void printAllEnquiries(String userID){
         for(int i = 0; i < enquiries.size(); i++){
-            /*
-             * Make sure enquiries that have not been answered are the only enquiries to be printed
-             */
             if(userID == enquiredCamp.get(i).getStaffID() && !isAnswered.get(i)){
                 System.out.print("Enquiry for "+ enquiredCamp.get(i).getCampName() + " , ");
                 System.out.println("Enquiry ID: "+ enquiryID.get(i)+ " : ");

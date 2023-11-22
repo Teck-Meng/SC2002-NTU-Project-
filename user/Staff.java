@@ -11,7 +11,11 @@ import clock.Time;
 import filehandler.Database;
 
 import java.util.Scanner;
-
+/**
+ * Class representing a staff user
+ * Staff users will have access to features in Staff UI
+ * Subclass of User
+ */
 public class Staff extends User{
     /*
      * Stores all the camps that the staff has created
@@ -19,22 +23,26 @@ public class Staff extends User{
     private ArrayList<Camp> myCamps = new ArrayList<Camp>();
 
 
-    /*
-     * Standard constructor
+    /**
+     * Standard constructor of staff
+     * 
+     * @param UserID User identification 
+     * @param facultyInfo Faculty that a staff belongs to
      */
     public Staff(String UserID, Faculty facultyInfo){
         super(UserID, facultyInfo);
     }
 
-    /*
-     * Console prompt to create camp
+    /**
+     * Console prompt to prompt staff to create camp
+     * 
+     * @param campInfo Database of camps
+     * @param database Database of users
+     * @param time Current Time
      */
     public void createCamp(CampInfo campInfo, Database database, Time time){
         Camp newCamp = new Camp(super.getUserID(), database);
-        /*
-         * Prompt Staff to enter basic information such as camp name for the camp
-         * Use of set methods will set the attributes after the prompt
-         */
+        
         boolean nameTaken = true;
         String campName = "";
         /*
@@ -71,23 +79,24 @@ public class Staff extends User{
 
         String description = CreateCampUI.askDescription();
         newCamp.setDescription(description);
-        /*
-         * Add to list of camps created by staff
-         */
+        
         myCamps.add(newCamp);
-        /*
-         * Set visibility of camp
-         */
+        
         boolean visiblity = CreateCampUI.askVisibility();
         campInfo.addCamp(newCamp, visiblity);
 
         System.out.println("Camp added successfully!");
     }
 
-    /*
-     * Console prompt to ask staff which camp details to edit
+    /**
+     * Console prompt for staff to edit camp
+     * 
+     * @param camp Camp that Staff wants to edit
+     * @param campInfo Database of Camps
+     * @param database Database of Users
+     * @param time Current Time
      */
-    public void editCamp(int choice, Camp camp, CampInfo campInfo, Database database, Time time){
+    public void editCamp(Camp camp, CampInfo campInfo, Database database, Time time){
         Scanner sc = new Scanner(System.in);
         
         /*
@@ -192,17 +201,17 @@ public class Staff extends User{
         }
     }
 
+    /**
+     * 
+     * @return List of camps that Staff object has created
+     */
     public ArrayList<Camp> getListOfCamps(){
         return myCamps;
     }
-
-    /*
-     * Checks if camp name has already been taken
-     */
     
 
-    /*
-     * Prints out list of names of staffs' camps
+    /**
+     * Prints out list of camps 
      */
     public void printListOfCamps(){
         for(int i = 0; i < myCamps.size(); i++){
@@ -211,28 +220,34 @@ public class Staff extends User{
         }
     } 
 
+    /**
+     * 
+     * @param camp Newly created Camp to be added into staff's database
+     */
     public void addCamp(Camp camp){
         myCamps.add(camp);
     }
 
+    /**
+     * For Staff to delete a camp
+     * 
+     * @param camp Camp to be deleted
+     * @param campInfo Database of Camps
+     */
     public void deleteCamp(Camp camp, CampInfo campInfo){
-        /*
-         * Delete camp in Staff's list of camps
-         */
         for(int i = 0; i < myCamps.size(); i++){
             if(camp.getCampName() == myCamps.get(i).getCampName()){
                 myCamps.remove(i);
             }
         }
-        /*
-         * Delete camp from camp info database
-         */
         campInfo.deleteCamp(camp);
     }
 
-    /*
-     * Call this method when the staff accept the suggestion from a committee member
-     * Staff can only check suggestion from their own camps so we do not need to check if camp is under the staff's jurisdiction
+    /**
+     * For staff to reward committee member points
+     * 
+     * @param committeeMember Committee Member who will receive the points
+     * @param numberOfPoints Number of Points to be added to committee member
      */
     public void addPoints(Student committeeMember, int numberOfPoints){
         for(int i = 0; i < numberOfPoints ; i++){
