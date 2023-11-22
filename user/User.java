@@ -1,7 +1,7 @@
 package user;
 /**
- * Super class of staff and student
- * For login purpose
+ * Super class of staff and student, 
+ * for login purpose
  */
 public class User {
     private String userID;

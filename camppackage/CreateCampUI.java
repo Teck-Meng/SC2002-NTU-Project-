@@ -10,9 +10,12 @@ import clock.Time;
 public class CreateCampUI {
 
     /**
+     * <p>
      * Check if certain features of a camp can be edited
+     * </p>
+     * <p>
      * Criteria for allowing edit when allowEdit is called: no person has registered for the camp yet.
-     * 
+     * </p>
      * @param camp Camp that is being checked 
      * @param campInfo Database of Camps
      * @return Boolean indication if a camp can be edited or not
@@ -60,8 +63,7 @@ public class CreateCampUI {
     }
 
     /**
-     * Prompt staff to enter the dates for the camp in the format DD/MM/YYYY without the slashes
-     * Can be used in both camp creation and camp editing
+     * Prompt staff to enter the dates for the camp in the format DD/MM/YYYY without the slashes, can be used in both camp creation and camp editing
      * 
      * @param time Current Date
      * @return Dates
@@ -123,8 +125,7 @@ public class CreateCampUI {
     }
 
     /**
-     * Prompt staff to enter registration closing date in the format DD/MM/YYYY without the slashes
-     * Can be used in both camp creation and camp editing
+     * Prompt staff to enter registration closing date in the format DD/MM/YYYY without the slashes, can be used in both camp creation and camp editing
      * 
      * @param time Current date
      * @param startDate Starting date of camp

@@ -6,8 +6,12 @@ import sort.AlphaSort;
 import user.Student;
 
 /**
+ * <p>
  * Class containing the list of camp committe member for a camp
+ * </p>
+ * <p>
  * Every camp will contain this object
+ * </p>
  */
 public class CommitteeList {
     private ArrayList<Student> listOfCCMembers = new ArrayList<Student>();

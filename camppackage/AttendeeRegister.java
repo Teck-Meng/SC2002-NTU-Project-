@@ -7,8 +7,12 @@ import clock.Time;
 import filehandler.Database;
 
 /**
+ * <p>
  * Implements CampRegister interface
+ * </p>
+ * <p>
  * Class is responsiple for handling registration of attendees into a camp
+ * </p>
  */
 public class AttendeeRegister implements CampRegister {
 

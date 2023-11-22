@@ -8,9 +8,12 @@ import filehandler.Database;
  */
 public class ValidateRegister {
     /**
+     * <p>
      * Method that checks if a student can register for a camp or not
+     * </p>
+     * <p>
      * Message will be printed to console if student cannot register for a camp
-     * 
+     * </p>
      * @param campInfo Database of Camps
      * @param camp Camp being checked
      * @param userID Student's user identification
@@ -45,9 +48,12 @@ public class ValidateRegister {
     }
 
     /**
+     * <p>
      * Method that checks if a student can register for a camp or not
+     * </p>
+     * <p>
      * Does not print anything to console, method is primarily used for checking when a student is not registering for a camp
-     * 
+     * </p>
      * @param campInfo Database of Camps
      * @param camp Camp being checked
      * @param userID Student's user identification

@@ -16,12 +16,17 @@ import user.Student;
  */
 public class PerformanceReport implements ReportGeneration{
     /**
-     * Prints performance report of commmittee members for all camps created by staff
-     * To be used in StaffUI.java
+     * <p>
+     * Prints performance report of commmittee members for all camps created by staff,
+     * to be used in StaffUI.java
+     * </p>
+     * <p>
      * StaffUI to be responsible to ask staff if they want to print performance report for all camps or one specific camp
-     * Pass in listOfcamps by using database.getUser(userID).getListOfCamps(), ensure that user object has been typecasted to Staff
-     * Order of report is alphabetical order
-     * 
+     * </p>
+     * <p>
+     * Pass in listOfcamps by using database.getUser(userID).getListOfCamps(), ensure that user object has been typecasted to Staff,
+     * order of report is alphabetical order
+     * </p>
      * @param listOfCamps List of camps to print the performance report for
      * @param campInfo Database of Camps
      * 
@@ -65,9 +70,13 @@ public class PerformanceReport implements ReportGeneration{
 
     
     /**
+     * <p>
      * Overloaded version of printReport
-     * Prints performance report of commmittee members for a specific camp created by staff
-     * To be used in StaffUI.java
+     * </p>
+     * <p>
+     * Prints performance report of commmittee members for a specific camp created by staff,
+     * to be used in StaffUI.java
+     * </p>
      * 
      * @param camp Specific camp to generate performance report for
      * @param campInfo Database of Camps

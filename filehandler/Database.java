@@ -109,9 +109,12 @@ public class Database {
     }
     
     /**
+     * <p>
      * Method overloading of SetPassword method
+     * </p>
+     * <p>
      * If index already known, prompt this version to set password
-     * 
+     * </p>
      * @param index Index positioning of password to be changed
      * @param newPassword New password
      */

@@ -10,11 +10,18 @@ import filehandler.Database;
  */
 public class ValidateDate {
     /**
+     * <p>
+     * Method that checks if date is valid
+     * </p>
+     * <p>
      * Ensure date follow DD/MM/YYYY format
-     * Minimum of 7 digits when date column is single digit
-     * Maximum of 8 digits
+     * </p>
+     * <p>
+     * Minimum of 7 digits when date column is single digit, maximum of 8 digits
+     * </p>
+     * <p>
      * Assume all months have 31 days
-     * 
+     * </p>
      * @param date Date to check
      * @return Boolean value indicating if a given date is valid or not
      */
@@ -118,9 +125,12 @@ public class ValidateDate {
 
     
     /**
+     * <p>
      * Verifies if the day section of the date is valid
+     * </p>
+     * <p>
      * Assumption is that day ranges from 1-31 regardless of month
-     * 
+     * </p>
      * @param date Date to be checked
      * @return Boolean value indicating if the day section of date is valid
      */

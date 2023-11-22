@@ -40,8 +40,8 @@ public class CampUtility {
     }
 
     /**
-     * For CommitteeList use: To find index of committee member in the list
-     * and For AttendeeList use: To find index of attendee in the list
+     * For CommitteeList use: To find index of committee member in the list,
+     * and For AttendeeList use: To find index of attendee in the list,
      * and For blackList use: To verify existence of student in blacklist
      * 
      * @param student Student to find in a list

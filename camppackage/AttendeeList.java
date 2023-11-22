@@ -6,7 +6,9 @@ import user.Student;
 import sort.AlphaSort;
 
 /**
+ * <p>
  * Class representing list of attendees
+ * </p>
  * Every camp object contains an attendee list
  */
 public class AttendeeList{

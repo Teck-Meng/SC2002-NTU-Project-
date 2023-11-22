@@ -4,9 +4,15 @@ import user.Student;
 import java.util.ArrayList;
 
 /**
+ * <p>
  * A list containing students who have withdrawn from a specfic camp
+ * </p>
+ * <p>
  * This list is used to ensure that students who have withdrawn are unable to re-register for that specific camp
+ * </p>
+ * <p>
  * Each camp will have one blacklist
+ * </p>
  */
 public class Blacklist {
     private ArrayList<Student> blacklist = new ArrayList<Student>();

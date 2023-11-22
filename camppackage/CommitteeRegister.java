@@ -8,8 +8,7 @@ import clock.Time;
 import filehandler.Database;
 
 /**
- * Class responsible for registration of camp committee member to a camp
- * Implements CampRegister interface
+ * Class responsible for registration of camp committee member to a camp, implements CampRegister interface
  */
 public class CommitteeRegister implements CampRegister {
     /**

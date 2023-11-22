@@ -14,20 +14,29 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
+ * <p>
  * Class responsible for generating attendance report
+ * </p>
+ * <p>
  * Class implements ReportGeneration interface
+ * </p>
  */
 public class AttendanceReport implements ReportGeneration{
 
     /**
-     * * This is the staff version of printReport
-     * To be added to StaffUI
-     * Pass in listOfcamps by using database.getUser(userID).getListOfCamps(), ensure that database.getUser is typecasted to staff first
+     * <p>
+     * This is the staff version of printReport,
+     * to be added to StaffUI
+     * </p>
+     * <p>
+     * Pass in listOfcamps by using database.getUser(userID).getListOfCamps(), ensure that database.getUser is typecasted to staff first.
      * To apply sorting in the future, it is recommended to apply sorting on listOfCamps of staff object first based on whatever
      * attributes one wishes to sort by
-     * The default arrangement is based on which camp is registered first
-     * This method will work as a console prompt to simulate filter
-     * 
+     * </p>
+     * <p>
+     * The default arrangement is based on which camp is registered first, 
+     * this method will work as a console prompt to simulate filter
+     * </p>
      * @param listOfCamps List of camps that a staff has created
      * @param campInfo Database of Camps
      * @Override
@@ -80,22 +89,23 @@ public class AttendanceReport implements ReportGeneration{
         System.out.println("Attendance Report successfully generated");
     }
 
-    /*
-     * Overloaded method of printReport
-     * This can also be used by staff if they only want to print report for one specific camp
-     * To be used by camp committee member
-     * Overall, this method to be added to StaffUI and CommitteeMemUI
-     * Use getCommitteCamp() on Student object in committeMemUI.java for @param committeeCamp
-     * For StaffUI, kindly add a console prompt method in the UI class to prompt staff to choose the camp to be passed in as arg
-     */
     /**
+     * <p>
      * Overloaded method of printReport
-     * This can also be used by staff if they only want to print report for one specific camp
+     * </p>
+     * <p>
+     * This can also be used by staff if they only want to print report for one specific camp,
      * To be used by camp committee member
+     * </p>
+     * <p>
      * Overall, this method to be added to StaffUI and CommitteeMemUI
-     * Use getCommitteCamp() on Student object in committeMemUI.java for committeeCamp paramaeter
-     * For StaffUI, kindly add a console prompt method in the UI class to prompt staff to choose the camp to be passed in as arg 
-     * 
+     * </p>
+     * <p>
+     * Use getCommitteCamp() on Student object in committeMemUI.java for committeeCamp
+     * </p>
+     * <p>
+     * For StaffUI, kindly add a console prompt method in the UI class to prompt staff to choose the camp to be passed in as arg
+     * </p>
      * @param camp Specific camp that the report will be printed for
      * @param campInfo Database of Camps
      * 
@@ -146,8 +156,8 @@ public class AttendanceReport implements ReportGeneration{
     }
 
     /**
-     * Method called by printReport to allow Staff to choose to print only attendees in report
-     * Call this together with committeeReportHandling to print for all
+     * Method called by printReport to allow Staff to choose to print only attendees in report,
+     * call this together with committeeReportHandling to print for all
      * 
      * @param attendeeList List of attendees in specific camp
      * @param camp Current camp to generate report for
@@ -175,8 +185,8 @@ public class AttendanceReport implements ReportGeneration{
             
         }
     /**
-     * Method called by printReport to allow Staff to choose to print only committee members in report
-     * Call this together with attendeeReportHandling to print for all
+     * Method called by printReport to allow Staff to choose to print only committee members in report,
+     * call this together with attendeeReportHandling to print for all
      * 
      * @param committeeList List of committee members in specific camp
      * @param camp Specific canp

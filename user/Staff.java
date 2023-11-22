@@ -221,7 +221,7 @@ public class Staff extends User{
     } 
 
     /**
-     * 
+     * Method to add camp to staff's list of camps
      * @param camp Newly created Camp to be added into staff's database
      */
     public void addCamp(Camp camp){

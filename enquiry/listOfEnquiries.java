@@ -102,11 +102,18 @@ public class ListOfEnquiries{
     }
     
     /**
+     * <p>
      * Method to edit enquiry
+     * </p>
+     * <p>
      * Unauthorized users will not be able to edit
+     * </p>
+     * <p>
      * Edits cannot be made after it has been answered
+     * </p>
+     * <p>
      * UI class will be responsible for system prompt, this method does not provide system prompt
-     * 
+     * </p>
      * @param id Unique identification number(pointer) of an enquiry
      * @param userID User identification of User trying to edit an enquiry
      * @param newEnquiry New enquiry to replace the old enquiry
@@ -126,9 +133,12 @@ public class ListOfEnquiries{
     }
 
     /**
+     * <p>
      * Method to delete enquiry
+     * </p>
+     * <p>
      * Enquiry can only be deleted by enquirer and if the enquiry is not yet answered
-     * 
+     * </p>
      * @param id Unique identification number(pointer) of an enquiry
      * @param userID User identification of User trying to edit an enquiry
      */
@@ -179,9 +189,12 @@ public class ListOfEnquiries{
     }
 
     /**
+     * <p>
      * To be used to ensure only Camp Committee Members and staff of that specific camp can view enquiries
+     * </p>
+     * <p>
      * Camp Name is a unique identification and will be returned to do the check
-     * 
+     * </p>
      * @param index Index positioning of enquiry in list of enquiries
      * @return Camp Name that received the enquiry
      */
@@ -215,11 +228,18 @@ public class ListOfEnquiries{
     }
 
     /**
+     * <p>
      * Used by attendee and staff class to print out all their enquiries
-     * returns arraylist containing the indexes of all enquiries, this will allow attendees to edit or delete their enquiries
-     * using the return arraylist during console prompt
+     * </p>
+     * <p>
+     * Returns arraylist containing the indexes of all enquiries, this will allow attendees to edit or delete their enquiries
+     * </p>
+     * <p>
+     * Use the return arraylist during console prompt
+     * </p>
+     * <p>
      * Set isStaff to be true to use staff version and false for attendee version
-     * 
+     * </p>
      * @param userID User Identification
      * @param isStaff Indication of whether method is called by a Staff object
      * @return List of unique identification number of enquiries

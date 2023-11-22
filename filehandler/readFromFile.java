@@ -96,8 +96,7 @@ public class ReadFromFile extends ConvertString {
     }
     
     /**
-     * To intialize campInfo object, to be called after using readPassWords()
-     * Will also update staff's list of camp list
+     * To intialize campInfo object, to be called after using readPassWords(), will also update staff's list of camp list
      * 
      * @param campInfo Database of Camps
      * @param database Database of Users
@@ -173,8 +172,7 @@ public class ReadFromFile extends ConvertString {
     }
     
     /**
-     * To update attendeeList
-     * Simultaneously update myCamps in student class and attendee list in camp object
+     * To update attendeeList and also simultaneously update myCamps in student class and attendee list in camp object
      * 
      * @param campInfo Database of Camps
      * @param database Database of Users
@@ -205,8 +203,7 @@ public class ReadFromFile extends ConvertString {
     }
     
     /**
-     * To update committeeList
-     * Simultaneously update student's committee camp attribute and committee member list in camp object
+     * To update committeeList, and also simultaneously update student's committee camp attribute and committee member list in camp object
      * 
      * @param campInfo Database of Camps
      * @param database Database of Users

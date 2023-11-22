@@ -209,14 +209,15 @@ public class ListOfSuggestions {
     }
 
     /**
-     * Used by committee member class to print out all their suggestions
-     * Used by staff class to print out all corresponding suggestions
-     * returns arraylist containing the indexes of all enquiries, this will allow committee member to edit or delete their suggestions
+     * <p>
+     * Used by committee member class to print out all their suggestions and used by staff class to print out all corresponding suggestions
+     * </p>
+     * <p>
+     * Returns arraylist containing the indexes of all enquiries, this will allow committee member to edit or delete their suggestions
+     * </p>
+     * <p>
      * This will also allow staff to see suggestions that they can approve or deny
-     * boolean param isStaff to differentiate staff and committee member version of printAllSuggestions
-     * using the return arraylist during console prompt
-     * Return list of suggestionIDs
-     * 
+     * </p>
      * @param camp Specific camp to print suggestions for
      * @param userID User identification of User who is trying to print all suggestions
      * @param isStaff Status of user as Staff member

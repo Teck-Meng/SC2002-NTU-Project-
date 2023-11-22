@@ -14,10 +14,15 @@ import clock.Time;
  */
 public class ReplyToSuggestion{
     /**
+     * <p>
      * StaffUI class will be responsible to prompt which suggestion they want to reply to
-     * index is the index of the suggestion
+     * </p>
+     * <p>
+     * Index is the index of the suggestion
+     * </p>
+     * <p>
      * StaffUI class should prompt Staff will another function call to make the necessary edits to be made from approving suggestion
-     * 
+     * </p>
      * @param index Index positioning of Suggestion in list of suggestions
      * @param list List of suggestions
      * @param staff Staff trying to reply to suggestion

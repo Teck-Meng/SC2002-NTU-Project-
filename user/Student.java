@@ -92,9 +92,12 @@ public class Student extends User{
     }
 
     /**
+     * <p>
      * Method to withdraw from camp
+     * </p>
+     * <p>
      * Return true if withdrawal is successful
-     * 
+     * </p>
      * @param camp Camp that a student wishes to withdraw from
      * @return Success of withdrawal
      */

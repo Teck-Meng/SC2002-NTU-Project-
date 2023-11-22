@@ -3,8 +3,12 @@ package enquiry;
 import java.util.ArrayList;
 
 /**
+ * <p>
  * Class handling replies to Student enquiries
+ * </p>
+ * <p>
  * Implements Replies interface
+ * </p>
  */
 public class ReplyToStudent implements Replies{
     private ArrayList<String> replies = new ArrayList<String>();

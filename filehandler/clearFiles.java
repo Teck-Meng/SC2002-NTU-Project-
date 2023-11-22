@@ -5,13 +5,17 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
+ * <p>
  * The purpose of this class is to empty out the csv file to prepare for writing
+ * </p>
+ * <p>
  * Clearing out the entire csv and rewriting is more efficient than having to match inputs of csv with inputs from application data
+ * </p>
  */
 public class ClearFiles {
     /**
-     * Clear the blacklist, attendee list and committee list
-     * To be used before calling corresponding write methods
+     * Clear the blacklist, attendee list and committee list,
+     * to be used before calling corresponding write methods
      */
     public static void clearAttendanceLists(){
         try{
@@ -35,8 +39,7 @@ public class ClearFiles {
     }
     
     /**
-     * Clear passwords csv file
-     * To be used before calling corresponding write methods
+     * Clear passwords csv file, to be used before calling corresponding write methods
      */
     public static void clearPasswords(){
         try{
@@ -54,8 +57,7 @@ public class ClearFiles {
     }
     
     /**
-     * Clear list of camps info csv file
-     * To be used before calling corresponding write methods
+     * Clear list of camps info csv file, to be used before calling corresponding write methods
      */
     public static void clearCampInfo(){
         try{
@@ -73,8 +75,7 @@ public class ClearFiles {
     }
     
     /**
-     * Clear CampInfo Attributes csv file
-     * To be used before calling corresponding write methods
+     * Clear CampInfo Attributes csv file, to be used before calling corresponding write methods
      */
     public static void clearCampInfoAttributes(){
         try{
@@ -92,8 +93,7 @@ public class ClearFiles {
     }
 
     /**
-     * Clears attendance report to set up a new attendance report to be written
-     * To only be called by AttendanceReport.java
+     * Clears attendance report to set up a new attendance report to be written, to only be called by AttendanceReport.java
      */
     public static void clearAttendanceReport(){
         try{
@@ -111,8 +111,7 @@ public class ClearFiles {
     }
 
     /**
-     * Clears performance report to set up a new performance report to be written
-     * To only be called by Performance_Report.java
+     * Clears performance report to set up a new performance report to be written, to only be called by Performance_Report.java
      */
     public static void clearPerformanceReport(){
         try{
@@ -149,8 +148,7 @@ public class ClearFiles {
     }
 
     /**
-     * Clears suggestion csv
-     * To be used before reading suggestions into csv
+     * Clears suggestion csv, to be used before reading suggestions into csv
      */
     public static void clearSuggestions(){
         try{

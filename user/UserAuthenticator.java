@@ -13,9 +13,7 @@ import filehandler.PasswordManager;
 public class UserAuthenticator {
 
     /**
-     * Method to check if a userID that is entered is inside the database of users
-     * Returns -1 if user not found
-     * 
+     * Method to check if a userID that is entered is inside the database of users, returns -1 if user not found.
      * @param database Database of users
      * @param enteredID User ID entered in by user for login
      * @return Index of user within the database of users, -1 if user not found
@@ -32,10 +30,13 @@ public class UserAuthenticator {
 
     
     /**
+     * <p>
      * Prompt user to input their login id, to be called by VerifyLogin method
-     * Returns -1 if user ID is wrong and user would like to try again
+     * </p>
+     * <p>
+     * Returns -1 if user ID is wrong and user would like to try again,
      * Returns -2 if user would to quit login, this will allow them to choose to change password in loginUI if they wish to
-     * 
+     * </p>
      * @param database Database of Users
      * @return Index of user within the database or instructions for system in response to user ID input
      */
@@ -72,12 +73,15 @@ public class UserAuthenticator {
 
     
     /**
+     * <p>
      * Prompts user to enter their password
+     * </p>
+     * <p>
      * Return value meaning:
-     * 0 == incorrect password
-     * 1 == prompt userID method
+     * 0 == incorrect password,
+     * 1 == prompt userID method,
      * 2 == Password is correct
-     * 
+     * </p>
      * @param userIDIndex
      * @param database
      * @return
@@ -120,11 +124,14 @@ public class UserAuthenticator {
     }
 
     /**
+     * <p>
      * System prompt to login
+     * </p>
+     * <p>
      * Return value meaning:
-     * -1 == login failed
+     * -1 == login failed,
      * Else, return index of login
-     * 
+     * </p>
      * @param database Database of users
      * @return Index of user within database
      */
@@ -157,11 +164,14 @@ public class UserAuthenticator {
 
     
     /**
+     * <p>
      * System prompt to change password
+     * </p>
+     * <p>
      * Return value meaning:
-     * -1 == verification to change password has failed
+     * -1 == verification to change password has failed.
      * Otherwise, return index of user in database
-     * 
+     * </p>
      * @param database Database of Users
      * @return Index of user in database
      */
