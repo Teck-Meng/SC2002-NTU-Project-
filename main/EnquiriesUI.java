@@ -124,21 +124,7 @@ public class EnquiriesUI {
         AttendeeEnquiry.deleteQuestion(pointerToEnquiry.get(index1 - 1), attendee.getUserID(), enquiries, database);
     }
 
-    /**
-     * <p>
-     * Console prompt for committee member to reply to enquiry
-     * </p>
-     * <p>
-     * Commitee Member not allowed to reply to their own enquiry
-     * </p>
-     * @param enquiries List of enquiries
-     * @param database Database of Users
-     * @param camp Camp committee member's camp
-     * @param replies List of replies
-     */
-    protected static void replyToEnquiry(ListOfEnquiries enquiries, Database database, Camp camp, ReplyToStudent replies){
-        
-    }
+    
     
     /**
      * Prints student's enquiries and corresponding replies onto console
@@ -247,6 +233,7 @@ public class EnquiriesUI {
             try{
                 enquiries.printAllEnquiries(camp, database.getUser(userID), false);
                 System.out.println("Enter the enquiry ID of the enquiry you want to reply to: ");
+                System.out.println("Enter -1 if you wish to quit:");
                 enquiryID = sc.nextInt();
             }
             catch(InputMismatchException e){
@@ -254,7 +241,10 @@ public class EnquiriesUI {
                 System.out.println("Please enter a valid integer choice!");
             }
         }
-        
+        if(enquiryID == -1){
+            System.out.println("Exiting interface . . .");
+            return;
+        }
         sc.nextLine();
         System.out.println("Enter your reply: ");
         String reply = sc.nextLine();

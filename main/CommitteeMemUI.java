@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import user.*;
 import report.AttendanceReport;
+import filehandler.ClearFiles;
 import filehandler.Database;
 import camppackage.Camp;
 import camppackage.CampInfo;
@@ -55,6 +56,7 @@ public class CommitteeMemUI {
                     EnquiriesUI.replyToEnquiries(enquiries, camp, userID, replyToStudent, database);
                     break;
                 case 4:
+                    ClearFiles.clearAttendanceLists();
                     AttendanceReport.attendeeReportHandling(camp.getAttendeeList().getListOfAttendees(), camp);
                     System.out.println("Report generated successfully!");
                     break;
